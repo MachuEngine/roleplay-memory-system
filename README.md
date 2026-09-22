@@ -55,17 +55,25 @@
 
 ## 실행
 
-```bash
-python -m venv .venv && .venv/bin/pip install -r requirements.txt
-cp .env.example .env    # API 키 입력
+Python 3.11 이상이 필요하다.
 
-.venv/bin/python scripts/cost_model.py      # 원가표 전체
-.venv/bin/python scripts/verify_cost.py     # 독립 검산
-.venv/bin/python scripts/test_memory_local.py       # 모델 호출 없음
-.venv/bin/python scripts/test_response_guard_local.py
+원가 계산과 로컬 검증은 **의존성 설치 없이** 바로 돌아간다.
+
+```bash
+python3 scripts/cost_model.py               # 원가표 전체
+python3 scripts/verify_cost.py              # 독립 검산
+python3 scripts/test_memory_local.py        # memory 참조 구현 18건
+python3 scripts/test_response_guard_local.py
 ```
 
-모델을 호출하는 스크립트는 `.env`에 키가 없으면 실행하지 않고 멈춘다.
+모델을 호출하는 스크립트는 키가 필요하다.
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+cp .env.example .env    # API 키 입력
+```
+
+OpenRouter를 경유하는 호출은 표준 라이브러리만 쓰고, `google-genai`는 Gemini API를 직접 부르는 스크립트에만 필요하다. 키가 없으면 실행하지 않고 멈춘다.
 
 ## 검증 범위
 

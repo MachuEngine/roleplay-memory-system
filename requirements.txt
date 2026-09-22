@@ -1,3 +1,3 @@
+# Gemini API를 직접 호출하는 스크립트에만 필요하다.
+# OpenRouter 경유 호출과 로컬 검증은 표준 라이브러리(urllib)만 쓴다.
 google-genai
-requests
-python-dotenv
