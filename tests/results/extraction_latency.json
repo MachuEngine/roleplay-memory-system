@@ -1,0 +1,135 @@
+{
+  "measured_at": "2026-09-20T14:39:08+09:00",
+  "model": "google/gemini-3.1-flash-lite",
+  "n": 20,
+  "turns": 11,
+  "tokens_in_avg": 6457,
+  "p50": 3.792,
+  "p95": 4.751,
+  "min": 2.522,
+  "max": 4.751,
+  "mean": 3.45,
+  "cost_usd": 0.0282,
+  "runs": [
+    {
+      "i": 1,
+      "seconds": 3.731,
+      "tokens_in": 6457,
+      "tokens_out": 796
+    },
+    {
+      "i": 2,
+      "seconds": 4.095,
+      "tokens_in": 6457,
+      "tokens_out": 796
+    },
+    {
+      "i": 3,
+      "seconds": 2.629,
+      "tokens_in": 6457,
+      "tokens_out": 463
+    },
+    {
+      "i": 4,
+      "seconds": 3.91,
+      "tokens_in": 6457,
+      "tokens_out": 796
+    },
+    {
+      "i": 5,
+      "seconds": 2.691,
+      "tokens_in": 6457,
+      "tokens_out": 424
+    },
+    {
+      "i": 6,
+      "seconds": 2.619,
+      "tokens_in": 6457,
+      "tokens_out": 451
+    },
+    {
+      "i": 7,
+      "seconds": 3.792,
+      "tokens_in": 6457,
+      "tokens_out": 796
+    },
+    {
+      "i": 8,
+      "seconds": 2.737,
+      "tokens_in": 6457,
+      "tokens_out": 443
+    },
+    {
+      "i": 9,
+      "seconds": 3.949,
+      "tokens_in": 6457,
+      "tokens_out": 796
+    },
+    {
+      "i": 10,
+      "seconds": 3.845,
+      "tokens_in": 6457,
+      "tokens_out": 796
+    },
+    {
+      "i": 11,
+      "seconds": 2.696,
+      "tokens_in": 6457,
+      "tokens_out": 460
+    },
+    {
+      "i": 12,
+      "seconds": 2.749,
+      "tokens_in": 6457,
+      "tokens_out": 507
+    },
+    {
+      "i": 13,
+      "seconds": 4.751,
+      "tokens_in": 6457,
+      "tokens_out": 796
+    },
+    {
+      "i": 14,
+      "seconds": 4.161,
+      "tokens_in": 6457,
+      "tokens_out": 796
+    },
+    {
+      "i": 15,
+      "seconds": 2.609,
+      "tokens_in": 6457,
+      "tokens_out": 453
+    },
+    {
+      "i": 16,
+      "seconds": 4.304,
+      "tokens_in": 6457,
+      "tokens_out": 796
+    },
+    {
+      "i": 17,
+      "seconds": 4.186,
+      "tokens_in": 6457,
+      "tokens_out": 796
+    },
+    {
+      "i": 18,
+      "seconds": 4.147,
+      "tokens_in": 6457,
+      "tokens_out": 796
+    },
+    {
+      "i": 19,
+      "seconds": 2.791,
+      "tokens_in": 6457,
+      "tokens_out": 426
+    },
+    {
+      "i": 20,
+      "seconds": 2.522,
+      "tokens_in": 6457,
+      "tokens_out": 479
+    }
+  ]
+}

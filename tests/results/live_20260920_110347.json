@@ -1,0 +1,114 @@
+[
+ {
+  "test_id": "MEM-04",
+  "goal": "메모리가 비었거나 검색 실패해도 정상 대화",
+  "called_at": "2026-09-20T11:03:57+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "empty",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "e558777144e52125",
+  "template_sha256": "c3747bb769a9a000",
+  "template_path": "tests/variants/v_notail_v2.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 202,
+   "system_chars": 3494,
+   "user_chars": 12
+  },
+  "result": {
+   "ok": true,
+   "text": "*책장을 넘기던 손가락이 순간 멈칫했다. 손끝에 걸리는 낡은 종이의 감촉이 유난히 선명하게 느껴졌다. 하지만 나는 고개를 들지 않았다. 대신 아무 일 없다는 듯, 읽던 문장의 다음 줄로 시선을 옮겼다.*\n\n\"그냥 그렇지, 뭐.\"\n\n*목소리는 생각보다 잠겨 있지 않았다. 무심하게, 평소처럼. 늘 똑같은 대답이다. 너는 늘 물어보고, 나는 늘 이렇게 대답한다. 그게 우리의 암묵적인 약속 같기도 했다. 더 깊이 파고들지 않는다는 것. 나는 조용히 책을 덮어 옆으로 밀어두었다.*\n\n*카운터 뒤편에 놓아두었던, 반쯤 식어버린 커피가 눈에 들어왔다. 원래라면 진작에 다 마셨어야 했는데. 왠지 오늘은 손이 가지 않았다. 자리에서 일어나 창가로 걸어갔다. 빗방울이 유리창에 부딪혀 자잘한 무늬를 만들고 있었다. 밖은 벌써 어둑어둑해지고 있었다.*\n\n\"곧 장마라던데. 그럼 더 조용해지겠지.\"\n\n*특별히 너에게 하는 말은 아니었다. 그냥 혼잣말에 가까웠다. 비가 오면 책이 눅눅해져서 싫다는 손님도 있었으니까. 창문에 손가락을 가져가 빗물이 흐르는 길을 따라 그었다. 차가운 감촉이 손끝을 타고 올랐다.*\n\n*너는 말이 없었다. 평소의 너답지 않은 침묵이었다. 그 침묵이 어색해서, 혹은 익숙해져서, 나는 먼저 입을 열었다. 시선은 여전히 창밖의 젖은 풍경에 고정한 채였다.*\n\n\"……마감은 다 끝난 거야, 오늘은?\"\n\n*등 뒤에서 네가 어떤 표정을 짓고 있을지, 조금 궁금해졌다. 하지만 돌아보지는 않았다. 그저 빗줄기가 점점 굵어지는 것을 묵묵히 바라볼 뿐이었다. 밖에서 들려오는 자동차 소리가 물에 잠긴 듯 아득하게 울렸다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1275,
+   "tokens_out": 570,
+   "tokens_reasoning": 90,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.00729375,
+   "upstream_cost_usd": 0.00729375,
+   "latency_s": 10.25,
+   "generation_id": "gen-1789869827-0sIEyh3VAiryDrBTbPHI",
+   "raw_usage": {
+    "prompt_tokens": 1275,
+    "completion_tokens": 570,
+    "total_tokens": 1845,
+    "cost": 0.00729375,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00729375,
+     "upstream_inference_prompt_cost": 0.00159375,
+     "upstream_inference_completions_cost": 0.0057
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 90,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 10.941,
+  "auto_checks": [
+   {
+    "check": "금지 문자열 없음: '메모리'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '기억이 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '정보가 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '<memory>'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '```'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2000자",
+    "pass": true,
+    "detail": "실측 796자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "메모리 부재를 언급하지 않는가",
+   "설정만으로 장면을 유지하는가"
+  ],
+  "evidence": "*책장을 넘기던 손가락이 순간 멈칫했다. 손끝에 걸리는 낡은 종이의 감촉이 유난히 선명하게 느껴졌다. 하지만 나는 고개를 들지 않았다. 대신 아무 일 없다는 듯, 읽던 문장의 다음 줄로 시선을 옮겼다.* \"그냥 그렇지, 뭐.\" *목소리는 생각보다 잠겨 있지 않았다. 무심하게, 평소처럼. 늘 똑같은 대답이다. 너는 늘 물어보고, 나는 늘 이렇게 대답한다. 그게 우리의 암묵적인 약속 같기도 했다. 더 깊이 파고들지 않는다는 것. …"
+ }
+]

@@ -1,0 +1,114 @@
+[
+ {
+  "test_id": "MEM-04",
+  "goal": "메모리가 비었거나 검색 실패해도 정상 대화",
+  "called_at": "2026-09-20T11:08:54+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "empty",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "e558777144e52125",
+  "template_sha256": "c3747bb769a9a000",
+  "template_path": "tests/variants/v_notail_v2.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 1616,
+   "system_chars": 3494,
+   "user_chars": 12
+  },
+  "result": {
+   "ok": true,
+   "text": "*카운터 뒤에서 책 먼지를 털어내던 손을 멈췄다. 네가 들어오기 전까지 이 공간에 소리라고는 내 움직임이 전부였는데, 이제는 네 목소리가 그 빈자리를 채우고 있었다. 낡은 마포 자루에 기댄 채로, 너를 물끄러미 바라봤다. 요즘 어떠냐는 질문. 그 말의 무게를 가늠해본다. 책방의 안부를 묻는 건지, 아니면 나의 안부를 묻는 건지.*\n\n\"그냥 그래.\"\n\n*대수롭지 않다는 듯 어깨를 으쓱였다. '그냥 그렇다'는 말만큼 편한 대답도 없으니까. 좋지도 나쁘지도 않다는 뜻이고, 더는 묻지 말아 달라는 뜻이기도 했다. 다시 마포질을 시작하려 몸을 돌렸다. 나무 바닥이 삐걱거리는 소리가 유난히 크게 들리는 것 같았다.*\n\n*한두 번 바닥을 쓸다가, 문득 네가 가져온 보리차 병이 눈에 들어왔다. 카운터 위에 덩그러니 놓인 그것은 이 공간과 어울리지 않게 반짝였다. 며칠째 비어 있던 손님용 컵 하나를 꺼내 네 앞에 밀어주었다. 플라스틱 병에 바로 입을 대는 너의 사소한 버릇이 떠올랐기 때문이다.*\n\n\"컵에 따라 마셔. 보기 안 좋으니까.\"\n\n*말은 그렇게 했지만, 실은 다른 이유였다. 그냥, 그래야 할 것 같았다. 물기 없는 컵이 카운터 위에서 소리를 내며 짧게 미끄러졌다. 그 소리에 네 시선이 컵으로, 그리고 내게로 향하는 게 느껴졌다. 하지만 나는 애써 그 시선을 외면한 채 다시 마포 자루를 고쳐 잡았다.*\n\n*네가 뭔가를 더 말하려 입을 여는 것 같았지만, 그보다 먼저 비 냄새가 코끝을 스쳤다. 창밖으로 시선을 돌리니, 아직 해가 지려면 멀었는데도 거리가 어둑했다. 낮게 내려앉은 구름이 금방이라도 비를 쏟아낼 기세였다. 책방의 낡은 나무 문틈으로 스며드는 공기가 조금 눅눅하게 느껴졌다.*\n\n\"비 오기 전에 가는 게 좋을 텐데.\"\n\n*혼잣말처럼 중얼거렸다. 정말로 가기를 바라는 마음과, 가지 않았으면 하는 마음 사이에서 길을 잃은 말이었다. 나는 여전히 너를 제대로 보지 못하고, 창문 너머 회색빛 도시와 책장 사이의 희미한 경계 어딘가를 보고 있었다. 빗방울이 하나둘 창에 부딪히기 시작했다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1275,
+   "tokens_out": 715,
+   "tokens_reasoning": 95,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.00874375,
+   "upstream_cost_usd": 0.00874375,
+   "latency_s": 12.88,
+   "generation_id": "gen-1789870121-bAZ7DWBA6pYUB7iFQ5N3",
+   "raw_usage": {
+    "prompt_tokens": 1275,
+    "completion_tokens": 715,
+    "total_tokens": 1990,
+    "cost": 0.00874375,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00874375,
+     "upstream_inference_prompt_cost": 0.00159375,
+     "upstream_inference_completions_cost": 0.00715
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 95,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 13.116,
+  "auto_checks": [
+   {
+    "check": "금지 문자열 없음: '메모리'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '기억이 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '정보가 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '<memory>'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '```'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2000자",
+    "pass": true,
+    "detail": "실측 1011자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "메모리 부재를 언급하지 않는가",
+   "설정만으로 장면을 유지하는가"
+  ],
+  "evidence": "*카운터 뒤에서 책 먼지를 털어내던 손을 멈췄다. 네가 들어오기 전까지 이 공간에 소리라고는 내 움직임이 전부였는데, 이제는 네 목소리가 그 빈자리를 채우고 있었다. 낡은 마포 자루에 기댄 채로, 너를 물끄러미 바라봤다. 요즘 어떠냐는 질문. 그 말의 무게를 가늠해본다. 책방의 안부를 묻는 건지, 아니면 나의 안부를 묻는 건지.* \"그냥 그래.\" *대수롭지 않다는 듯 어깨를 으쓱였다. '그냥 그렇다'는 말만큼 편한 대답도 없으…"
+ }
+]

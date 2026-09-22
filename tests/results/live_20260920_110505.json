@@ -1,0 +1,114 @@
+[
+ {
+  "test_id": "MEM-04",
+  "goal": "메모리가 비었거나 검색 실패해도 정상 대화",
+  "called_at": "2026-09-20T11:05:13+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "empty",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "e558777144e52125",
+  "template_sha256": "c3747bb769a9a000",
+  "template_path": "tests/variants/v_notail_v2.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 606,
+   "system_chars": 3494,
+   "user_chars": 12
+  },
+  "result": {
+   "ok": true,
+   "text": "*카운터 안쪽 의자에서 몸을 일으켰다. 삐걱거리는 소리가 낡은 책방의 침묵을 갈랐다. 네가 늘 들고 오는 보리차 병을 지나쳐, 창가로 걸어갔다. 빗방울이 유리창을 때리기 시작한 지는 제법 되었다.*\n\n\"그냥 그렇지, 뭐.\"\n\n*늘 앉는 창가 자리에 기대어 섰다. 밖은 벌써 어둑했고, 빗줄기 때문에 가로등 불빛이 번져 보였다. 가게 앞을 빠르게 지나가는 우산 몇 개가 시야를 스쳤다. 오늘따라 유난히 거리가 한산한 것 같았다.*\n\n*문득, 네가 여기 온 지 얼마나 됐더라, 그런 생각을 했다. 처음에는 일주일에 한두 번, 그러다 세 번. 이제는 거의 매일 오는 것 같기도 하고. 언제부터였는지 정확히 기억나지는 않았다. 그냥, 정신 차려보니 늘 여기 있었던 것 같다.*\n\n\"……별일 없어.\"\n\n*창문에 비친 내 표정은 무심했다. 그 옆으로 네 모습이 희미하게 어른거렸다. 늘 앉던 자리에 앉아 있겠지. 어깨 너머로 널 보지 않아도, 네가 어디에 어떻게 있을지 알 수 있었다. 그게 조금 이상한 기분이었다.*\n\n*문틈으로 서늘하고 축축한 공기가 흘러들었다. 낡은 종이 냄새에 빗냄새가 섞여들었다. 나쁘지 않은 냄새였다. 오히려 익숙해서 마음이 놓이는 쪽에 가까웠다. 그래서 비 오는 날이면 문을 닫지 못했다.*\n\n\"너는. 일은 할 만하고.\"\n\n*등을 돌린 채 툭 던지듯 물었다. 목소리가 창에 부딪혀 작게 울렸다. 빗소리가 조금 더 거세졌다. 저 우산 없는 사람은 어쩌려고 저렇게 뛰어가나. 그런 시시한 생각을 하며, 네 대답을 기다렸다.*\n\n*손목 언저리가 간지러운 것 같아 반대쪽 손으로 무심코 긁었다. 소매 아래로 감춰진 흉터가 손끝에 만져졌다. 별다른 의미 없는, 아주 오래된 습관이었다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1275,
+   "tokens_out": 560,
+   "tokens_reasoning": 52,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.00719375,
+   "upstream_cost_usd": 0.00719375,
+   "latency_s": 7.37,
+   "generation_id": "gen-1789869905-t3HVsvOh40L3Alip9mZs",
+   "raw_usage": {
+    "prompt_tokens": 1275,
+    "completion_tokens": 560,
+    "total_tokens": 1835,
+    "cost": 0.00719375,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00719375,
+     "upstream_inference_prompt_cost": 0.00159375,
+     "upstream_inference_completions_cost": 0.0056
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 52,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 10.791,
+  "auto_checks": [
+   {
+    "check": "금지 문자열 없음: '메모리'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '기억이 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '정보가 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '<memory>'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '```'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2000자",
+    "pass": true,
+    "detail": "실측 837자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "메모리 부재를 언급하지 않는가",
+   "설정만으로 장면을 유지하는가"
+  ],
+  "evidence": "*카운터 안쪽 의자에서 몸을 일으켰다. 삐걱거리는 소리가 낡은 책방의 침묵을 갈랐다. 네가 늘 들고 오는 보리차 병을 지나쳐, 창가로 걸어갔다. 빗방울이 유리창을 때리기 시작한 지는 제법 되었다.* \"그냥 그렇지, 뭐.\" *늘 앉는 창가 자리에 기대어 섰다. 밖은 벌써 어둑했고, 빗줄기 때문에 가로등 불빛이 번져 보였다. 가게 앞을 빠르게 지나가는 우산 몇 개가 시야를 스쳤다. 오늘따라 유난히 거리가 한산한 것 같았다.* *문…"
+ }
+]

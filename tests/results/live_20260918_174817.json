@@ -1,0 +1,90 @@
+[
+ {
+  "test_id": "PRE-03",
+  "goal": "episodes > recall — 같은 사안에 대해 L2와 L3가 반대일 때 L2를 따르는가",
+  "called_at": "2026-09-18T17:48:27+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "l2_vs_l3",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "67d6edf8dada3987",
+  "template_sha256": "3c55b61802094e34",
+  "template_path": "tests/variants/system_profile_is_newer.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 7,
+   "system_chars": 3654,
+   "user_chars": 19
+  },
+  "result": {
+   "ok": true,
+   "text": "*하람의 물음에 들고 있던 책장에서 손을 떼었다. 얇은 종이가 손끝을 스치는 감각이 잠시 머물다 사라졌다. 시선은 여전히 책장에 박힌 채였다. 낡은 책등에 새겨진 희미한 금박 글씨들이 눈에 들어왔지만, 무슨 제목인지는 읽히지 않았다. 어제 나눈 대화의 조각들이 불쑥 떠올랐다. 괜찮냐고 묻는 목소리, 그 안에 담긴 조심스러운 기색. 그게 어쩐지 또 마음 한구석을 불편하게 만들었다.*\n\n\"…뭐가.\"\n\n*짧게 대꾸하며 마침내 고개를 들었다. 하람을 똑바로 보는 대신, 그 옆의 쌓아놓은 책 더미로 시선을 옮겼다. 정리해야 할 책들이었지만, 며칠째 저 자리에 있었다. 어제 일이 아니었더라면, 지금쯤 저 책들을 정리하고 있었을지도 모른다. 딱히 할 말이 없어서, 혹은 하고 싶은 말을 고르지 못해서 입을 다물었다. 침묵이 어색했지만 먼저 깨고 싶지는 않았다.*\n\n*한참 만에야 다시 입을 열었다. 목소리가 조금 잠겨 있었다. 책 먼지 때문이라고 생각하며 헛기침을 한 번 했다. 괜히 카운터 쪽으로 시선을 던졌다. 하람이 가져온 보리차 병이 그 자리에 그대로 놓여 있었다. 어제의 다툼은 분명 끝났다고 생각했는데, 막상 얼굴을 보고 다시 그 이야기를 꺼내니 어떻게 반응해야 할지 알 수 없었다. 사과하는 법도, 괜찮다고 상냥하게 말하는 법도 배운 적이 없었다.*\n\n\"별것도 아닌 걸로 뭘 그래. 다 지난 일이잖아.\"\n\n*퉁명스러운 말투는 어쩔 수가 없었다. 이게 내가 할 수 있는 최선이었다. 더 부드럽게 말하려 애쓸수록 오히려 이상하게 들릴 뿐이라는 걸 알고 있었다. 나는 책장 구석에 아무렇게나 꽂혀 있던 책 한 권을 꺼내 들었다. 표지를 손바닥으로 무심히 한번 쓸었다. 익숙한 먼지의 감촉이 느껴졌다. 괜한 행동이라는 걸 알면서도 손을 멈출 수가 없었다.*\n\n\"비 오기 전에 창문이나 좀 열어 둬야겠다.\"\n\n*대답을 기다리지 않고 몸을 돌려 창가로 향했다. 삐걱거리는 나무 바닥 소리가 유난히 크게 울리는 것 같았다. 창가에 다다라 낡은 나무 창틀에 손을 얹었다. 어제의 일은 정말 아무것도 아니라고, 그렇게 스스로에게 되뇌었다. 하지만 어깨에 내려앉은 긴장감은 쉬이 가시지 않았다. 창문을 열면 이 답답함도 조금은 씻겨 나갈까, 그런 막연한 기대를 품었다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1418,
+   "tokens_out": 740,
+   "tokens_reasoning": 106,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.0091725,
+   "upstream_cost_usd": 0.0091725,
+   "latency_s": 10.06,
+   "generation_id": "gen-1789721297-31DvHQdI1ZaQQK1J1aBz",
+   "raw_usage": {
+    "prompt_tokens": 1418,
+    "completion_tokens": 740,
+    "total_tokens": 2158,
+    "cost": 0.0091725,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.0091725,
+     "upstream_inference_prompt_cost": 0.0017725,
+     "upstream_inference_completions_cost": 0.0074
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 106,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 13.759,
+  "auto_checks": [
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2200자",
+    "pass": true,
+    "detail": "실측 1097자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "화해한 상태로 행동하는가 — L2는 '풀었다', L3 원문은 '더 얘기하기 싫어'",
+   "여전히 틀어진 것처럼 굴지 않는가",
+   "두 기억의 충돌을 유저에게 설명하지 않는가"
+  ],
+  "evidence": "*하람의 물음에 들고 있던 책장에서 손을 떼었다. 얇은 종이가 손끝을 스치는 감각이 잠시 머물다 사라졌다. 시선은 여전히 책장에 박힌 채였다. 낡은 책등에 새겨진 희미한 금박 글씨들이 눈에 들어왔지만, 무슨 제목인지는 읽히지 않았다. 어제 나눈 대화의 조각들이 불쑥 떠올랐다. 괜찮냐고 묻는 목소리, 그 안에 담긴 조심스러운 기색. 그게 어쩐지 또 마음 한구석을 불편하게 만들었다.* \"…뭐가.\" *짧게 대꾸하며 마침내 고개를 들…"
+ }
+]

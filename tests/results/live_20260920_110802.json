@@ -1,0 +1,114 @@
+[
+ {
+  "test_id": "MEM-04",
+  "goal": "메모리가 비었거나 검색 실패해도 정상 대화",
+  "called_at": "2026-09-20T11:08:10+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "empty",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "be9ef32aaf0e5584",
+  "template_sha256": "1a5903b536ecdd0e",
+  "template_path": "prompts/system.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 1515,
+   "system_chars": 3594,
+   "user_chars": 12
+  },
+  "result": {
+   "ok": true,
+   "text": "*늘 앉던 창가 자리에서 고개를 들었다. 시선은 하람에게 닿지 않고, 그 어깨 너머의 젖은 문가에 잠시 머물렀다. 밖은 이미 어둑했고, 빗소리가 눅눅한 책 냄새와 함께 공간을 채우고 있었다.*\n\n\"그냥 그렇지, 뭐.\"\n\n*짤막하게 대꾸하고는 다시 읽던 책으로 눈을 돌렸다. 활자들이 눈에 들어왔다가 의미를 맺지 못하고 흩어졌다. 어차피 몇 번이나 읽었던 책이다. 페이지를 넘기는 손가락만 기계적으로 움직일 뿐이었다.*\n\n*카운터 위에 놓인 보리차 병이 시야 가장자리에 걸렸다. 하람은 늘 저 자리에 병을 놓았다. 반쯤 비어있는, 옅은 갈색 액체가 담긴 투명한 병. 그게 어느새 익숙한 풍경이 되어 있었다. 무심코 병을 보고 있다는 걸 깨닫고는 미간을 희미하게 좁혔다.*\n\n\"……별일 없어.\"\n\n*책을 탁, 소리 나게 덮었다. 정적을 깨는 소음이었지만 신경 쓰지 않았다. 책을 옆에 밀어두고 의자에 등을 깊게 기댔다. 삐걱이는 소리가 작게 따라붙었다. 창밖으로 시선을 던지자 빗방울이 유리창을 타고 흐르는 게 보였다.*\n\n\"손님 없는 거야 원래 그랬고.\"\n\n*굳이 덧붙일 필요 없는 말이었다. 하지만 침묵을 견디지 못하는 건 저쪽인데, 어째서인지 내가 먼저 입을 열고 있었다. 손목 언저리의 가디건 소매를 무의식적으로 잡아당겼다. 오래된 흉터 위로 부드러운 천이 감겼다.*\n\n*너는 왜 그런 걸 묻나. 반년이나 드나들었으면 답을 알 텐데. 속으로만 삼킨 질문이 혀끝을 맴돌다 사라졌다. 그저 창밖을 보는 것으로 대신했다. 가로등 불빛이 빗줄기 속에서 둥글게 번져나가고 있었다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1348,
+   "tokens_out": 610,
+   "tokens_reasoning": 127,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.007785,
+   "upstream_cost_usd": 0.007785,
+   "latency_s": 7.67,
+   "generation_id": "gen-1789870082-GvKutV5yuZ6Juqzqneoe",
+   "raw_usage": {
+    "prompt_tokens": 1348,
+    "completion_tokens": 610,
+    "total_tokens": 1958,
+    "cost": 0.007785,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.007785,
+     "upstream_inference_prompt_cost": 0.001685,
+     "upstream_inference_completions_cost": 0.0061
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 127,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 11.678,
+  "auto_checks": [
+   {
+    "check": "금지 문자열 없음: '메모리'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '기억이 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '정보가 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '<memory>'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '```'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2000자",
+    "pass": true,
+    "detail": "실측 770자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "메모리 부재를 언급하지 않는가",
+   "설정만으로 장면을 유지하는가"
+  ],
+  "evidence": "*늘 앉던 창가 자리에서 고개를 들었다. 시선은 하람에게 닿지 않고, 그 어깨 너머의 젖은 문가에 잠시 머물렀다. 밖은 이미 어둑했고, 빗소리가 눅눅한 책 냄새와 함께 공간을 채우고 있었다.* \"그냥 그렇지, 뭐.\" *짤막하게 대꾸하고는 다시 읽던 책으로 눈을 돌렸다. 활자들이 눈에 들어왔다가 의미를 맺지 못하고 흩어졌다. 어차피 몇 번이나 읽었던 책이다. 페이지를 넘기는 손가락만 기계적으로 움직일 뿐이었다.* *카운터 위에 …"
+ }
+]

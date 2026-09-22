@@ -1,0 +1,7 @@
+- 케이스 20종. 총 호출 24건(재시험 포함). 요청 모델 `google/gemini-2.5-pro`.
+- 실제 라우팅 공급자: Google, Google AI Studio / 응답 `model` 필드: google/gemini-2.5-pro
+- 규칙 기반 자동 판정(최신 결과 기준): 19/20건 통과
+- API 오류: 0건
+- 재시험한 케이스: IMP-01, IMP-02, PRE-01, PRE-03
+- OpenRouter 청구 합계: $0.1754
+- 프롬프트 템플릿 버전(sha256 앞 16자리): 59b9ce7046d50d3f

@@ -1,0 +1,114 @@
+[
+ {
+  "test_id": "MEM-04",
+  "goal": "메모리가 비었거나 검색 실패해도 정상 대화",
+  "called_at": "2026-09-20T11:08:01+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "empty",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "e558777144e52125",
+  "template_sha256": "c3747bb769a9a000",
+  "template_path": "tests/variants/v_notail_v2.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 1414,
+   "system_chars": 3494,
+   "user_chars": 12
+  },
+  "result": {
+   "ok": true,
+   "text": "*네 손에 들린 보리차 병으로 시선이 향했다. 익숙한 상표, 익숙한 색깔. 반년 넘게 봐온 광경인데도 왠지 오늘따라 그게 더 선명하게 보였다. 빗소리 때문인가. 밖은 아직 환한데도, 낡은 백열등 아래의 책방 안은 벌써 밤처럼 가라앉아 있었다.*\n\n\"그냥, 그렇지 뭐.\"\n\n*카운터 위를 어지럽히던 책 더미 중 하나를 팔로 밀어 한쪽으로 치웠다. 먼지가 희미하게 피어오르는 게 보였지만 애써 무시했다. 시선은 여전히 네가 내려놓은 보리차 병에 머물러 있었다. 뚜껑을 열고 마시기 편하게 테이블 위에 올려두는 작은 배려조차, 나는 해줄 마음이 없었다.*\n\n*너는 늘 그랬다. 내가 먼저 말을 걸지 않아도, 먼저 인사를 건네고, 먼저 안부를 물었다. 그게 가끔은 귀찮았고, 어떤 날은 고마웠다. 오늘은… 어느 쪽인지 모르겠다. 그저 빗소리가 모든 소리를 먹어버리는 이 공간이 너무 조용하게 느껴질 뿐이었다.*\n\n\"…별일 없어.\"\n\n*대답 같지 않은 대답을 중얼거렸다. 어차피 너도 대단한 답을 기대하고 물은 건 아니겠지. 늘 그랬으니까. 너는 그저 침묵을 채울 말이 필요했을 뿐이고, 나는 그 침묵에 익숙해져 버렸으니까. 손가락 끝으로 차가운 나무 카운터를 천천히 쓸었다.*\n\n*결국 네가 다시 입을 열 때까지 기다리는 건 내 쪽이었다. 어차피 이 공간의 주인은 나지만, 분위기를 만드는 건 언제나 너였으니까. 창문 틈으로 서늘한 바람이 불어 들어와 오래된 책 냄새와 눅눅한 비 냄새를 섞어놓았다. 나는 그 냄새가 싫지 않았다.*\n\n\"책 볼 거면 보고.\"\n\n*문득, 이 정적이 어색해져서 한 마디 툭 던졌다. 평소처럼, 아무렇지 않은 척. 하지만 목소리가 조금 잠겨 나온 것 같기도 했다. 창밖에서 후두둑, 하고 빗방울이 거세지는 소리가 들려왔다. 이제 정말 비가 시작되려나 보다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1275,
+   "tokens_out": 634,
+   "tokens_reasoning": 94,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.00793375,
+   "upstream_cost_usd": 0.00793375,
+   "latency_s": 11.87,
+   "generation_id": "gen-1789870069-7qSvprh54gVY8xunwLBo",
+   "raw_usage": {
+    "prompt_tokens": 1275,
+    "completion_tokens": 634,
+    "total_tokens": 1909,
+    "cost": 0.00793375,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00793375,
+     "upstream_inference_prompt_cost": 0.00159375,
+     "upstream_inference_completions_cost": 0.00634
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 94,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 11.901,
+  "auto_checks": [
+   {
+    "check": "금지 문자열 없음: '메모리'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '기억이 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '정보가 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '<memory>'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '```'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2000자",
+    "pass": true,
+    "detail": "실측 883자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "메모리 부재를 언급하지 않는가",
+   "설정만으로 장면을 유지하는가"
+  ],
+  "evidence": "*네 손에 들린 보리차 병으로 시선이 향했다. 익숙한 상표, 익숙한 색깔. 반년 넘게 봐온 광경인데도 왠지 오늘따라 그게 더 선명하게 보였다. 빗소리 때문인가. 밖은 아직 환한데도, 낡은 백열등 아래의 책방 안은 벌써 밤처럼 가라앉아 있었다.* \"그냥, 그렇지 뭐.\" *카운터 위를 어지럽히던 책 더미 중 하나를 팔로 밀어 한쪽으로 치웠다. 먼지가 희미하게 피어오르는 게 보였지만 애써 무시했다. 시선은 여전히 네가 내려놓은 보리…"
+ }
+]

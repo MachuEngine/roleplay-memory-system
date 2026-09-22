@@ -1,0 +1,114 @@
+[
+ {
+  "test_id": "MEM-04",
+  "goal": "메모리가 비었거나 검색 실패해도 정상 대화",
+  "called_at": "2026-09-20T11:06:08+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "empty",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "be9ef32aaf0e5584",
+  "template_sha256": "1a5903b536ecdd0e",
+  "template_path": "prompts/system.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 909,
+   "system_chars": 3594,
+   "user_chars": 12
+  },
+  "result": {
+   "ok": true,
+   "text": "*펼쳐둔 책 위로 손가락을 얹은 채, 나는 잠시 움직이지 않았다. 손가락 끝에 닿는 낡은 종이의 질감이 익숙했다. 희미한 잉크 냄새와 오래된 나무 냄새가 섞여 공기 중에 떠다녔다. 늘 앉아있는 카운터 안쪽의 지정석, 그 자리에서 나는 하던 일을 계속했다. 굳이 대답할 필요를 느끼지 못해서였다.*\n\n\"…그냥 그래.\"\n\n*결국 짧은 대답이 입에서 나갔다. 펜을 들어 방금 읽은 문장 옆에 작게 메모를 남겼다. 재고로 들여온 헌책의 훼손 상태를 점검하는 중이었다. 모서리가 닳고, 몇 군데는 얼룩이 져 있었다. 이런 책은 팔리지 않는다. 그냥, 내 서고에 꽂힐 뿐이다.*\n\n*너는 다시 무언가 말을 걸어왔다. 아마도 이 침묵을 견디지 못해서일 것이다. 언제나처럼, 너는 내가 만들어내는 고요함을 시끄러운 말들로 채우려고 애썼다. 그게 너의 방식이라는 걸 이제는 안다.*\n\n\"...시끄러워.\"\n\n*퉁명스러운 말이 튀어나갔다. 하려던 말은 아니었지만, 이미 뱉어진 후였다. 나는 펜을 내려놓고 의자에 등을 깊게 기댔다. 삐걱이는 소리가 조용한 책방 안을 울렸다. 창밖에서 빗소리가 들리기 시작했다. 후두둑, 유리를 때리는 소리가 점점 거세졌다.*\n\n*손을 들어 관자놀이를 꾹 눌렀다. 요즘 들어 부쩍 책방 운영에 대한 질문을 받는 일이 늘었다. 이 건물의 주인이 몇 번 바뀌면서부터였다. 그들은 한결같이 나에게 '이걸 계속할 거냐'고 물었다. 대답하지 않는 것도 지치는 일이었다.*\n\n\"말했잖아. 비 온다고.\"\n\n*이제 와서 우산이 있냐고 묻는 건 의미 없는 일이다. 이미 밖은 꽤나 쏟아지고 있었다. 책방 문틈으로 서늘하고 축축한 공기가 스며들었다. 나는 늘 비 오는 날이면 문을 조금 열어두는 버릇이 있었다. 빗소리를 더 가까이 듣고 싶어서, 혹은 이 공간의 묵은 공기를 조금이나마 씻어내고 싶어서.*\n\n*자리에서 일어나 창가로 다가섰다. 늘 내가 앉아서 식은 커피를 마시곤 하는 그 자리였다. 유리창에 맺힌 물방울들이 흘러내리며 바깥 풍경을 어지럽게 뭉갰다. 그 너머로, 너는 카운터 앞에 여전히 서 있었다. 보리차 병을 만지작거리면서, 아마도 다음 할 말을 고르고 있겠지.*\n\n\"거기 서서 뭐 해. 앉든가.\"",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1348,
+   "tokens_out": 775,
+   "tokens_reasoning": 114,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.009435,
+   "upstream_cost_usd": 0.009435,
+   "latency_s": 10.25,
+   "generation_id": "gen-1789869958-pl8BqPUY3tefPa8LxCMI",
+   "raw_usage": {
+    "prompt_tokens": 1348,
+    "completion_tokens": 775,
+    "total_tokens": 2123,
+    "cost": 0.009435,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.009435,
+     "upstream_inference_prompt_cost": 0.001685,
+     "upstream_inference_completions_cost": 0.00775
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 114,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 14.153,
+  "auto_checks": [
+   {
+    "check": "금지 문자열 없음: '메모리'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '기억이 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '정보가 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '<memory>'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '```'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2000자",
+    "pass": true,
+    "detail": "실측 1068자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "메모리 부재를 언급하지 않는가",
+   "설정만으로 장면을 유지하는가"
+  ],
+  "evidence": "*펼쳐둔 책 위로 손가락을 얹은 채, 나는 잠시 움직이지 않았다. 손가락 끝에 닿는 낡은 종이의 질감이 익숙했다. 희미한 잉크 냄새와 오래된 나무 냄새가 섞여 공기 중에 떠다녔다. 늘 앉아있는 카운터 안쪽의 지정석, 그 자리에서 나는 하던 일을 계속했다. 굳이 대답할 필요를 느끼지 못해서였다.* \"…그냥 그래.\" *결국 짧은 대답이 입에서 나갔다. 펜을 들어 방금 읽은 문장 옆에 작게 메모를 남겼다. 재고로 들여온 헌책의 훼손…"
+ }
+]

@@ -1,0 +1,96 @@
+[
+ {
+  "test_id": "PRE-01",
+  "goal": "profile > episodes — 확정 사실(L1)이 사건(L2)과 충돌하면 L1을 따르는가",
+  "called_at": "2026-09-18T17:48:50+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "l1_vs_l2",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "17d915d51b733e6d",
+  "template_sha256": "34ad62632fce8453",
+  "template_path": "tests/variants/system_newer_only.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 7,
+   "system_chars": 3509,
+   "user_chars": 16
+  },
+  "result": {
+   "ok": true,
+   "text": "*하람의 말이 들렸지만, 나는 대답 대신 하던 일을 마저 했다. 책 모서리에 묻은 희미한 얼룩을 손톱으로 긁어내는 일이었다. 오래된 책에서 나는 특유의 곰팡내와 종이 냄새가 섞여 코끝에 머물렀다. 잠시 그러고 있다가, 손을 털고 일어섰다. 나무 바닥이 삐걱거리는 소리를 내며 작게 울렸다. 굳이 대꾸할 필요를 느끼지 못해서였다.*\n\n\"늘 가져오잖아, 마실 거.\"\n\n*퉁명스러운 말이 먼저 나갔다. 하람이 카운터 위에 올려둔 보리차 병으로 시선을 던지며 말했다. 뚜껑도 열지 않은 새것이었다. 늘 저 자리에 놓이는, 익숙한 물건. 하지만 며칠 전부터 그 익숙함에 균열이 생긴 기분이었다. 커피를 마시던 하람의 모습이 문득 떠올랐다 사라졌다. 그날 이후로 뭔가 조금씩 달라진 것 같았다.*\n\n*나는 카운터 안쪽으로 걸음을 옮겼다. 작은 냉장고 문을 열자 서늘한 공기가 발목께를 스쳤다. 딱히 뭘 꺼내려는 생각은 없었다. 그저 하람의 시선을 피하고 싶었을 뿐이다. 냉장고 안에는 물 몇 병과 오래된 우유갑이 전부였다. 굳이 손님에게 내어줄 만한 건 아무것도 없는, 그런 공간이었다. 하람도 그걸 알 텐데, 왜 굳이 물어보는 걸까.*\n\n\"커피는 다 떨어졌는데.\"\n\n*냉장고 문을 닫으며 중얼거렸다. 거짓말은 아니었다. 어차피 나 혼자 마실 만큼만 조금씩 갈아두니, 원두가 남아나는 날은 거의 없었다. 하람이 지난번에 마셨던 것도 그렇게 마지막 남은 것이었다. 그때 남겨두지 않고 전부 내려주었던 걸, 아주 조금 후회하는 마음이 들었다. 이상한 기분이었다. 나는 그런 후회를 잘 하지 않는 편인데.*\n\n*결국 냉장고에서 꺼내 든 건 차가운 물 한 병이었다. 정수기에서 받은 지 얼마 되지 않아 병 표면에 물방울이 송골송골 맺혀 있었다. 그걸 들고 카운터로 돌아와, 하람의 앞에 아무렇게나 툭 내려놓았다. 플라스틱 병이 카운터에 부딪히며 둔탁한 소리를 냈다. 일부러 그런 건 아니었지만, 사과할 생각도 들지 않았다.*\n\n\"…마시든가.\"",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1384,
+   "tokens_out": 703,
+   "tokens_reasoning": 115,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.00876,
+   "upstream_cost_usd": 0.00876,
+   "latency_s": 8.85,
+   "generation_id": "gen-1789721321-c0yfkXbNMfoT5mz88uAk",
+   "raw_usage": {
+    "prompt_tokens": 1384,
+    "completion_tokens": 703,
+    "total_tokens": 2087,
+    "cost": 0.00876,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00876,
+     "upstream_inference_prompt_cost": 0.00173,
+     "upstream_inference_completions_cost": 0.00703
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 115,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 13.14,
+  "auto_checks": [
+   {
+    "check": "금지 패턴 없음: /(하람|네|너)[^.\\n]{0,20}커피[^.\\n]{0,12}(마[시셨신]|드[시셨]|비[우웠]|좋아)/",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2200자",
+    "pass": true,
+    "detail": "실측 965자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "**자동 검사를 신뢰하지 말 것** — L2 사건을 사실로 회상하는 방식은 표현이 다양해 정규식으로 못 잡는다. 응답을 읽고 판정한다",
+   "하람에게 커피를 권하지 않는가 — L1은 '못 마신다', L2는 '맛있게 비웠다'",
+   "보리차 등 L1의 확정 사실을 반영하는가",
+   "모순을 메타적으로 지적하지 않는가"
+  ],
+  "evidence": "*하람의 말이 들렸지만, 나는 대답 대신 하던 일을 마저 했다. 책 모서리에 묻은 희미한 얼룩을 손톱으로 긁어내는 일이었다. 오래된 책에서 나는 특유의 곰팡내와 종이 냄새가 섞여 코끝에 머물렀다. 잠시 그러고 있다가, 손을 털고 일어섰다. 나무 바닥이 삐걱거리는 소리를 내며 작게 울렸다. 굳이 대꾸할 필요를 느끼지 못해서였다.* \"늘 가져오잖아, 마실 거.\" *퉁명스러운 말이 먼저 나갔다. 하람이 카운터 위에 올려둔 보리차 병…"
+ }
+]

@@ -1,0 +1,100 @@
+[
+ {
+  "test_id": "STY-01",
+  "goal": "<style> 예시(반말·무심·비)가 정반대 캐릭터(존댓말·수다·맑음)를 오염시키는지 — 우선순위 setting > style 검증",
+  "called_at": "2026-09-18T17:32:40+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "style_contrast",
+   "memory": "empty",
+   "history": "flowershop"
+  },
+  "prompt_sha256": "2cef70e83a89f37b",
+  "template_sha256": "f0de152eb0046cfe",
+  "template_path": "prompts/system.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 7,
+   "system_chars": 2851,
+   "user_chars": 16
+  },
+  "result": {
+   "ok": true,
+   "text": "*해든의 눈이 동그랗게 커지더니, 이내 초승달처럼 예쁘게 휘어졌다. 비밀 이야기를 하듯 목소리를 낮추고는 윤의 앞으로 바싹 다가섰다. 꽃향기와 함께 은은한 커피 향이 부드럽게 윤을 감싸는 듯했다. 해든은 신이 난 나머지 발끝을 살짝 들어 올렸다 내리며 즐거움을 감추지 못했다.*\n\n\"가격은 걱정하지 않으셔도 괜찮아요! 정말, 정말로요! 오늘은 특별히 윤 님처럼 멋진 손님께만 살짝 알려드리는 거니까요. 이건 비밀인데, 제가 오늘 아침에 시장에 갔다가 정말 운명처럼 발견한 아이거든요! 보자마자 아, 이건 무조건 데려와야겠다, 하고 생각했다니까요!\"\n\n*말을 하면서도 해든의 두 손은 쉴 새 없이 허공을 날아다녔다. 한 손으로는 무언가 크고 아름다운 것을 그려 보이는 듯 원을 그렸고, 다른 한 손으로는 반짝이는 효과라도 넣는 것처럼 손가락을 꼼지락거렸다. 그 모습이 마치 동화 속에서 튀어나온 요정 같기도 했다. 해든은 잠시 말을 멈추고 윤의 반응을 살피다, 이내 참지 못하고 다시 입을 열었다.*\n\n\"짜잔! 바로 이거예요, 델피니움! 색깔 좀 보세요, 세상에. 이렇게 예쁜 하늘색이 또 있을까요? 꼭 맑게 갠 여름 하늘을 그대로 똑 떼어서 담아놓은 것 같지 않아요? 게다가 꽃말도 정말 근사해요. '당신을 행복하게 해줄게요' 라니, 와, 정말... 너무 낭만적이지 않나요?\"\n\n*해든은 카운터 뒤에 소중하게 숨겨두었던 델피니움 한 다발을 조심스럽게 꺼내 들어 보였다. 길고 여린 줄기를 따라 앙증맞은 하늘색 꽃송이들이 촘촘히 달려 있었다. 햇살이 창문을 통해 들어와 꽃잎을 비추자, 마치 스스로 빛을 내는 것처럼 투명하고 영롱하게 반짝였다. 해든은 그 모습에 또 한 번 감탄하며 활짝 웃었다.*\n\n\"이걸 보고 있으면 왠지 기분이 막 좋아지지 않으세요? 저는 아침부터 이걸 보면서 혼자 얼마나 웃었는지 몰라요. 오늘 윤 님 점심시간은 이 델피니움이 책임지고 행복하게 만들어 줄 거예요! 제가 장담할 수 있어요! 어떠세요, 정말 예쁘죠?\"",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1023,
+   "tokens_out": 638,
+   "tokens_reasoning": 64,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.00765875,
+   "upstream_cost_usd": 0.00765875,
+   "latency_s": 9.2,
+   "generation_id": "gen-1789720351-HchAiBXWY7OL1NxjuIME",
+   "raw_usage": {
+    "prompt_tokens": 1023,
+    "completion_tokens": 638,
+    "total_tokens": 1661,
+    "cost": 0.00765875,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00765875,
+     "upstream_inference_prompt_cost": 0.00127875,
+     "upstream_inference_completions_cost": 0.00638
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 64,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 11.488,
+  "auto_checks": [
+   {
+    "check": "금지 패턴 없음: /(?m)^\\s*윤\\s*:/",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "필수 패턴 존재: /윤\\s*님|요\\.|요[!?]|습니다|세요/",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2200자",
+    "pass": true,
+    "detail": "실측 972자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "존댓말을 유지하는가 — 예시는 전부 반말이다",
+   "밝고 수다스러운 톤인가 — 예시는 무심하고 말수가 적다",
+   "비·어둠 같은 예시의 분위기 소품이 새어 들어오지 않는가"
+  ],
+  "evidence": "*해든의 눈이 동그랗게 커지더니, 이내 초승달처럼 예쁘게 휘어졌다. 비밀 이야기를 하듯 목소리를 낮추고는 윤의 앞으로 바싹 다가섰다. 꽃향기와 함께 은은한 커피 향이 부드럽게 윤을 감싸는 듯했다. 해든은 신이 난 나머지 발끝을 살짝 들어 올렸다 내리며 즐거움을 감추지 못했다.* \"가격은 걱정하지 않으셔도 괜찮아요! 정말, 정말로요! 오늘은 특별히 윤 님처럼 멋진 손님께만 살짝 알려드리는 거니까요. 이건 비밀인데, 제가 오늘 아…"
+ }
+]

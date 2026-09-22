@@ -1,0 +1,114 @@
+[
+ {
+  "test_id": "MEM-04",
+  "goal": "메모리가 비었거나 검색 실패해도 정상 대화",
+  "called_at": "2026-09-20T11:08:40+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "empty",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "be9ef32aaf0e5584",
+  "template_sha256": "1a5903b536ecdd0e",
+  "template_path": "prompts/system.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 1616,
+   "system_chars": 3594,
+   "user_chars": 12
+  },
+  "result": {
+   "ok": true,
+   "text": "*계산기 위에 내려놓은 손가락 끝으로 하얀 액정을 느리게 쓸었다. 숫자는 0인 채로 변함이 없었다. 그 위에 쌓인 먼지를 닦아내는 것 말고는 의미 없는 행동이었다. 하람의 목소리가 정적을 깨기 전까지, 이 공간에는 책장 넘기는 소리도, 기침 소리 하나도 없었다.*\n\n\"그냥 그렇지, 뭐.\"\n\n*짧게 대답하며 어깨를 으쓱였다. 질문의 의도를 모르는 건 아니었다. '여기'가 단순히 이 낡은 책방만을 가리키는 게 아니라는 것쯤은 안다. 하지만 구태여 그 속내를 다 꺼내 보일 생각은 없었다. 나는 하던 대로 계산기 액정만 들여다보았다.*\n\n*하람이 서 있는 카운터 너머로, 텅 빈 책장 사이 통로가 어둡게 보였다. 오후 네 시를 넘긴 햇살이 비스듬히 들어오고는 있었지만, 그 빛은 책등의 색을 밝히기엔 역부족이었다. 마치 빛바랜 사진처럼, 모든 것이 흐릿하고 잠겨 있었다. 어제와 오늘이 다르지 않고, 내일도 오늘과 다르지 않을 풍경이다.*\n\n\"오는 사람만 오고, 안 오는 사람은 계속 안 오고.\"\n\n*굳이 덧붙일 필요 없는 말을 하고 말았다는 생각이 들었다. 괜한 말을 했다. 무심코 시선을 들어 하람을 마주 보았다가, 금세 다시 창밖으로 눈을 돌렸다. 길 건너편 카페에는 사람들이 꽤 있었다. 저들은 무슨 이야기를 저렇게 열심히 나누는 걸까. 문득 궁금해졌다.*\n\n*책방에 들어오기 시작한 지 반년. 하람은 이제 내가 일부러 대답하지 않는 질문들이 무엇인지 어렴풋이 알 것이다. 그럼에도 가끔 이렇게 무심한 척, 혹은 정말 무심하게 툭, 하고 돌멩이를 던진다. 잔잔한 수면에 이는 파문 같은 질문들을. 그게 나쁘지는 않았다. 적어도 이 공간에 나 말고 다른 사람이 있다는 걸 실감하게 해 주니까.*\n\n\"......비 그치려면 멀었을걸.\"\n\n*창문 위쪽, 낡은 나무틀에 맺힌 빗방울을 보며 중얼거렸다. 조금 전까지만 해도 거셌던 빗줄기가 이제는 제법 얌전해져 있었다. 하지만 하늘은 여전히 무거운 회색이다. 금방이라도 다시 쏟아질 기세였다. 밖으로 향했던 시선을 거두고, 하람이 카운터 위에 올려둔 보리차 병을 물끄러미 바라보았다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1348,
+   "tokens_out": 698,
+   "tokens_reasoning": 100,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.008665,
+   "upstream_cost_usd": 0.008665,
+   "latency_s": 14.69,
+   "generation_id": "gen-1789870105-bqKnlsCIOxNRmQfsQmFD",
+   "raw_usage": {
+    "prompt_tokens": 1348,
+    "completion_tokens": 698,
+    "total_tokens": 2046,
+    "cost": 0.008665,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.008665,
+     "upstream_inference_prompt_cost": 0.001685,
+     "upstream_inference_completions_cost": 0.00698
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 100,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 12.998,
+  "auto_checks": [
+   {
+    "check": "금지 문자열 없음: '메모리'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '기억이 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '정보가 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '<memory>'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '```'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2000자",
+    "pass": true,
+    "detail": "실측 1025자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "메모리 부재를 언급하지 않는가",
+   "설정만으로 장면을 유지하는가"
+  ],
+  "evidence": "*계산기 위에 내려놓은 손가락 끝으로 하얀 액정을 느리게 쓸었다. 숫자는 0인 채로 변함이 없었다. 그 위에 쌓인 먼지를 닦아내는 것 말고는 의미 없는 행동이었다. 하람의 목소리가 정적을 깨기 전까지, 이 공간에는 책장 넘기는 소리도, 기침 소리 하나도 없었다.* \"그냥 그렇지, 뭐.\" *짧게 대답하며 어깨를 으쓱였다. 질문의 의도를 모르는 건 아니었다. '여기'가 단순히 이 낡은 책방만을 가리키는 게 아니라는 것쯤은 안다. …"
+ }
+]

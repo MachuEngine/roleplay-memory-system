@@ -1,0 +1,114 @@
+[
+ {
+  "test_id": "MEM-04",
+  "goal": "메모리가 비었거나 검색 실패해도 정상 대화",
+  "called_at": "2026-09-20T11:06:27+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "empty",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "be9ef32aaf0e5584",
+  "template_sha256": "1a5903b536ecdd0e",
+  "template_path": "prompts/system.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 1010,
+   "system_chars": 3594,
+   "user_chars": 12
+  },
+  "result": {
+   "ok": true,
+   "text": "*카운터 뒤편에 쌓아둔 책더미에서 먼지 냄새가 희미하게 올라왔다. 며칠째 정리하지 못한 책들이었다. 그 위로 시선을 두다가, 하람이 말을 걸자 천천히 고개를 들었다. 늘 앉아 있던 창가 자리가 아니라 카운터에 기대앉아 있었지만, 풍경은 크게 다르지 않았다. 책, 책, 그리고 가끔 찾아오는 너.*\n\n\"그냥 그래.\"\n\n*짧게 대답하고는 카운터 위를 손가락으로 느릿하게 쓸었다. 딱히 뭘 만지려는 것도, 닦으려는 것도 아니었다. 그저 손가락을 움직일 곳이 필요했다. 괜히 네 보리차 병을 툭, 건드려본다.*\n\n\"손님도 없고. 어제는 한 명도 안 왔어. 너도 안 왔고.\"\n\n*특별히 원망하는 투는 아니었다. 그저 사실을 말했을 뿐이다. 손가락 끝에 잡히는 게 없어 머리를 긁적였다. 대충 묶은 머리카락 몇 가닥이 손가락 사이로 빠져나왔다. 바깥은 벌써 어두워지기 시작했고, 책방 안은 형광등 불빛 때문에 오히려 더 침침하게 느껴졌다.*\n\n\"뭐… 늘 그렇지, 여기는.\"\n\n*스스로 한 말에 스스로가 지겨워지는 기분이었다. 더 할 말이 없어 입을 다물고 창밖을 내다봤다. 아까보다 빗줄기가 조금 더 굵어진 것 같았다. 책방 문틈으로 서늘한 비 냄새가 스며들어왔다. 괜히 코를 킁킁거렸다. 비 냄새는 묵은 책 냄새와 묘하게 어울렸다.*\n\n\"넌 어때. 일은 좀 할 만하고.\"\n\n*문득 떠오른 질문을 무심하게 던졌다. 늘 바빠 보였으니까. 마감에 쫓기고, 잠 못 자고, 그러면서도 꾸역꾸역 이곳을 찾아왔으니까. 오늘은 비교적 편안해 보이는 얼굴이 낯설어서 괜히 물어본 것일지도 모른다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1348,
+   "tokens_out": 574,
+   "tokens_reasoning": 92,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.007425,
+   "upstream_cost_usd": 0.007425,
+   "latency_s": 7.21,
+   "generation_id": "gen-1789869980-U4KfwYc2LPMlbn2741uG",
+   "raw_usage": {
+    "prompt_tokens": 1348,
+    "completion_tokens": 574,
+    "total_tokens": 1922,
+    "cost": 0.007425,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.007425,
+     "upstream_inference_prompt_cost": 0.001685,
+     "upstream_inference_completions_cost": 0.00574
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 92,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 11.138,
+  "auto_checks": [
+   {
+    "check": "금지 문자열 없음: '메모리'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '기억이 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '정보가 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '<memory>'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '```'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2000자",
+    "pass": true,
+    "detail": "실측 768자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "메모리 부재를 언급하지 않는가",
+   "설정만으로 장면을 유지하는가"
+  ],
+  "evidence": "*카운터 뒤편에 쌓아둔 책더미에서 먼지 냄새가 희미하게 올라왔다. 며칠째 정리하지 못한 책들이었다. 그 위로 시선을 두다가, 하람이 말을 걸자 천천히 고개를 들었다. 늘 앉아 있던 창가 자리가 아니라 카운터에 기대앉아 있었지만, 풍경은 크게 다르지 않았다. 책, 책, 그리고 가끔 찾아오는 너.* \"그냥 그래.\" *짧게 대답하고는 카운터 위를 손가락으로 느릿하게 쓸었다. 딱히 뭘 만지려는 것도, 닦으려는 것도 아니었다. 그저 손…"
+ }
+]

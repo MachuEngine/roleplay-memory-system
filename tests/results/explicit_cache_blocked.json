@@ -1,0 +1,11 @@
+{
+  "checked_on": "2026-09-18",
+  "method": "google-genai SDK, caches.create(), GEMINI_API_KEY (free tier)",
+  "attempts": [
+    {"tokens_requested": 102, "result": "400 INVALID_ARGUMENT", "message": "Cached content is too small. total_token_count=102, min_total_token_count=1024"},
+    {"tokens_requested": 202, "result": "400 INVALID_ARGUMENT", "message": "Cached content is too small. total_token_count=202, min_total_token_count=1024"},
+    {"tokens_requested": 1202, "result": "429 RESOURCE_EXHAUSTED", "message": "TotalCachedContentStorageTokensPerModelFreeTier limit exceeded for model gemini-3.1-flash-lite: limit=0, requested=1202"},
+    {"tokens_requested": 9766, "result": "429 RESOURCE_EXHAUSTED", "message": "TotalCachedContentStorageTokensPerModelFreeTier limit exceeded for model gemini-3.1-flash-lite: limit=0, requested=9766"}
+  ],
+  "conclusion": "무료 티어의 명시적 캐시 저장 한도는 0. 최소 크기(1024)를 넘기면 크기와 무관하게 항상 429. 모델(gemini-3.1-flash-lite, 호출 자체는 가능한 모델)과도 무관 — 이 제약은 생성 API가 아니라 캐시 스토리지 자체에 걸려 있다."
+}

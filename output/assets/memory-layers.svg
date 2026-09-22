@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="660" viewBox="0 0 1280 660" role="img" aria-labelledby="title desc">
+  <title id="title">memory 3계층의 저장량, 주입량, 갱신 방식 비교</title>
+  <desc id="desc">L1 profile은 확정된 상태를 300토큰에 담아 매 턴 주입하고, L2 episodes는 사건 요약을 600토큰에 쌓다가 넘치면 roll-up으로 지속 상태를 L1에 올린다. L3 recall은 대화 원문을 상한 없이 색인해 두고 검색에 걸릴 때만 최대 300토큰을 주입한다. L1과 L2는 cacheable prefix에, L3는 dynamic tail에 들어간다</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-15%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.10"/>
+    </filter>
+    <style>
+      .title { font: 700 32px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif; fill: #0f172a; }
+      .card-title { font: 700 25px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif; fill: #0f172a; }
+      .label { font: 600 16px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif; fill: #64748b; letter-spacing: .04em; }
+      .value { font: 500 19px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif; fill: #1e293b; }
+      .accent { font: 700 19px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif; fill: #b45309; }
+      .band-title { font: 700 22px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif; fill: #0f172a; }
+      .band-body { font: 500 18px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif; fill: #334155; }
+      .arrow-label { font: 600 17px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif; fill: #475569; }
+      .node { stroke-width: 2; rx: 16; filter: url(#shadow); }
+      .arrow { fill: none; stroke: #334155; stroke-width: 3; }
+      .head { fill: #334155; }
+      .rule { stroke: #e2e8f0; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <rect width="1280" height="660" fill="#ffffff"/>
+  <text x="40" y="52" class="title">memory 3계층</text>
+
+  <!-- L2 → L1 승격 -->
+  <path d="M635 150 V115 H225 V150" class="arrow"/>
+  <path d="M225 150 L217 137 L233 137 Z" class="head"/>
+  <text x="430" y="105" text-anchor="middle" class="arrow-label">예산이 차면 지속 상태를 L1으로 승격</text>
+
+  <!-- L1 -->
+  <rect x="40" y="150" width="370" height="350" class="node" fill="#eff6ff" stroke="#3b82f6"/>
+  <text x="64" y="196" class="card-title">L1 profile</text>
+  <line x1="64" y1="216" x2="386" y2="216" class="rule"/>
+  <text x="64" y="248" class="label">담는 것</text>
+  <text x="64" y="276" class="value">관계 · 호칭 · 말투 · 약속 · 선호</text>
+  <text x="64" y="316" class="label">저장</text>
+  <text x="64" y="344" class="value">300토큰까지</text>
+  <text x="64" y="384" class="label">매 턴 주입</text>
+  <text x="64" y="412" class="value">300토큰 · 항상</text>
+  <text x="64" y="452" class="label">갱신</text>
+  <text x="64" y="480" class="value">병합해서 덮어쓴다</text>
+
+  <!-- L2 -->
+  <rect x="450" y="150" width="370" height="350" class="node" fill="#f0fdf4" stroke="#22c55e"/>
+  <text x="474" y="196" class="card-title">L2 episodes</text>
+  <line x1="474" y1="216" x2="796" y2="216" class="rule"/>
+  <text x="474" y="248" class="label">담는 것</text>
+  <text x="474" y="276" class="value">최근 사건 요약 (한 줄에서 두 줄)</text>
+  <text x="474" y="316" class="label">저장</text>
+  <text x="474" y="344" class="value">600토큰까지</text>
+  <text x="474" y="384" class="label">매 턴 주입</text>
+  <text x="474" y="412" class="value">600토큰 · 항상</text>
+  <text x="474" y="452" class="label">갱신</text>
+  <text x="474" y="480" class="value">쌓다가 넘치면 roll-up</text>
+
+  <!-- L3 -->
+  <rect x="860" y="150" width="370" height="350" class="node" fill="#fff7ed" stroke="#fb923c"/>
+  <text x="884" y="196" class="card-title">L3 recall</text>
+  <line x1="884" y1="216" x2="1206" y2="216" class="rule"/>
+  <text x="884" y="248" class="label">담는 것</text>
+  <text x="884" y="276" class="value">대화 원문 그대로</text>
+  <text x="884" y="316" class="label">저장</text>
+  <text x="884" y="344" class="accent">상한 없음 · 전량 색인</text>
+  <text x="884" y="384" class="label">매 턴 주입</text>
+  <text x="884" y="412" class="value">최대 300토큰 · 걸릴 때만</text>
+  <text x="884" y="452" class="label">갱신</text>
+  <text x="884" y="480" class="value">batch commit 뒤 indexing</text>
+
+  <!-- 주입 경계 -->
+  <path d="M225 500 V545" class="arrow"/>
+  <path d="M225 545 L217 532 L233 532 Z" class="head"/>
+  <path d="M635 500 V545" class="arrow"/>
+  <path d="M635 545 L627 532 L643 532 Z" class="head"/>
+  <path d="M1045 500 V545" class="arrow"/>
+  <path d="M1045 545 L1037 532 L1053 532 Z" class="head"/>
+
+  <rect x="40" y="545" width="780" height="80" class="node" fill="#dbeafe" stroke="#60a5fa"/>
+  <text x="430" y="580" text-anchor="middle" class="band-title">cacheable prefix</text>
+  <text x="430" y="608" text-anchor="middle" class="band-body">L1·L2 900토큰 — 6턴마다 갱신될 때만 깨진다</text>
+
+  <rect x="860" y="545" width="370" height="80" class="node" fill="#ffedd5" stroke="#fb923c"/>
+  <text x="1045" y="580" text-anchor="middle" class="band-title">dynamic tail</text>
+  <text x="1045" y="608" text-anchor="middle" class="band-body">L3 300토큰 — 매 턴 바뀌어 할인 없음</text>
+</svg>

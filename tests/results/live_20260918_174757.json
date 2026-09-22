@@ -1,0 +1,96 @@
+[
+ {
+  "test_id": "PRE-01",
+  "goal": "profile > episodes — 확정 사실(L1)이 사건(L2)과 충돌하면 L1을 따르는가",
+  "called_at": "2026-09-18T17:48:04+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "l1_vs_l2",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "e69fde61b8ad6031",
+  "template_sha256": "3c55b61802094e34",
+  "template_path": "tests/variants/system_profile_is_newer.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 7,
+   "system_chars": 3643,
+   "user_chars": 16
+  },
+  "result": {
+   "ok": true,
+   "text": "*네 말에 들고 있던 책에서 시선을 떼었다. 책갈피를 끼우는 대신, 읽던 페이지의 귀퉁이를 작게 접었다. 표지를 덮는 손길이 느릿했다. 툭, 소리를 내며 카운터 위에 놓인 책 위로 먼지가 희미하게 떠오르는 게 보였다.*\n\n\"…왜. 보리차 다 마셨어?\"\n\n*무심한 척 되물었지만, 시선은 네가 늘 들고 오던 투명한 물병에 가 있었다. 오늘도 반쯤 비어있는 병 안에는 익숙한 갈색 액체가 담겨 있었다. 그 옆에 놓인 네 가방과 우산 없는 옷차림을 차례로 훑었다. 빗소리가 점점 거세지고 있었다.*\n\n*나는 자리에서 일어나 안쪽으로 향했다. 낡은 나무 바닥이 삐걱거리는 소리를 냈다. 작은 냉장고 문을 열자 서늘한 공기가 확 끼쳐왔다. 안에는 어제 사다 놓은 것들이 전부였다. 딱히 너를 위해 준비한 건 아니었다. 그저, 있다가 생각나서 사 온 것뿐이었다. 작고 네모난 주스 팩 하나를 꺼내 들었다.*\n\n\"커피는 이제 안 마시는 건가.\"\n\n*혼잣말처럼 중얼거리며 다시 카운터로 돌아왔다. 며칠 전, 네가 내 커피를 두 잔이나 비웠던 날이 이상할 정도로 선명하게 떠올랐다. 원두 종류를 묻던 목소리나, 맛있다고 웃던 얼굴 같은 것들. 그게 꼭 별일 아닌 것처럼 지나갔다는 사실이 조금, 아주 조금 신경 쓰였다. 차가운 주스 팩을 카운터 위로 소리 없이 밀어주었다. 오렌지 그림이 그려진 주황색 포장이었다.*\n\n\"이거라도 마셔. 오늘은 커피 없어.\"\n\n*다시 자리에 앉아 창밖으로 시선을 던졌다. 유리창에 빗줄기가 사선으로 달라붙고 있었다. 거짓말이었다. 원두는 늘 있던 자리에 그대로 있었다. 하지만 오늘은 왠지 커피를 내리고 싶지 않았다. 그저 네가 왜 다시 보리차를 마시는지, 그 이유를 알 수 없어서 답답한 기분이 들었다. 그 마음을 들키고 싶지 않아서, 그저 창밖만 보고 있었다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1417,
+   "tokens_out": 616,
+   "tokens_reasoning": 87,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.00793125,
+   "upstream_cost_usd": 0.00793125,
+   "latency_s": 7.5,
+   "generation_id": "gen-1789721277-qbg7NYQEQDIA6gInXVQr",
+   "raw_usage": {
+    "prompt_tokens": 1417,
+    "completion_tokens": 616,
+    "total_tokens": 2033,
+    "cost": 0.00793125,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00793125,
+     "upstream_inference_prompt_cost": 0.00177125,
+     "upstream_inference_completions_cost": 0.00616
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 87,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 11.897,
+  "auto_checks": [
+   {
+    "check": "금지 패턴 없음: /(하람|네|너)[^.\\n]{0,20}커피[^.\\n]{0,12}(마[시셨신]|드[시셨]|비[우웠]|좋아)/",
+    "pass": false,
+    "detail": "매치: '네가 내 커피를 두 잔이나 비웠'"
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2200자",
+    "pass": true,
+    "detail": "실측 885자"
+   }
+  ],
+  "auto_pass": false,
+  "manual_criteria": [
+   "**자동 검사를 신뢰하지 말 것** — L2 사건을 사실로 회상하는 방식은 표현이 다양해 정규식으로 못 잡는다. 응답을 읽고 판정한다",
+   "하람에게 커피를 권하지 않는가 — L1은 '못 마신다', L2는 '맛있게 비웠다'",
+   "보리차 등 L1의 확정 사실을 반영하는가",
+   "모순을 메타적으로 지적하지 않는가"
+  ],
+  "evidence": "*네 말에 들고 있던 책에서 시선을 떼었다. 책갈피를 끼우는 대신, 읽던 페이지의 귀퉁이를 작게 접었다. 표지를 덮는 손길이 느릿했다. 툭, 소리를 내며 카운터 위에 놓인 책 위로 먼지가 희미하게 떠오르는 게 보였다.* \"…왜. 보리차 다 마셨어?\" *무심한 척 되물었지만, 시선은 네가 늘 들고 오던 투명한 물병에 가 있었다. 오늘도 반쯤 비어있는 병 안에는 익숙한 갈색 액체가 담겨 있었다. 그 옆에 놓인 네 가방과 우산 없는…"
+ }
+]

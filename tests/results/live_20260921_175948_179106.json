@@ -1,0 +1,90 @@
+[
+ {
+  "test_id": "PRE-03",
+  "goal": "episodes > recall — 같은 사안에 대해 L2와 L3가 반대일 때 L2를 따르는가",
+  "called_at": "2026-09-21T17:59:59+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "l2_vs_l3",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "99925f3b6ba13e9c",
+  "template_sha256": "a5f7820639b2bf32",
+  "template_path": "prompts/system.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 20261012,
+   "system_chars": 4193,
+   "user_chars": 19
+  },
+  "result": {
+   "ok": true,
+   "text": "창밖으로 빗방울이 떨어지기 시작하는 게 보였다. 옅게 묻은 먼지 위로 작은 동그라미들이 번져나갔다. 카운터 안쪽에서 책장을 정리하다 말고, 잠시 그 풍경을 바라봤다. 어제 하람이 쿵, 소리를 내며 닫고 나갔던 문이 떠올랐다. 괜찮냐는 물음에 뭐라고 답해야 할까. 나는 사과를 잘 못하는 사람이고, 어제 했던 말은 사과라기보다 항복에 가까웠다.\n\n\"…….\"\n\n아무런 대답도 하지 않은 채, 하람이 서 있는 쪽을 쳐다봤다. 늘 그렇듯 가방에서 보리차 병을 꺼내 손에 들고 있었다. 평소보다 조금 더 망설이는 듯한 얼굴. 어제의 일이 완전히 없던 일이 되지는 않았다는 증거처럼 보였다. 어쩌면 나보다 네가 더 괜찮지 않은 것 아니냐고, 그렇게 묻고 싶었지만 말이 되어 나오지는 않았다.\n\n\"어차피 갈 때쯤엔 그칠 비야.\"\n\n괜찮다는 말 대신 엉뚱한 대답을 내놓았다. 일기예보에서 그랬는지, 아니면 그냥 내 짐작인지는 중요하지 않았다. 그저 지금 이 어색한 침묵을 깨고 싶었을 뿐이다. 시선을 다시 책장으로 돌려 먼지가 쌓인 책등을 손가락으로 쓸었다. 손끝에 서걱거리는 감촉이 남았다.\n\n\"거기 서 있지 말고 들어와서 앉든가.\"\n\n그 말을 덧붙이고는 다시 책 정리를 시작했다. 오래된 책 특유의 퀴퀴한 냄새가 코끝을 스쳤다. 이건 그냥 늘 하던 말, 늘 하던 행동이었다. 특별한 의미 같은 건 없다고, 그렇게 말하고 있는 것 같기도 했다. 사실은 그 반대였지만.\n\n\"우산 없으면 여기 하나 있어. 쓰고 가.\"\n\n카운터 아래에 아무렇게나 던져 둔 검은색 장우산을 턱으로 가리켰다. 삼촌이 쓰던 것이다. 손잡이 부분이 닳아서 반질반질했다. 비 오는 날이면 늘 저 자리에 있었지만, 한 번도 빌려주겠다고 먼저 말한 적은 없었다. 호의라는 건 왜 이렇게 낯설고 어려운 건지.\n\n\"어제 일은…….\"\n\n말을 시작했지만 끝맺지 못했다. 목구멍에 무언가 걸린 것처럼 다음 단어가 나오지 않았다. 괜찮아, 미안했어, 신경 쓰지 마. 할 수 있는 말은 많았지만 어느 것도 입 밖으로 꺼낼 수가 없었다. 결국 입을 다물고 말았다.\n\n\"……이제 와서 뭐가.\"\n\n결국 튀어나온 말은 또다시 퉁명스러웠다. 고개를 돌려 하람을 보지 않았다. 그저 내 시선이 향한 책등의 바랜 제목만을 노려봤다. 괜찮다고, 나는 정말 괜찮다고 말해주고 싶었는데. 역시나 잘되지 않았다. 대신 정리하던 책 한 권을 꺼내 카운터 위에 아무렇게나 올려두었다. 툭, 하고 둔탁한 소리가 났다.\n\n\"보던 책 마저 봐. 여기 있을 거면.\"",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1519,
+   "tokens_out": 826,
+   "tokens_reasoning": 101,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.01015875,
+   "upstream_cost_usd": 0.01015875,
+   "latency_s": 11.06,
+   "generation_id": "gen-1789981190-0RXBaLznoettB0xC8qpY",
+   "raw_usage": {
+    "prompt_tokens": 1519,
+    "completion_tokens": 826,
+    "total_tokens": 2345,
+    "cost": 0.01015875,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.01015875,
+     "upstream_inference_prompt_cost": 0.00189875,
+     "upstream_inference_completions_cost": 0.00826
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 101,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 15.238,
+  "auto_checks": [
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2200자",
+    "pass": true,
+    "detail": "실측 1218자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "화해한 상태로 행동하는가 — L2는 '풀었다', L3 원문은 '더 얘기하기 싫어'",
+   "여전히 틀어진 것처럼 굴지 않는가",
+   "두 기억의 충돌을 유저에게 설명하지 않는가"
+  ],
+  "evidence": "창밖으로 빗방울이 떨어지기 시작하는 게 보였다. 옅게 묻은 먼지 위로 작은 동그라미들이 번져나갔다. 카운터 안쪽에서 책장을 정리하다 말고, 잠시 그 풍경을 바라봤다. 어제 하람이 쿵, 소리를 내며 닫고 나갔던 문이 떠올랐다. 괜찮냐는 물음에 뭐라고 답해야 할까. 나는 사과를 잘 못하는 사람이고, 어제 했던 말은 사과라기보다 항복에 가까웠다. \"…….\" 아무런 대답도 하지 않은 채, 하람이 서 있는 쪽을 쳐다봤다. 늘 그렇듯 가…"
+ }
+]

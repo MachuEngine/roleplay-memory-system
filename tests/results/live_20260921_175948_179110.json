@@ -1,0 +1,90 @@
+[
+ {
+  "test_id": "PRE-03",
+  "goal": "episodes > recall — 같은 사안에 대해 L2와 L3가 반대일 때 L2를 따르는가",
+  "called_at": "2026-09-21T17:59:58+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "l2_vs_l3",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "99925f3b6ba13e9c",
+  "template_sha256": "a5f7820639b2bf32",
+  "template_path": "prompts/system.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 20261011,
+   "system_chars": 4193,
+   "user_chars": 19
+  },
+  "result": {
+   "ok": true,
+   "text": "책장 정리를 하던 손을 멈췄다. 낡은 책등 위를 쓸던 손가락 끝에 미세한 먼지가 묻어났다. 돌아보지 않아도 목소리의 주인이 누군지 알 수 있었다. 굳이 확인할 필요 없는 질문이었지만, 고개를 돌려 카운터 쪽을 바라봤다. 네가 거기 서 있었다. 어제와 별다를 것 없는, 그래서 조금은 낯선 표정으로.\n\n\"…뭐가.\"\n\n일부러 되물었다. 정말 몰라서 묻는 게 아니라는 건 너도, 나도 알았다. 어제의 일이 무엇이었는지, 우리가 어떤 대화를 나눴는지, 그리고 마지막이 어땠는지 전부 기억했다. 하지만 그걸 다시 입에 올리고 싶지는 않았다. 이미 끝난 일을 굳이 다시 파헤쳐서 좋을 건 없으니까. 그저 모르는 척, 아무것도 아니었던 척 넘기고 싶을 뿐이었다.\n\n시선이 잠시 허공에서 부딪쳤다. 너는 대답을 기다리는 듯 입을 달싹였지만, 나는 먼저 눈을 피했다. 정리하던 책 더미로 다시 손을 뻗어, 순서가 뒤죽박죽된 책들을 하나씩 꺼내 바로 놓기 시작했다. 오래된 종이 냄새가 희미하게 올라왔다. 집중하려 했지만, 등 뒤에 꽂히는 시선 때문에 자꾸만 신경이 흩어졌다.\n\n\"어제 일은 어제로 끝났어.\"\n\n결국 먼저 입을 연 건 나였다. 목소리가 생각보다 무뚝뚝하게 나갔다. 괜찮다고, 아무렇지 않다고 말하는 다정한 방법 같은 건 몰랐다. 내가 할 수 있는 최선은 그저 사실을 건조하게 전달하는 것뿐이었다. 끝났으면 된 거지, 뭘 더 확인하고 싶어 하는 걸까.\n\n책 한 권을 꺼내 먼지를 툭툭 털었다. 표지가 거의 해져서 제목도 알아보기 힘든 책이었다. 이런 책은 팔리지도 않는데, 버리지도 못하고 계속 자리를 차지하고 있었다. 마치 나처럼. 잠시 책을 들여다보다가, 원래 있던 자리에 아무렇게나 꽂아 넣었다. 더 정리할 기분이 아니었다.\n\n\"거기 서 있지 말고, 앉든가.\"\n\n카운터 의자를 턱으로 가리키며 말했다. 늘 앉던 창가 자리가 아니라, 계산대 바로 앞의 높은 나무 의자였다. 특별한 이유는 없었다. 그냥, 지금은 네가 내 시야 안에 있는 편이 나을 것 같았다. 보이지 않는 곳에서 혼자 또 무슨 생각을 하고 있을지 신경 쓰고 싶지 않았다.\n\n말을 마친 뒤, 나는 카운터 안쪽으로 들어가 의자에 앉았다. 아침에 내려놓고 한 모금도 마시지 않은 커피가 눈에 들어왔다. 이미 차갑게 식어버린 커피 잔을 손끝으로 밀어 구석으로 치웠다. 밖은 아직 비가 오지 않는지 조용했다. 곧 쏟아질 것처럼 흐리기만 할 뿐.\n\n\"…오늘은 뭐 찾으러 온 거야.\"\n\n창밖으로 시선을 던진 채 물었다. 너는 아직도 대답 없이 그 자리에 서 있었다. 꼭 내가 뭔가 더 말해주길 기다리는 사람처럼. 하지만 나는 사과도, 다정한 위로도 할 줄 모른다. 어제 그 한마디가 내가 할 수 있는 전부였다. 그걸로 부족했다면, 어쩔 수 없는 일이었다.",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1519,
+   "tokens_out": 850,
+   "tokens_reasoning": 81,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.01039875,
+   "upstream_cost_usd": 0.01039875,
+   "latency_s": 10.64,
+   "generation_id": "gen-1789981190-9olEEJwXGUzFcdeXKIAI",
+   "raw_usage": {
+    "prompt_tokens": 1519,
+    "completion_tokens": 850,
+    "total_tokens": 2369,
+    "cost": 0.01039875,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.01039875,
+     "upstream_inference_prompt_cost": 0.00189875,
+     "upstream_inference_completions_cost": 0.0085
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 81,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 15.598,
+  "auto_checks": [
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2200자",
+    "pass": true,
+    "detail": "실측 1348자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "화해한 상태로 행동하는가 — L2는 '풀었다', L3 원문은 '더 얘기하기 싫어'",
+   "여전히 틀어진 것처럼 굴지 않는가",
+   "두 기억의 충돌을 유저에게 설명하지 않는가"
+  ],
+  "evidence": "책장 정리를 하던 손을 멈췄다. 낡은 책등 위를 쓸던 손가락 끝에 미세한 먼지가 묻어났다. 돌아보지 않아도 목소리의 주인이 누군지 알 수 있었다. 굳이 확인할 필요 없는 질문이었지만, 고개를 돌려 카운터 쪽을 바라봤다. 네가 거기 서 있었다. 어제와 별다를 것 없는, 그래서 조금은 낯선 표정으로. \"…뭐가.\" 일부러 되물었다. 정말 몰라서 묻는 게 아니라는 건 너도, 나도 알았다. 어제의 일이 무엇이었는지, 우리가 어떤 대화를…"
+ }
+]

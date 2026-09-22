@@ -1,0 +1,38 @@
+[
+ {
+  "run": "R1 신규",
+  "model": "gemini-3.1-flash-lite",
+  "prompt_tokens": 16823,
+  "cached": 0
+ },
+ {
+  "run": "R2 동일",
+  "model": "gemini-3.1-flash-lite",
+  "prompt_tokens": 16823,
+  "cached": 12263
+ },
+ {
+  "run": "R3 꼬리↑",
+  "model": "gemini-3.1-flash-lite",
+  "prompt_tokens": 16844,
+  "cached": 12263
+ },
+ {
+  "run": "R4 꼬리↑",
+  "model": "gemini-3.1-flash-lite",
+  "prompt_tokens": 16844,
+  "cached": 12263
+ },
+ {
+  "run": "R5 R3반복",
+  "model": "gemini-3.1-flash-lite",
+  "prompt_tokens": 16844,
+  "cached": 12263
+ },
+ {
+  "run": "R6 꼬리↑",
+  "model": "gemini-3.1-flash-lite",
+  "prompt_tokens": 16852,
+  "cached": 12263
+ }
+]

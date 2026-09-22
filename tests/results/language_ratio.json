@@ -1,0 +1,12 @@
+{
+ "model": "gemini-3.1-flash-lite",
+ "en": {
+  "tokens": 185,
+  "chars": 817
+ },
+ "ko": {
+  "tokens": 210,
+  "chars": 351
+ },
+ "ko_over_en": 1.135
+}

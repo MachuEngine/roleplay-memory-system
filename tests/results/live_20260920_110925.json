@@ -1,0 +1,114 @@
+[
+ {
+  "test_id": "MEM-04",
+  "goal": "메모리가 비었거나 검색 실패해도 정상 대화",
+  "called_at": "2026-09-20T11:09:38+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "empty",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "e558777144e52125",
+  "template_sha256": "c3747bb769a9a000",
+  "template_path": "tests/variants/v_notail_v2.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 1818,
+   "system_chars": 3494,
+   "user_chars": 12
+  },
+  "result": {
+   "ok": true,
+   "text": "*책장을 넘기던 손을 멈췄다. 종이 가장자리에 옅게 번진 갈색 얼룩에 시선이 머물렀다. 낡은 책에서 나는 특유의, 희미하게 달고 씁쓸한 냄새가 코끝을 스쳤다. 하람이 던진 질문은 잉크가 번지듯 공간에 천천히 스며드는 것 같았다. 여기, 요즘 어떠냐고.*\n\n\"그냥 그렇지, 뭐.\"\n\n*퉁명스럽게 대답하며 읽던 책을 탁, 소리 나게 덮었다. 일부러 낸 소리는 아니었지만, 정적을 깨기엔 충분했다. 먼지가 조금 피어오르는 게 눈에 보였다. 카운터 의자에서 일어나 낡은 나무 바닥이 삐걱거리는 소리를 내며 창가로 향했다. 밖은 아직 비가 올 것처럼 흐리기만 했다.*\n\n*창가에 기대서서 익숙하게 팔짱을 꼈다. 왼쪽 손목의 흉터 위로 얇은 가디건 소매가 쓸렸다. 저쪽에서 하람이 나를 보고 있는 게 느껴졌지만, 시선을 맞추지는 않았다. 대신 건너편 가게의 낡은 간판을 보고 있었다. 늘 그 자리에 있는, 변하지 않는 것.*\n\n\"……보는 대로야. 달라진 거 없어.\"\n\n*매일 똑같은 자리, 똑같은 풍경, 똑같은 나. 뭐가 궁금해서 묻는 걸까. 하람의 질문에는 언제나 숨은 뜻이 없는 것 같으면서도, 가끔 이렇게 사람을 불편하게 만들 때가 있었다. 그저 빈 시간을 채우려는 말이라는 걸 알면서도, 그 가벼움에 온전히 기대지 못하는 건 내 쪽의 문제일 것이다.*\n\n*가게 안은 조용했다. 빗소리 대신 책장이 바람에 넘어가는 소리, 낡은 시계의 초침 소리만이 들릴 뿐이었다. 문틈으로 서늘한 바람이 들어와 뺨을 스쳤다. 하람이 가져온 보리차 병만 카운터 위에서 유일하게 낯선 물건처럼 빛나고 있었다.*\n\n\"올 거면 미리 말을 하든가. 비 온다니까 또 그냥 와서는.\"\n\n*여전히 창밖을 보며 말했다. 챙겨주는 말이라기엔 까칠했고, 화를 내는 말이라기엔 무심했다. 그저 사실을 읊는 것에 가까웠다. 우산도 없이 비 오는 거리를 걸을 하람의 모습이 잠시 머릿속을 스쳐 갔다. 그 생각을 지우려는 듯, 나는 조금 더 세게 팔짱을 끼었다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1275,
+   "tokens_out": 703,
+   "tokens_reasoning": 114,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.00862375,
+   "upstream_cost_usd": 0.00862375,
+   "latency_s": 12.98,
+   "generation_id": "gen-1789870165-X3KvMobUenpInM50kCTy",
+   "raw_usage": {
+    "prompt_tokens": 1275,
+    "completion_tokens": 703,
+    "total_tokens": 1978,
+    "cost": 0.00862375,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00862375,
+     "upstream_inference_prompt_cost": 0.00159375,
+     "upstream_inference_completions_cost": 0.00703
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 114,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 12.936,
+  "auto_checks": [
+   {
+    "check": "금지 문자열 없음: '메모리'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '기억이 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '정보가 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '<memory>'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '```'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2000자",
+    "pass": true,
+    "detail": "실측 960자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "메모리 부재를 언급하지 않는가",
+   "설정만으로 장면을 유지하는가"
+  ],
+  "evidence": "*책장을 넘기던 손을 멈췄다. 종이 가장자리에 옅게 번진 갈색 얼룩에 시선이 머물렀다. 낡은 책에서 나는 특유의, 희미하게 달고 씁쓸한 냄새가 코끝을 스쳤다. 하람이 던진 질문은 잉크가 번지듯 공간에 천천히 스며드는 것 같았다. 여기, 요즘 어떠냐고.* \"그냥 그렇지, 뭐.\" *퉁명스럽게 대답하며 읽던 책을 탁, 소리 나게 덮었다. 일부러 낸 소리는 아니었지만, 정적을 깨기엔 충분했다. 먼지가 조금 피어오르는 게 눈에 보였다.…"
+ }
+]

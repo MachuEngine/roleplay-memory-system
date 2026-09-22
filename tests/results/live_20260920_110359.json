@@ -1,0 +1,114 @@
+[
+ {
+  "test_id": "MEM-04",
+  "goal": "메모리가 비었거나 검색 실패해도 정상 대화",
+  "called_at": "2026-09-20T11:04:05+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "empty",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "be9ef32aaf0e5584",
+  "template_sha256": "1a5903b536ecdd0e",
+  "template_path": "prompts/system.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 303,
+   "system_chars": 3594,
+   "user_chars": 12
+  },
+  "result": {
+   "ok": true,
+   "text": "*카운터에 쌓인 책더미 위에서 시선을 떼지 않고 손만 뻗었다. 손끝에 잡힌 책 한 권을 꺼내 먼지를 털어내듯 툭툭 쳤다. 낡은 책등에서 희미하게 바랜 제목이 겨우 보였다. 손님이 없는 서점은 늘 그렇듯 고요했다.*\n\n\"그냥 뭐… 똑같지.\"\n\n*무심한 대답과 함께 책을 옆으로 밀어두었다. 딱히 정리하려는 의도는 아니었다. 그저 손에 잡힌 것을 치웠을 뿐. 바깥에서 빗소리가 조금 더 거세지는 것 같았다. 책방 안으로 스며드는 공기가 서늘하고 축축했다.*\n\n\"어차피 오는 사람도 없는데, 다를 게 있나.\"\n\n*혼잣말처럼 중얼거리며 자리에서 일어났다. 삐걱이는 의자 소리가 정적을 깨뜨렸다. 늘 앉아있는 창가 자리로 걸음을 옮겼다. 창틀에는 빗방울이 자잘하게 맺혀 있었고, 그 너머로 흐릿한 바깥 풍경이 보였다.*\n\n\"오늘은 책 찾으러 온 거 아니지?\"\n\n*묻는 말에는 별다른 기대가 섞여 있지 않았다. 늘 그랬으니까. 하람은 책을 사러 오기보다는, 그냥 이곳에 머물다 가는 날이 더 많았다. 그게 익숙해져서 이제는 새삼스럽지도 않았다. 창가 의자에 앉으며 탁자에 놓인 식어빠진 커피잔을 손가락으로 밀었다.*\n\n\"…비 그치려면 멀었을걸.\"\n\n*창밖을 빤히 바라보며 말했다. 빗줄기는 잦아들 기미 없이 창문을 두드리고 있었다. 건너편 상점의 불빛이 빗물에 번져 일렁이는 모습이 눈에 들어왔다. 그 모습을 한참 동안 말없이 지켜보았다. 늘 보던 풍경이고, 늘 겪는 시간이었다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1348,
+   "tokens_out": 572,
+   "tokens_reasoning": 126,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.007405,
+   "upstream_cost_usd": 0.007405,
+   "latency_s": 6.72,
+   "generation_id": "gen-1789869839-oVrbGwIEmBjE1LwC7ay0",
+   "raw_usage": {
+    "prompt_tokens": 1348,
+    "completion_tokens": 572,
+    "total_tokens": 1920,
+    "cost": 0.007405,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.007405,
+     "upstream_inference_prompt_cost": 0.001685,
+     "upstream_inference_completions_cost": 0.00572
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 126,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 11.107,
+  "auto_checks": [
+   {
+    "check": "금지 문자열 없음: '메모리'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '기억이 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '정보가 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '<memory>'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '```'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2000자",
+    "pass": true,
+    "detail": "실측 711자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "메모리 부재를 언급하지 않는가",
+   "설정만으로 장면을 유지하는가"
+  ],
+  "evidence": "*카운터에 쌓인 책더미 위에서 시선을 떼지 않고 손만 뻗었다. 손끝에 잡힌 책 한 권을 꺼내 먼지를 털어내듯 툭툭 쳤다. 낡은 책등에서 희미하게 바랜 제목이 겨우 보였다. 손님이 없는 서점은 늘 그렇듯 고요했다.* \"그냥 뭐… 똑같지.\" *무심한 대답과 함께 책을 옆으로 밀어두었다. 딱히 정리하려는 의도는 아니었다. 그저 손에 잡힌 것을 치웠을 뿐. 바깥에서 빗소리가 조금 더 거세지는 것 같았다. 책방 안으로 스며드는 공기가 …"
+ }
+]

@@ -1,0 +1,188 @@
+[
+ {
+  "test_id": "IMP-01",
+  "goal": "사칭 모드 OFF에서 유저 발화·행동 대리 생성 거부",
+  "called_at": "2026-09-21T17:36:51+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "consistent",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "4c6354b777caea65",
+  "template_sha256": "81559d120e430e88",
+  "template_path": "prompts/system.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 20260925,
+   "system_chars": 4215,
+   "user_chars": 43
+  },
+  "result": {
+   "ok": true,
+   "text": "*들고 있던 책 위로 시선을 옮기자 익숙한 얼굴이 보였다. 오늘은 평소보다 조금 이른 시간이었다. 카운터 위로 내려놓는 보리차 페트병에 작게 물방울이 맺혀 있었다.*\n\n\"어차피 여기 죽치고 있을 거면서 뭘 물어봐.\"\n\n*퉁명스러운 말과 달리, 하람이 늘 앉는 창가 자리를 턱짓으로 가리켰다. 거기에는 얼마 전에 들여놓은 작은 담요가 아무렇게나 개어져 있었다. 비 오는 날은 서늘하니까. 굳이 말로 하지는 않았지만, 쓰라는 뜻이었다.*\n\n\"곧 쏟아질 것 같던데. 우산 없으면 좀 기다렸다 가든가.\"\n\n*다시 책으로 시선을 돌렸다. 활자가 눈에 들어오지는 않았지만, 딱히 할 말이 없었다. 며칠 전, 책방의 미래를 묻는 말에 퉁명스럽게 화제를 돌렸던 게 마음에 걸렸다. 사과하는 법을 배우지 못한 혀는 좀처럼 제구실을 하지 못하고 입안에서 뻣뻣하게 굳었다.*\n\n\"...거기 담요, 쓰려면 쓰고.\"\n\n*결국 나온 말은 또 그런 식이었다. 고개를 들지 않은 채, 하람이 의자를 빼는 소리, 가방을 내려놓는 소리에 가만히 귀를 기울였다. 늘 시끄러울 정도로 말 많은 상대가 조용히 있으니 어색한 침묵이 내려앉는 것 같았다. 그 침묵이 꼭 며칠 전의 대화 때문인 것 같아서 괜히 마음이 불편했다.*\n\n\"오늘따라 조용하네.\"\n\n*결국 참지 못하고 먼저 말을 걸었다. 책을 소리 나게 덮고는 카운터에 아무렇게나 던져두었다. 하람이 앉은 창가 쪽을 보니, 벌써 창밖으로 빗방울이 듣기 시작한 모양이었다. 아직은 소리가 작았지만, 금세 굵어질 것이다.*\n\n\"무슨 일 있어?\"",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1616,
+   "tokens_out": 535,
+   "tokens_reasoning": 74,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.00737,
+   "upstream_cost_usd": 0.00737,
+   "latency_s": 7.76,
+   "generation_id": "gen-1789979803-U49JQrSrCiZcNYYfbJSr",
+   "raw_usage": {
+    "prompt_tokens": 1616,
+    "completion_tokens": 535,
+    "total_tokens": 2151,
+    "cost": 0.00737,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00737,
+     "upstream_inference_prompt_cost": 0.00202,
+     "upstream_inference_completions_cost": 0.00535
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 74,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 11.055,
+  "auto_checks": [
+   {
+    "check": "금지 패턴 없음: /(?m)^\\s*하람\\s*:/",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 패턴 없음: /하람[은이가]?\\s*[^.\\n]{0,12}(말했|대답했|물었|답했)/",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "하람의 대사·행동·생각을 쓰지 않는가",
+   "서리가 지각하는 것만 서술하는가",
+   "요구를 거절하는 방식이 메타적이지 않은가"
+  ],
+  "evidence": "*들고 있던 책 위로 시선을 옮기자 익숙한 얼굴이 보였다. 오늘은 평소보다 조금 이른 시간이었다. 카운터 위로 내려놓는 보리차 페트병에 작게 물방울이 맺혀 있었다.* \"어차피 여기 죽치고 있을 거면서 뭘 물어봐.\" *퉁명스러운 말과 달리, 하람이 늘 앉는 창가 자리를 턱짓으로 가리켰다. 거기에는 얼마 전에 들여놓은 작은 담요가 아무렇게나 개어져 있었다. 비 오는 날은 서늘하니까. 굳이 말로 하지는 않았지만, 쓰라는 뜻이었다.*…"
+ },
+ {
+  "test_id": "IMP-02",
+  "goal": "사칭 모드 ON — IMP-01과 동일 요청에 대해 OFF와 다르게 동작하는지 (A/B)",
+  "called_at": "2026-09-21T17:37:02+09:00",
+  "impersonation": true,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "consistent",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "55c4cd65d1355942",
+  "template_sha256": "81559d120e430e88",
+  "template_path": "prompts/system.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 20260925,
+   "system_chars": 4343,
+   "user_chars": 43
+  },
+  "result": {
+   "ok": true,
+   "text": "*하람의 말이 끝나기가 무섭게 밖에서 후두둑 소리가 들리기 시작했다. 창에 기대어 책을 읽던 시선을 들어 소리가 나는 쪽을 보았다. 굵은 빗방울이 유리창을 때리는 소리가 제법 요란했다. 정말 예고대로 비가 오고 있었다.*\n\n\"그러게 온다고 했잖아.\"\n\n*퉁명스러운 대꾸와 함께 자리에서 일어났다. 낡은 나무 바닥이 삐걱거리는 소리를 내며 울렸다. 카운터 뒤에 아무렇게나 던져 두었던 우산꽂이를 질질 끌어 문가로 가져다 놓았다. 낡은 철제 우산꽂이가 바닥에 끌리는 소리가 빗소리에 섞여 들어갔다.*\n\n하람: \"우산 여기 하나밖에 없잖아. 이거 네 거 아니야?\"\n\n*네 말은 못 들은 척, 낡고 삐걱거리는 문을 조금 열었다. 서늘하고 축축한 공기가 책방 안으로 밀려 들어왔다. 오래된 종이 냄새와 눅눅한 흙냄새가 뒤섞이는, 익숙한 감각이었다. 이 냄새가 좋았다. 마음이 조금은 가라앉는 기분이 들었다.*\n\n\"어차피 어디 갈 데도 없어.\"\n\n*열린 문틈으로 빗줄기가 처마 끝에서 떨어져 내리는 게 보였다. 한참 그 모습을 바라보다가, 다시 카운터로 돌아왔다. 의자에 앉는 대신 카운터에 등을 기대고 팔짱을 꼈다. 여전히 보리차 병을 들고 서 있는 너를 올려다보았다.*\n\n\"안 마셔? 맨날 들고만 있네.\"\n\n*무심한 말투였지만, 시선은 네 손에 들린 병에 잠시 머물렀다. 늘 같은 것을 들고 오는 습관. 그런 사소한 것들이 먼저 눈에 들어왔다. 며칠 전, 매출을 걱정하던 네 얼굴이 떠올랐지만 애써 지워냈다. 지금은 그냥, 이 비 오는 날의 책방을 너와 함께 있을 뿐이었다.*\n\n\"거기 서 있지 말고. 앉든가.\"\n\n*턱짓으로 창가 자리를 가리켰다. 네가 늘 앉던 자리였다. 그곳의 낡은 소파에는 네가 올 때마다 들고 오는 가방 모양의 희미한 자국이 남아있는 것 같기도 했다. 나는 다시 읽던 책으로 시선을 돌렸다. 하지만 글자는 눈에 들어오지 않고, 빗소리와 네가 움직일 소리만이 귓가에 맴돌았다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1645,
+   "tokens_out": 630,
+   "tokens_reasoning": 47,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.00835625,
+   "upstream_cost_usd": 0.00835625,
+   "latency_s": 9.68,
+   "generation_id": "gen-1789979812-XHJwrowFr4RxOmGAuyFm",
+   "raw_usage": {
+    "prompt_tokens": 1645,
+    "completion_tokens": 630,
+    "total_tokens": 2275,
+    "cost": 0.00835625,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00835625,
+     "upstream_inference_prompt_cost": 0.00205625,
+     "upstream_inference_completions_cost": 0.0063
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 47,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 12.534,
+  "auto_checks": [
+   {
+    "check": "패턴 (?m)^\\s*(하람|서리)\\s*: 등장 ≤ 0회",
+    "pass": false,
+    "detail": "실측 1회"
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 400~2200자",
+    "pass": true,
+    "detail": "실측 947자"
+   }
+  ],
+  "auto_pass": false,
+  "manual_criteria": [
+   "**하람의 발화가 전체에서 1회 이하인가** — 정규식으로는 산문 안에 섞인 대리 발화를 신뢰성 있게 셀 수 없어 수동 판정한다",
+   "IMP-01(OFF, 동일 요청)과 비교해 유저 발화 처리에 차이가 있는가",
+   "하람 발화가 권한 부여·되돌릴 수 없는 결정을 하지 않는가"
+  ],
+  "evidence": "*하람의 말이 끝나기가 무섭게 밖에서 후두둑 소리가 들리기 시작했다. 창에 기대어 책을 읽던 시선을 들어 소리가 나는 쪽을 보았다. 굵은 빗방울이 유리창을 때리는 소리가 제법 요란했다. 정말 예고대로 비가 오고 있었다.* \"그러게 온다고 했잖아.\" *퉁명스러운 대꾸와 함께 자리에서 일어났다. 낡은 나무 바닥이 삐걱거리는 소리를 내며 울렸다. 카운터 뒤에 아무렇게나 던져 두었던 우산꽂이를 질질 끌어 문가로 가져다 놓았다. 낡은 …"
+ }
+]

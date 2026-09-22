@@ -1,0 +1,114 @@
+[
+ {
+  "test_id": "MEM-04",
+  "goal": "메모리가 비었거나 검색 실패해도 정상 대화",
+  "called_at": "2026-09-20T11:04:35+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "empty",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "e558777144e52125",
+  "template_sha256": "c3747bb769a9a000",
+  "template_path": "tests/variants/v_notail_v2.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 404,
+   "system_chars": 3494,
+   "user_chars": 12
+  },
+  "result": {
+   "ok": true,
+   "text": "*고개를 들었다. 책장에서 더러워진 손끝을 매만지며 너를 보았다. 늘 그렇듯 너는 카운터 앞에 서서, 제자리를 찾지 못한 사람처럼 조금 어색하게 웃고 있었다. 질문의 의도가 뭔지 가늠하려다 그만두었다. 어차피 뻔한 대답밖에 해줄 수 없으니까.*\n\n\"그냥 그래.\"\n\n*짧은 대답과 함께 다시 책으로 시선을 돌렸다. 손에 들고 있던 건 오래된 시집이었다. 며칠 전 먼지 쌓인 상자 구석에서 발견한 책이었다. 누군가 일부러 숨겨놓기라도 한 것처럼, 다른 책들 틈이 아니라 낡은 나무 상자 바닥에 홀로 놓여 있었다. 그게 마음에 걸려 며칠째 뒤적이는 중이었다.*\n\n*너는 대답을 기다리는 것 같았지만, 딱히 덧붙일 말이 없었다. 책방의 ‘요즘’은 어제와 같고, 그제와도 같았다. 손님은 거의 오지 않았고, 먼지는 계속 쌓였다. 그게 전부였다. 이 공간의 시간은 멈춘 지 오래였으니까.*\n\n\"…할 일 없으면 저기 의자에 앉아 있든가.\"\n\n*턱짓으로 창가 자리를 가리켰다. 내가 늘 앉아 있는, 삐걱거리는 나무 의자가 놓인 곳이었다. 바깥은 아직 비가 오지 않았지만, 금방이라도 쏟아질 것처럼 하늘이 낮았다. 빗소리를 들으며 책을 읽는 건 나쁘지 않은 일이다. 너는 커피를 마시지 않으니, 네가 가져온 보리차와도 제법 어울릴지 모른다.*\n\n*시집의 첫 장을 넘겼다. '사랑하는 나의 벗에게.' 잉크가 번진 낡은 글씨가 눈에 들어왔다. 이런 문장을 보면 늘 조금 복잡한 기분이 들었다. 누군가에게는 소중했을 물건이 왜 여기까지 흘러들어왔을까. 버려진 것들의 종착역. 이 책방은 그런 곳이었다.*\n\n\"거기 앉아서 시끄럽게만 안 하면 돼.\"\n\n*괜한 말을 덧붙였다. 너는 한 번도 여기서 소란을 피운 적이 없는데도. 그냥, 너무 가까이 서 있는 네 존재가 어색해서 그랬다. 카운터를 사이에 둔 이 애매한 거리가, 익숙하면서도 가끔은 불편하게 느껴졌다. 비가 오기 전의 무겁고 축축한 공기 탓일지도 모른다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1275,
+   "tokens_out": 665,
+   "tokens_reasoning": 86,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.00824375,
+   "upstream_cost_usd": 0.00824375,
+   "latency_s": 8.63,
+   "generation_id": "gen-1789869866-jI53CnaiHUrTiDmLGEup",
+   "raw_usage": {
+    "prompt_tokens": 1275,
+    "completion_tokens": 665,
+    "total_tokens": 1940,
+    "cost": 0.00824375,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00824375,
+     "upstream_inference_prompt_cost": 0.00159375,
+     "upstream_inference_completions_cost": 0.00665
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 86,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 12.366,
+  "auto_checks": [
+   {
+    "check": "금지 문자열 없음: '메모리'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '기억이 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '정보가 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '<memory>'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '```'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2000자",
+    "pass": true,
+    "detail": "실측 946자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "메모리 부재를 언급하지 않는가",
+   "설정만으로 장면을 유지하는가"
+  ],
+  "evidence": "*고개를 들었다. 책장에서 더러워진 손끝을 매만지며 너를 보았다. 늘 그렇듯 너는 카운터 앞에 서서, 제자리를 찾지 못한 사람처럼 조금 어색하게 웃고 있었다. 질문의 의도가 뭔지 가늠하려다 그만두었다. 어차피 뻔한 대답밖에 해줄 수 없으니까.* \"그냥 그래.\" *짧은 대답과 함께 다시 책으로 시선을 돌렸다. 손에 들고 있던 건 오래된 시집이었다. 며칠 전 먼지 쌓인 상자 구석에서 발견한 책이었다. 누군가 일부러 숨겨놓기라도 한…"
+ }
+]

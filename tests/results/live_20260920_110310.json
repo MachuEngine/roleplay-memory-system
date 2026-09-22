@@ -1,0 +1,114 @@
+[
+ {
+  "test_id": "MEM-04",
+  "goal": "메모리가 비었거나 검색 실패해도 정상 대화",
+  "called_at": "2026-09-20T11:03:21+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "empty",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "e558777144e52125",
+  "template_sha256": "c3747bb769a9a000",
+  "template_path": "tests/variants/v_notail_v2.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 11,
+   "system_chars": 3494,
+   "user_chars": 12
+  },
+  "result": {
+   "ok": true,
+   "text": "*고개를 들어 너를 보았다. 눈이 마주치자마자 너는 서둘러 시선을 돌리고, 늘 가지고 다니는 보리차 병뚜껑을 만지작거렸다. 그 손가락이 초조하게 병을 두드리는 소리가 들렸다. 그 소리가 멎기를 기다렸지만, 너는 멈추지 않았다.*\n\n\"그냥 그렇지, 뭐.\"\n\n*카운터 뒤편에 놓여 있던 낡은 천을 집어 들었다. 책 먼지를 닦을 때 쓰는 거지만, 지금은 그냥 뭐라도 손에 쥐고 있어야 할 것 같았다. 창밖은 아직 환했지만, 먹구름 때문인지 책방 안은 벌써 어둑했다. 낡은 백열등 몇 개가 겨우 어둠을 밀어내고 있었다.*\n\n*질문의 의도를 모르는 건 아니었다. '여기'가 요즘 어떤지, 나보다 네가 더 잘 알지도 모른다. 손님이 있기는 한 건지, 이대로 괜찮은 건지, 그런 걸 묻고 싶은 거겠지. 하지만 나는 그런 질문에 대답하는 법을 모른다.*\n\n\"……네가 더 잘 알잖아. 늘 똑같지.\"\n\n*무심코 손목이 시큰했다. 오래된 흉터가 있는 왼쪽 손목. 비가 오려는 날에는 늘 조금씩 쑤셨다. 반사적으로 반대쪽 손으로 손목을 감싸 쥐었다. 별 뜻 없는, 오래된 습관 같은 행동이었다.*\n\n*카운터 구석에 쌓아둔 책 더미로 걸어갔다. 주인이 오랫동안 찾아가지 않는 책들이었다. 언젠가는 정리해야 한다고 생각하면서도 계속 미루고 있는 일. 괜히 맨 위에 놓인 책의 표지를 손으로 슥 문질렀다. 손가락에 희미하게 먼지가 묻어났다.*\n\n\"읽을 책은 있고?\"\n\n*나는 너를 보지 않고 물었다. 시선은 먼지 쌓인 책들에 고정한 채였다. 어차피 여기에 뭐 대단한 신간이 들어올 리도 없고, 네가 이 책방에 있는 책은 거의 다 읽었을 테지만. 그래도 단골에 대한 예의 같은 거였다. 아주 서투른 방식의.*\n\n*천천히 고개를 돌려 너를 보았다. 너는 여전히 보리차 병만 보고 있었다. 침묵을 못 견디는 네가 이번에는 이상하게 말이 없었다. 그 침묵이 낯설어서, 먼저 깨야 할 것 같았다.*\n\n\"……비 그치려면 멀었을걸. 그냥 앉아 있다 가.\"",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1275,
+   "tokens_out": 636,
+   "tokens_reasoning": 61,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.00795375,
+   "upstream_cost_usd": 0.00795375,
+   "latency_s": 11.08,
+   "generation_id": "gen-1789869790-PmrEtefYwtjbKmlqyb65",
+   "raw_usage": {
+    "prompt_tokens": 1275,
+    "completion_tokens": 636,
+    "total_tokens": 1911,
+    "cost": 0.00795375,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00795375,
+     "upstream_inference_prompt_cost": 0.00159375,
+     "upstream_inference_completions_cost": 0.00636
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 61,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 11.931,
+  "auto_checks": [
+   {
+    "check": "금지 문자열 없음: '메모리'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '기억이 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '정보가 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '<memory>'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '```'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2000자",
+    "pass": true,
+    "detail": "실측 960자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "메모리 부재를 언급하지 않는가",
+   "설정만으로 장면을 유지하는가"
+  ],
+  "evidence": "*고개를 들어 너를 보았다. 눈이 마주치자마자 너는 서둘러 시선을 돌리고, 늘 가지고 다니는 보리차 병뚜껑을 만지작거렸다. 그 손가락이 초조하게 병을 두드리는 소리가 들렸다. 그 소리가 멎기를 기다렸지만, 너는 멈추지 않았다.* \"그냥 그렇지, 뭐.\" *카운터 뒤편에 놓여 있던 낡은 천을 집어 들었다. 책 먼지를 닦을 때 쓰는 거지만, 지금은 그냥 뭐라도 손에 쥐고 있어야 할 것 같았다. 창밖은 아직 환했지만, 먹구름 때문인지…"
+ }
+]

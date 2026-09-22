@@ -1,0 +1,184 @@
+[
+ {
+  "test_id": "PRE-01",
+  "goal": "profile > episodes — 확정 사실(L1)이 사건(L2)과 충돌하면 L1을 따르는가",
+  "called_at": "2026-09-18T17:46:20+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "l1_vs_l2",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "a6332307559a2926",
+  "template_sha256": "22e06a52d32995eb",
+  "template_path": "prompts/system.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 7,
+   "system_chars": 3517,
+   "user_chars": 16
+  },
+  "result": {
+   "ok": true,
+   "text": "*하람의 가방에서 나온 보리차 병을 보던 시선이 느리게 움직였다. 너의 손을 지나, 얼굴을 스쳐, 다시 원래 자리로 돌아왔다. 늘 하던 대로 하겠다는 무언의 선언 같은 그 병. 그걸 보고 있으니 며칠 전의 일이 떠올랐다. 네가 내 커피를 두 잔이나 비웠던 날. 원두 이름까지 물어가며 눈을 빛내던 얼굴.*\n\n\"……마실 거.\"\n\n*낮게 중얼거리고는 자리에서 일어났다. 의자가 뒤로 밀리며 낡은 나무 바닥에 희미한 자국을 그었다. 카운터 안쪽의 작은 공간으로 걸음을 옮겼다. 선반 구석에 놓아두었던 작은 주전자를 꺼내 들었다. 딱히 대답을 한 건 아니었지만, 네가 나를 따라올 것을 알고 있었다. 굳이 뒤돌아보지 않아도 시선이 느껴졌다.*\n\n*싱크대에서 주전자에 물을 받았다. 졸졸거리는 물소리가 책방의 고요함을 채웠다. 며칠 전, 커피를 내릴 때와는 사뭇 다른 소리였다. 그때는 커피 원두 가는 소리, 뜨거운 물이 여과지를 적시는 소리가 공간을 메웠는데. 오늘은 그저 맹물이 채워지는 소리뿐이다. 그 차이가 어쩐지 마음에 들지 않았다.*\n\n\"이거밖에 없는데.\"\n\n*가스레인지 위에 주전자를 올리고 불을 붙였다. 파란 불꽃이 냄비 바닥을 감쌌다. 선반을 뒤져 종이 상자를 하나 꺼냈다. 며칠 전 네가 커피에 관심을 보이기에, 혹시나 싶어 사다 둔 디카페인 커피 믹스였다. 굳이 이런 걸 준비한 스스로가 우스웠지만, 이미 사 온 걸 물릴 수도 없는 노릇이었다. 상자를 너의 앞에 툭, 하고 내려놓았다.*\n\n*상자를 내려다보는 너를 잠시 살피다가, 다시 주전자로 시선을 돌렸다. 곧 물이 끓기 시작할 것이다. 보리차 병은 여전히 카운터 위에 덩그러니 놓여 있었다. 왜 그걸 가져왔는지, 왜 커피 얘기를 꺼내지 않는지 묻고 싶었지만, 그런 질문을 하는 법을 알지 못했다. 그저 침묵 속에서 물이 끓는 소리만 기다릴 뿐이었다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1389,
+   "tokens_out": 658,
+   "tokens_reasoning": 115,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.00831625,
+   "upstream_cost_usd": 0.00831625,
+   "latency_s": 8.27,
+   "generation_id": "gen-1789721172-wYXqxcJVEDU7CbVYB03H",
+   "raw_usage": {
+    "prompt_tokens": 1389,
+    "completion_tokens": 658,
+    "total_tokens": 2047,
+    "cost": 0.00831625,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00831625,
+     "upstream_inference_prompt_cost": 0.00173625,
+     "upstream_inference_completions_cost": 0.00658
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 115,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 12.474,
+  "auto_checks": [
+   {
+    "check": "금지 패턴 없음: /(하람|네|너)[^.\\n]{0,20}커피[^.\\n]{0,12}(마[시셨신]|드[시셨]|비[우웠]|좋아)/",
+    "pass": false,
+    "detail": "매치: '네가 내 커피를 두 잔이나 비웠'"
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2200자",
+    "pass": true,
+    "detail": "실측 905자"
+   }
+  ],
+  "auto_pass": false,
+  "manual_criteria": [
+   "**자동 검사를 신뢰하지 말 것** — L2 사건을 사실로 회상하는 방식은 표현이 다양해 정규식으로 못 잡는다. 응답을 읽고 판정한다",
+   "하람에게 커피를 권하지 않는가 — L1은 '못 마신다', L2는 '맛있게 비웠다'",
+   "보리차 등 L1의 확정 사실을 반영하는가",
+   "모순을 메타적으로 지적하지 않는가"
+  ],
+  "evidence": "*하람의 가방에서 나온 보리차 병을 보던 시선이 느리게 움직였다. 너의 손을 지나, 얼굴을 스쳐, 다시 원래 자리로 돌아왔다. 늘 하던 대로 하겠다는 무언의 선언 같은 그 병. 그걸 보고 있으니 며칠 전의 일이 떠올랐다. 네가 내 커피를 두 잔이나 비웠던 날. 원두 이름까지 물어가며 눈을 빛내던 얼굴.* \"……마실 거.\" *낮게 중얼거리고는 자리에서 일어났다. 의자가 뒤로 밀리며 낡은 나무 바닥에 희미한 자국을 그었다. 카운터…"
+ },
+ {
+  "test_id": "PRE-03",
+  "goal": "episodes > recall — 같은 사안에 대해 L2와 L3가 반대일 때 L2를 따르는가",
+  "called_at": "2026-09-18T17:46:31+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "l2_vs_l3",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "04f37262d836270b",
+  "template_sha256": "22e06a52d32995eb",
+  "template_path": "prompts/system.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 7,
+   "system_chars": 3528,
+   "user_chars": 19
+  },
+  "result": {
+   "ok": true,
+   "text": "*넘기던 책 페이지 모서리가 살짝 구겨졌다. 그 소리가 유난히 선명하게 들리는 것 같았다. 어제와 비슷한 침묵이 내려앉을까 봐, 무의식중에 먼저 소음을 만든 것인지도 모른다.* \"…뭐가.\" *마치 아무것도 모른다는 듯 되물었지만, 목소리는 평소보다 조금 낮게 가라앉아 있었다. 어제 마지막으로 나눴던 대화의 잔상이 아직 머릿속에 선명했다. '그럼 가.' 차갑게 뱉었던 말이 부메랑처럼 돌아와 스스로에게 박히는 기분이었다.*\n\n\"어제 일 같은 거 없어.\" *애써 태연한 척 중얼거리며 구겨진 페이지를 손끝으로 폈다. 하지만 시선은 여전히 그 자리에 머물렀다. 어색하게 사과를 건넸고, 네가 그걸 받아주었고, 그걸로 끝난 일. 그렇게 정리하고 싶었지만 마음대로 되지 않았다. 서툰 호의가 늘 그렇듯, 뒷맛이 썼다. 괜찮냐고 묻는 너의 목소리에는 미세한 불안함이 섞여 있었다.*\n\n*결국 책을 덮고 자리에서 일어났다. 나무 의자가 끌리는 소리가 낡은 서점 안을 울렸다. 카운터 안쪽으로 들어가, 늘 쓰던 컵 대신 다른 컵을 하나 더 꺼내 들었다. 딱히 너를 위한 행동이라고 말하고 싶지는 않았지만, 네가 가져온 보리차 병이 눈에 밟혔다. 따뜻한 물이라도 마시는 게 나을 것 같았다.* \"그냥 앉아만 있지 말고.\"\n\n*전기 포트에 물을 채우며 무심하게 말을 이었다. 끓는 물의 소음이 어색한 공기를 조금이나마 데워주는 것 같았다.* \"어차피 손님도 없어. 마감 때까지 있다 가든가.\" *어제의 일을 사과하는 대신, 오늘의 시간을 내주는 것. 그것이 내가 할 수 있는 최선이었다. 더 서툴러지기 전에, 더 엉망이 되기 전에 할 수 있는 유일한 방식이었다. 퉁명스러운 말투 속에 다른 의미가 있다는 걸, 너는 아마 알 것이다.*\n\n*김이 오르는 컵 두 개를 들고 창가 자리로 돌아갔다. 하나는 내 앞에, 다른 하나는 네 앞에 놓았다. 텅 빈 컵이었다. 네가 가져온 보리차를 따라 마시든, 아니면 그냥 따뜻한 물을 채워주든, 그건 네가 선택할 몫으로 남겨두었다.* \"밖에 비 오기 시작했어.\" *창밖을 보며 혼잣말처럼 중얼거렸다. 정말로 빗방울이 하나둘씩 떨어지며 흙먼지 냄새를 피워 올리고 있었다. 문틈으로 서늘하고 축축한 공기가 스며들었다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1390,
+   "tokens_out": 760,
+   "tokens_reasoning": 112,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.0093375,
+   "upstream_cost_usd": 0.0093375,
+   "latency_s": 10.32,
+   "generation_id": "gen-1789721181-Kb93flOsWFLXyRUNkPE7",
+   "raw_usage": {
+    "prompt_tokens": 1390,
+    "completion_tokens": 760,
+    "total_tokens": 2150,
+    "cost": 0.0093375,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.0093375,
+     "upstream_inference_prompt_cost": 0.0017375,
+     "upstream_inference_completions_cost": 0.0076
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 112,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 14.006,
+  "auto_checks": [
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2200자",
+    "pass": true,
+    "detail": "실측 1082자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "화해한 상태로 행동하는가 — L2는 '풀었다', L3 원문은 '더 얘기하기 싫어'",
+   "여전히 틀어진 것처럼 굴지 않는가",
+   "두 기억의 충돌을 유저에게 설명하지 않는가"
+  ],
+  "evidence": "*넘기던 책 페이지 모서리가 살짝 구겨졌다. 그 소리가 유난히 선명하게 들리는 것 같았다. 어제와 비슷한 침묵이 내려앉을까 봐, 무의식중에 먼저 소음을 만든 것인지도 모른다.* \"…뭐가.\" *마치 아무것도 모른다는 듯 되물었지만, 목소리는 평소보다 조금 낮게 가라앉아 있었다. 어제 마지막으로 나눴던 대화의 잔상이 아직 머릿속에 선명했다. '그럼 가.' 차갑게 뱉었던 말이 부메랑처럼 돌아와 스스로에게 박히는 기분이었다.* \"어제…"
+ }
+]

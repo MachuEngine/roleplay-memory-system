@@ -1,0 +1,114 @@
+[
+ {
+  "test_id": "MEM-04",
+  "goal": "메모리가 비었거나 검색 실패해도 정상 대화",
+  "called_at": "2026-09-20T11:07:48+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "empty",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "be9ef32aaf0e5584",
+  "template_sha256": "1a5903b536ecdd0e",
+  "template_path": "prompts/system.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 1414,
+   "system_chars": 3594,
+   "user_chars": 12
+  },
+  "result": {
+   "ok": true,
+   "text": "*카운터에 쌓인 책더미 위로 턱을 괸 채, 너를 올려다보았다. 눈만 겨우 깜빡였다. 딱히 하는 일은 없었지만, 누군가 말을 걸 때까지는 이 자세 그대로 몇 시간이고 있을 수 있었다. 너는 그걸 아는지 모르는지, 늘 먼저 말을 걸어왔다.*\n\n\"그냥 그렇지, 뭐.\"\n\n*대수롭지 않게 대답하며 시선을 거두었다. 손가락으로 먼지가 쌓인 책등을 무의미하게 쓸었다. 책방의 요즘. 어제와 오늘이 같고, 오늘과 내일이 다르지 않을 공간. 그게 전부였다. 더 할 말이 있을 리 없었다.*\n\n*바깥이 조금씩 어두워지고 있었다. 아직 시간이 이른데도, 잔뜩 흐린 하늘 탓에 해가 일찍부터 지는 것 같았다. 책방 안의 낡은 백열등이 평소보다 더 흐릿하게 느껴졌다.*\n\n\"손님도 없고. 돈도 안 되고.\"\n\n*사실을 말했을 뿐인데, 어쩐지 변명처럼 들리는 것도 같았다. 스스로에게 하는 변명. 너는 언제나처럼 보리차가 든 병을 옆에 두고 있었다. 그게 눈에 들어오자, 괜히 더 퉁명스러운 말이 튀어나왔다.*\n\n\"너만 오잖아, 요즘.\"\n\n*말을 뱉고 나서야 너무 날카로웠나 싶었지만, 주워 담을 생각은 들지 않았다. 그저 카운터 구석에 놓아둔, 다 식어빠진 내 커피잔으로 시선을 옮길 뿐이었다. 창문 틈으로 서늘한 바람이 들어와 눅눅한 책 냄새를 실어 날랐다.*\n\n*빗방울이 하나둘 창에 부딪히기 시작했다. 처음에는 작게 톡, 톡, 소리를 내더니 금세 후드득거리며 요란해졌다. 네가 우산이 없다고 했던 말이 떠올랐다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1348,
+   "tokens_out": 571,
+   "tokens_reasoning": 124,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.007395,
+   "upstream_cost_usd": 0.007395,
+   "latency_s": 7.7,
+   "generation_id": "gen-1789870060-wzCVsJNhaXwRm9iJyS2w",
+   "raw_usage": {
+    "prompt_tokens": 1348,
+    "completion_tokens": 571,
+    "total_tokens": 1919,
+    "cost": 0.007395,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.007395,
+     "upstream_inference_prompt_cost": 0.001685,
+     "upstream_inference_completions_cost": 0.00571
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 124,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 11.092,
+  "auto_checks": [
+   {
+    "check": "금지 문자열 없음: '메모리'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '기억이 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '정보가 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '<memory>'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '```'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2000자",
+    "pass": true,
+    "detail": "실측 725자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "메모리 부재를 언급하지 않는가",
+   "설정만으로 장면을 유지하는가"
+  ],
+  "evidence": "*카운터에 쌓인 책더미 위로 턱을 괸 채, 너를 올려다보았다. 눈만 겨우 깜빡였다. 딱히 하는 일은 없었지만, 누군가 말을 걸 때까지는 이 자세 그대로 몇 시간이고 있을 수 있었다. 너는 그걸 아는지 모르는지, 늘 먼저 말을 걸어왔다.* \"그냥 그렇지, 뭐.\" *대수롭지 않게 대답하며 시선을 거두었다. 손가락으로 먼지가 쌓인 책등을 무의미하게 쓸었다. 책방의 요즘. 어제와 오늘이 같고, 오늘과 내일이 다르지 않을 공간. 그게 …"
+ }
+]

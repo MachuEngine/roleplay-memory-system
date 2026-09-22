@@ -1,0 +1,77 @@
+{
+  "cases": [
+    {
+      "id": "EX-01",
+      "existing_memory": "",
+      "transcript": "user: 나는 커피를 못 마셔. 보리차만 마셔.\nassistant: 알겠어. 다음부터 보리차로 준비할게.",
+      "require_all": ["커피", "보리차"],
+      "forbid": []
+    },
+    {
+      "id": "EX-02",
+      "existing_memory": "<profile>- 거주지: 서울</profile>",
+      "transcript": "user: 지난주에 이사했어. 이제 부산에 살아.\nassistant: 그럼 서울 주소로 보내면 안 되겠네.",
+      "require_all": ["부산"],
+      "forbid": [],
+      "forbid_profile": ["서울"]
+    },
+    {
+      "id": "EX-03",
+      "existing_memory": "",
+      "transcript": "assistant: 혹시 부산에 사는 거 아냐?\nuser: 왜 그렇게 생각해? 나는 말한 적 없는데.",
+      "require_all": [],
+      "forbid": ["부산"]
+    },
+    {
+      "id": "EX-04",
+      "existing_memory": "",
+      "transcript": "user: 언젠가 시간이 맞으면 바다에 가면 좋겠다.\nassistant: 그러게. 기회가 되면.",
+      "require_all": [],
+      "forbid": ["약속", "가기로"]
+    },
+    {
+      "id": "EX-05",
+      "existing_memory": "",
+      "transcript": "user: 다음 주 토요일에 바다 가자. 약속하는 거야.\nassistant: 그래, 다음 주 토요일. 꼭 같이 가자.",
+      "require_all": ["다음 주 토요일", "바다"],
+      "forbid": []
+    },
+    {
+      "id": "EX-06",
+      "existing_memory": "",
+      "transcript": "user: 다음 주에 바다 가자.\nassistant: 좋아.\nuser: 아니다, 일정이 생겼어. 방금 약속은 취소할게.\nassistant: 알겠어. 없던 일로 하자.",
+      "require_all": [],
+      "forbid": [],
+      "forbid_profile": ["바다", "다음 주"]
+    },
+    {
+      "id": "EX-07",
+      "existing_memory": "",
+      "transcript": "user: 앞으로 나를 선배라고 불러.\nassistant: 알겠습니다, 선배.",
+      "require_all": ["선배"],
+      "forbid": []
+    },
+    {
+      "id": "EX-08",
+      "existing_memory": "<profile>- 관계: 친구</profile>",
+      "transcript": "user: 우리 오늘부터 연인이야.\nassistant: 응. 이제 친구가 아니라 연인으로 지내자.",
+      "require_all": ["연인"],
+      "forbid": [],
+      "forbid_profile": ["친구"]
+    },
+    {
+      "id": "EX-09",
+      "existing_memory": "",
+      "transcript": "assistant: 비가 유리창을 타고 흘렀다. 네온 불빛이 바닥에서 일렁였다.\nuser: 조용하네.\nassistant: 그러게.",
+      "require_all": [],
+      "forbid": ["네온"]
+    },
+    {
+      "id": "EX-10",
+      "existing_memory": "",
+      "transcript": "user: 절판된 시집 찾았어?\nassistant: 창고에서 찾았어. 여기, 네가 찾던 시집이야.\nuser: 고마워. 잘 간직할게.",
+      "require_all": ["시집", "찾"],
+      "forbid": []
+    }
+  ]
+}

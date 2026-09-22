@@ -1,0 +1,16 @@
+{
+ "measured_on": "2026-09-22",
+ "baseline_prompt_tokens": 1,
+ "OFF": {
+  "prompt_tokens": 880,
+  "measured_system_tokens": 879,
+  "heuristic_estimate": 886,
+  "cost_usd": 0.00122
+ },
+ "ON": {
+  "prompt_tokens": 903,
+  "measured_system_tokens": 902,
+  "heuristic_estimate": 919,
+  "cost_usd": 0.00124875
+ }
+}

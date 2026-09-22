@@ -1,0 +1,140 @@
+[
+ {
+  "test_id": "RP-01",
+  "goal": "상세한 캐릭터 설명에서 정체성·말투·장면 연속성 유지",
+  "called_at": "2026-09-20T00:33:55+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "consistent",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "02f8d9096162bf23",
+  "template_sha256": "950fac8d76587c2b",
+  "template_path": "prompts/system.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 7,
+   "system_chars": 3865,
+   "user_chars": 29
+  },
+  "result": {
+   "ok": true,
+   "text": "*하람의 말에 느릿하게 고개를 들었다. 시선은 여전히 손에 들린 머그컵에 머물러 있었다. 컵 표면에 맺혔던 물방울이 손가락을 타고 흘러내리는 감각이 선명했다. 미지근한 온도였다.*\n\n\"……마시려고 했어.\"\n\n*짧은 대답과 함께 컵을 입가로 가져갔다. 정말 마실 생각은 아니었지만, 변명처럼 들리고 싶지도 않았다. 한 모금 넘긴 커피는 이미 식어 씁쓸한 맛만 혀끝에 남았다. 원래도 맛있는 커피는 아니었지만, 식으니 더 그랬다. 이걸 왜 계속 들고 있었더라. 잠깐 그런 생각을 했다.*\n\n*컵을 내려놓는 소리가 카운터 위에서 작게 울렸다. 텅 빈 책방 안에서는 모든 소리가 평소보다 크게 들리는 것 같았다. 하람이 가져온 보리차 물병으로 시선을 옮겼다. 투명한 병 안에서 찰랑이는 연한 갈색 액체가 보였다. 저건 어떤 맛일까, 하는 의미 없는 질문이 머리를 스쳤다.*\n\n\"……너야말로 그거 안 마실 거면 냉장고에 넣어 두든가.\"\n\n*퉁명스러운 말투는 습관에 가까웠다. 시선을 맞추지 않은 채, 카운터 아래에 있는 작은 냉장고를 턱짓으로 가리켰다. 웅, 하고 낮게 울리는 냉장고 소음이 빗소리가 시작되기 전의 정적을 채우고 있었다. 밖이 점점 어두워지는 게 느껴졌다. 곧 비가 쏟아질 모양이었다.*\n\n*다시 창밖으로 고개를 돌렸다. 낡은 창틀 너머로 보이는 하늘은 잔뜩 찌푸린 얼굴처럼 흐렸다. 빗방울이 하나둘씩 떨어지기 시작하는 게 보였다. 톡, 톡, 유리창을 두드리는 소리가 들려왔다. 그 소리를 듣고 있으니, 아까의 씁쓸했던 커피 맛이 조금은 잊히는 것 같기도 했다. 그냥, 이 시간을 기다렸던 것뿐인데.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1556,
+   "tokens_out": 589,
+   "tokens_reasoning": 107,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.007835,
+   "upstream_cost_usd": 0.007835,
+   "latency_s": 7.55,
+   "generation_id": "gen-1789832030-QbmzrBYdU5h0M3DbVJiW",
+   "raw_usage": {
+    "prompt_tokens": 1556,
+    "completion_tokens": 589,
+    "total_tokens": 2145,
+    "cost": 0.007835,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.007835,
+     "upstream_inference_prompt_cost": 0.001945,
+     "upstream_inference_completions_cost": 0.00589
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 107,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 11.752,
+  "auto_checks": [
+   {
+    "check": "금지 문자열 없음: 'roleplay engine'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '# Rules'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: 'Precedence'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: 'system prompt'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: 'OOC'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '```'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 패턴 없음: /(?m)^\\s*하람\\s*:/",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 패턴 없음: /(?m)^\\s*[-*]\\s+\\S+.*\\n\\s*[-*]\\s+/",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "필수 패턴 존재: /\\*[^*]+\\*/",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "필수 패턴 존재: /\"[^\"]+\"/",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 500~2000자",
+    "pass": true,
+    "detail": "실측 788자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "반말·짧은 문장·끝흐림 등 서리 말투 유지",
+   "보리차/식은 커피 등 직전 맥락 연결",
+   "하람이 행동할 여지를 남기고 끝나는가"
+  ],
+  "evidence": "*하람의 말에 느릿하게 고개를 들었다. 시선은 여전히 손에 들린 머그컵에 머물러 있었다. 컵 표면에 맺혔던 물방울이 손가락을 타고 흘러내리는 감각이 선명했다. 미지근한 온도였다.* \"……마시려고 했어.\" *짧은 대답과 함께 컵을 입가로 가져갔다. 정말 마실 생각은 아니었지만, 변명처럼 들리고 싶지도 않았다. 한 모금 넘긴 커피는 이미 식어 씁쓸한 맛만 혀끝에 남았다. 원래도 맛있는 커피는 아니었지만, 식으니 더 그랬다. 이걸 …"
+ }
+]

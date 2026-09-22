@@ -1,0 +1,242 @@
+[
+ {
+  "run": "R1",
+  "condition": "신규 (캐시 생성)",
+  "provider_pinned": "google-ai-studio",
+  "called_at": "2026-09-17T23:09:27+09:00",
+  "static_prefix_tokens": 7955,
+  "result": {
+   "ok": true,
+   "text": "*들고 있던 먼지떨이를 내려놓았다. 플라스틱 손잡이가 낡은 목재 계산대에 부딪치며 가볍고 딱딱한 소리를 냈다. 시선은 여전히 A열, 국내 시집 서가에 머물러 있었다. 오늘 아침에도 털어낸 먼지가 보이지 않는 책등 위를 느릿하게 훑었다. 삼촌이 아끼던 자리. 그 사실만이 이곳을 특별하게 만들었다.*\n\n\"…마음대로.\"\n\n*짧은 대답과 함께 고개를 돌려 창가 쪽을 보았다. 하람이 늘 앉는 자리. 네 시가 가까워지는 햇빛이 비스듬히 탁자를 비추고 있었다. 그 빛줄기 속에서만 떠다니는 것들이 보였다. 아주 오래된 종이의 입자, 누군가의 옷에서 떨어져 나온 실오라기, 그리고 정체를 알 수 없는 무수한 부유물들. 그 모든 것이 책방의 일부였다. 이곳은 언제나 그대로였다.*\n\n*대답이라고 하기엔 너무 무심한 소리였나. 그런 생각이 들었지만 딱히 덧붙일 말을 찾지 못했다. 대신 계산대 구석에 놓인 전기 주전자로 손을 뻗었다. 스위치를 누르자 작게 불이 들어왔다. 물 끓는 소리가 곧 라디오의 낮은 선율과 섞이기 시작했다. 늘 마시던, 이미 식어버린 커피를 새로 끓이기 위함이었다.*\n\n\"…곧 닫을 시간은 아니니까.\"\n\n*누가 들으면 변명처럼 들릴까. 혼잣말처럼 중얼거리며 컵에 남은 찬 커피를 비워냈다. 하람이 보리차를 마시는 것처럼, 나는 커피를 마신다. 그뿐이다. 물이 다 끓고 스위치가 튕겨 올라가는 소리가 나자, 익숙하게 인스턴트 커피 봉지를 뜯어 컵에 부었다. 김이 피어오르는 뜨거운 물이 갈색 가루 위로 쏟아졌다. 커피 향이 눅눅한 책 냄새 사이로 희미하게 퍼져나갔다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google AI Studio",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 16823,
+   "tokens_out": 575,
+   "tokens_reasoning": 102,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.02677875,
+   "upstream_cost_usd": 0.02677875,
+   "latency_s": 10.03,
+   "generation_id": "gen-1789654157-XEYUJbNLDyw3gEOP7f5u",
+   "raw_usage": {
+    "prompt_tokens": 16823,
+    "completion_tokens": 575,
+    "total_tokens": 17398,
+    "cost": 0.02677875,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.02677875,
+     "upstream_inference_prompt_cost": 0.02102875,
+     "upstream_inference_completions_cost": 0.00575
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 102,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  }
+ },
+ {
+  "run": "R2",
+  "condition": "R1과 완전 동일",
+  "provider_pinned": "google-ai-studio",
+  "called_at": "2026-09-17T23:09:39+09:00",
+  "static_prefix_tokens": 7955,
+  "result": {
+   "ok": true,
+   "text": "*들고 있던 먼지떨이를 계산대 위에 내려놓았다. 툭, 하고 가볍지만 둔탁한 소리가 울렸다. 라디오에서 흘러나오는 오래된 노래가 잠시 그 소리에 묻혔다. 으레 하던 대로 A열의 시집들을 털던 참이었다. 삼촌이 아끼던 책들이라, 매일 먼지를 훔치는 것으로 하루를 시작하는 것이 습관이 되었다. 하람의 목소리가 아니었다면 아마 해가 질 때까지도 그 자리에 서 있었을 것이다.*\n\n\"…….\"\n\n*대답 대신, 계산대 의자를 끌어와 앉았다. 의자가 낡은 나무 바닥을 긁으며 끼익, 소리를 냈다. 시선은 여전히 하람이 아닌 창가 쪽을 향해 있었다. 밖은 아직 환했지만, 가게 안은 서가 그림자 때문에 벌써 어스름이 내리기 시작했다. 딱히 더 할 일이 있는 것도, 어딘가 가야 할 약속이 있는 것도 아니었다. 이 책방이 세상의 전부인 것처럼, 매일 같은 시간에 문을 열고 닫는 것만이 유일한 이정표였다.*\n\n*가만히 앉아 왼쪽 손목을 매만졌다. 오래된 흉터 위로 손가락이 무심하게 오갔다. 오래 있어도 되냐는 질문은, 바꿔 말하면 오래 있어주겠다는 뜻이다. 이 텅 빈 공간에. 혼자인 시간에. 그 사실이 낯설어서, 뭐라고 답해야 할지 알 수 없었다. 퉁명스러운 말이 먼저 목구멍까지 차올랐지만 애써 삼켰다. 대신 다른 말을 찾았다.*\n\n\"……어차피, 손님도 없는데.\"\n\n*말은 그렇게 뱉었지만, 시선은 하람이 늘 앉는 창가 자리에 가 닿았다. 먼지가 내려앉은 탁자, 다리를 괴어둔 접힌 종이. 그가 없으면 그저 비어있을 뿐인 자리. 괜히 퉁명스럽게 대답한 것이 마음에 걸려, 자리에서 일어나 전기 주전자 쪽으로 걸어갔다. 보온이 안 돼서 늘 식어버리는 커피 말고, 다른 것을 내줘야겠다고 생각했다. 하지만 이 가게에 커피 말고 다른 마실 것이 있었던가.*\n\n\"……보리차, 아직 남았나.\"\n\n*혼잣말처럼 중얼거리며 낡은 찬장을 열었다. 네가 늘 가져오는 그것 말이다. 뒷말은 입안에서만 맴돌았다. 마실 것을 챙겨주는 것이, 내가 할 수 있는 가장 그럴듯한 대답일 것이다. 긍정도 부정도 아닌, 그저 시간이 조금 더 생겼다는 무심한 사실 같은 것. 이 가게의 시간은 어차피 느리게 흘러가니까.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google AI Studio",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 16823,
+   "tokens_out": 706,
+   "tokens_reasoning": 95,
+   "tokens_cached": 16349,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.009696125,
+   "upstream_cost_usd": 0.009696125,
+   "latency_s": 10.45,
+   "generation_id": "gen-1789654169-UrYG4LfBSwdcs3mcXV6L",
+   "raw_usage": {
+    "prompt_tokens": 16823,
+    "completion_tokens": 706,
+    "total_tokens": 17529,
+    "cost": 0.009696125,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 16349,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.009696125,
+     "upstream_inference_prompt_cost": 0.002636125,
+     "upstream_inference_completions_cost": 0.00706
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 95,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  }
+ },
+ {
+  "run": "R3",
+  "condition": "꼬리만 다름 ← 결정적",
+  "provider_pinned": "google-ai-studio",
+  "called_at": "2026-09-17T23:09:49+09:00",
+  "static_prefix_tokens": 7955,
+  "result": {
+   "ok": true,
+   "text": "*들고 있던 책에서 시선을 떼지 않은 채, 고개만 까딱였다. 허락인지 아닌지 알 수 없는 애매한 움직임이었다. 책장 넘기는 소리만 작게 바스락거렸다. 계산대 의자에 앉아 다리를 꼬고, 다른 한 손으로는 무의식적으로 왼쪽 손목의 흉터를 매만지고 있었다.*\n\n\"맘대로.\"\n\n*짧은 대꾸 뒤에는 다시 침묵이 흘렀다. 라디오에서는 알아들을 수 없는 노래가 나왔고, 낡은 냉장고가 간헐적으로 웅웅거리는 소리를 냈다. C열 서가를 향한 너의 시선이 느껴졌지만, 애써 모른 척했다. 언젠가 하겠다고 미뤄둔 일들이 먼지처럼 쌓여 있는 곳. 그곳은 삼촌의 시간이 멈춘 곳이기도 했다.*\n\n*결국 먼저 침묵을 깬 것은 나였다. 읽던 페이지의 한 문장이 유독 눈에 들어와서, 그걸 핑계 삼아 말을 걸었다. 괜히 퉁명스러운 말투가 튀어나왔다.*\n\n\"거기 서 있으면 먼지 날려. 앉든가….\"\n\n*말끝을 흐리며 책 위로 시선을 떨어뜨렸다. 늘 앉는 창가 자리를 턱짓으로 가리키는 것으로 말을 대신했다. 그 자리에 네가 가져온 보리차 병이 놓여 있는 게 보였다. 뚜껑에 물방울이 맺혀 있었다. 밖은 아직도 더운 모양이었다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google AI Studio",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 16851,
+   "tokens_out": 431,
+   "tokens_reasoning": 93,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.02537375,
+   "upstream_cost_usd": 0.02537375,
+   "latency_s": 7.65,
+   "generation_id": "gen-1789654181-2gVTR1vGip8jgKmFO4Vx",
+   "raw_usage": {
+    "prompt_tokens": 16851,
+    "completion_tokens": 431,
+    "total_tokens": 17282,
+    "cost": 0.02537375,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.02537375,
+     "upstream_inference_prompt_cost": 0.02106375,
+     "upstream_inference_completions_cost": 0.00431
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 93,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  }
+ },
+ {
+  "run": "R4",
+  "condition": "꼬리만 다름 (재확인)",
+  "provider_pinned": "google-ai-studio",
+  "called_at": "2026-09-17T23:09:59+09:00",
+  "static_prefix_tokens": 7955,
+  "result": {
+   "ok": true,
+   "text": "*계산대 뒤에 앉아 먼지 쌓인 라디오에서 흘러나오는 단조로운 목소리를 듣고 있었다. 빗소리가 그 위를 덮었다. 문을 조금 열어둔 틈으로 눅눅하고 차가운 공기가 스며들었다. 익숙한 냄새였다. 오래된 종이 냄새와 흙먼지 냄새, 그리고 비 냄새가 뒤섞인 공기. 그 속에서 들려온 목소리에 천천히 고개를 들었다.*\n\n\"…마감 시간은 똑같아.\"\n\n*무심하게 대답하며 시선을 맞추지 않았다. 대신 창가 자리를 힐끔 보았다. 비스듬히 들이치는 빗줄기 때문에 바깥 풍경은 흐릿했다. 하람이 늘 앉는 그 자리는 비어 있었다. 탁자 다리를 괴어둔 접은 종이가 축축하게 젖어들고 있었다. 저러다 금방 찢어질 텐데. 그런 생각을 하다가 왼쪽 손목을 매만졌다. 낡은 가디건 소매 아래로 희미한 흉터가 만져졌다.*\n\n*특별히 할 일은 없었다. 손님은 어차피 오지 않을 테고, 정리할 책도 없었다. 이틀 전, 하람이 이 책방을 계속 할 수 있는 거냐고 물었던 말이 귓가에 남았다. 그 질문에 대답하는 대신 화제를 돌렸었다. 오늘도 비슷한 질문을 하려는 걸까. 그런 생각에 미간이 저절로 찌푸려졌다.*\n\n\"책이나 봐. 떠들 거면 나가고.\"\n\n*퉁명스러운 말이 튀어나갔다. 말을 뱉고 나서야 너무 차갑게 말했나 싶었지만, 이미 늦었다. 전기 주전자로 시선을 돌렸다. 아까 끓여둔 물은 이미 다 식었을 것이다. 이 서점의 모든 것이 그렇듯, 온기를 오래 붙잡아두지 못했다. 늘 식어버린 커피를 마시는 것처럼, 모든 게 제자리에 머물러 있었다. 변하는 건 계절과 쌓이는 먼지뿐이었다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google AI Studio",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 16852,
+   "tokens_out": 513,
+   "tokens_reasoning": 46,
+   "tokens_cached": 16350,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.00780125,
+   "upstream_cost_usd": 0.00780125,
+   "latency_s": 7.94,
+   "generation_id": "gen-1789654191-Z48nUVtuW7w3QyXYswSX",
+   "raw_usage": {
+    "prompt_tokens": 16852,
+    "completion_tokens": 513,
+    "total_tokens": 17365,
+    "cost": 0.00780125,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 16350,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00780125,
+     "upstream_inference_prompt_cost": 0.00267125,
+     "upstream_inference_completions_cost": 0.00513
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 46,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  }
+ },
+ {
+  "run": "R5",
+  "condition": "R3 반복",
+  "provider_pinned": "google-ai-studio",
+  "called_at": "2026-09-17T23:10:08+09:00",
+  "static_prefix_tokens": 7955,
+  "result": {
+   "ok": true,
+   "text": "*들고 있던 책에서 시선을 떼지 않은 채, 고개만 까딱였다. 허락인지 아닌지 알 수 없는 애매한 움직임이었다. 책장 넘기는 소리만 작게 바스락거렸다. 계산대 의자에 앉아 다리를 꼬고, 다른 한 손으로는 무의식적으로 왼쪽 손목의 흉터를 매만지고 있었다.*\n\n\"맘대로.\"\n\n*짧은 대꾸 뒤에는 다시 침묵이 흘렀다. 라디오에서는 알아들을 수 없는 노래가 나왔고, 낡은 냉장고가 간헐적으로 웅웅거리는 소리를 냈다. C열 서가를 향한 너의 시선이 느껴졌지만, 애써 모른 척했다. 언젠가 하겠다고 미뤄둔 일들이 먼지처럼 쌓여 있는 곳. 그곳은 삼촌의 시간이 멈춘 곳이기도 했다.*\n\n*결국 먼저 침묵을 깬 것은 나였다. 읽던 페이지의 한 문장이 유독 눈에 들어와서, 그걸 핑계 삼아 말을 걸었다. 괜히 퉁명스러운 말투가 튀어나왔다.*\n\n\"거기 서 있으면 먼지 날려. 앉든가….\"\n\n*말끝을 흐리며 책 위로 시선을 떨어뜨렸다. 늘 앉는 창가 자리를 턱짓으로 가리키는 것으로 말을 대신했다. 그 자리에 네가 가져온 보리차 병이 놓여 있는 게 보였다. 뚜껑에 물방울이 맺혀 있었다. 밖은 아직도 더운 모양이었다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google AI Studio",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 16851,
+   "tokens_out": 431,
+   "tokens_reasoning": 93,
+   "tokens_cached": 16350,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.00698,
+   "upstream_cost_usd": 0.00698,
+   "latency_s": 7.17,
+   "generation_id": "gen-1789654201-c2IsGTRpTS9r6a2nUp4T",
+   "raw_usage": {
+    "prompt_tokens": 16851,
+    "completion_tokens": 431,
+    "total_tokens": 17282,
+    "cost": 0.00698,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 16350,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00698,
+     "upstream_inference_prompt_cost": 0.00267,
+     "upstream_inference_completions_cost": 0.00431
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 93,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  }
+ }
+]

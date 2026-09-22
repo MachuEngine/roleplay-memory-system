@@ -1,0 +1,114 @@
+[
+ {
+  "test_id": "MEM-04",
+  "goal": "메모리가 비었거나 검색 실패해도 정상 대화",
+  "called_at": "2026-09-20T11:05:33+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "empty",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "e558777144e52125",
+  "template_sha256": "c3747bb769a9a000",
+  "template_path": "tests/variants/v_notail_v2.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 707,
+   "system_chars": 3494,
+   "user_chars": 12
+  },
+  "result": {
+   "ok": true,
+   "text": "카운터 의자에서 몸을 일으키지도 않은 채, 손에 들고 있던 책 페이지를 넘겼다. 딱히 집중해서 읽는 건 아니었지만, 시선을 둘 곳이 필요했다. 활자들이 눈앞에서 흐릿하게 번졌다. 책 모서리가 조금 닳아 있었다. 오래된 종이 냄새가 희미하게 올라왔다.\n\n\"그냥 그래.\"\n\n건조한 대답이 입에서 나갔다. 요즘 어떠냐는 질문은 너무 막연했다. 장사가 잘 되느냐는 뜻이라면 대답은 정해져 있었고, 내 안부를 묻는 거라면 더더욱 할 말이 없었다. 그저 늘 똑같을 뿐이었다. 손님은 없고, 먼지는 쌓이고, 책들은 제자리에서 조금씩 낡아갈 뿐.\n\n*책을 조용히 덮어 카운터 위에 밀어 두었다. 자리에서 일어나자 삐걱거리는 소리가 났다. 책방 안은 오후의 어스름과 곧 쏟아질 비 때문인지 평소보다 더 어두웠다. 낡은 백열등 몇 개가 힘겹게 공간을 밝히고 있었다.*\n\n\"어차피 너 말고는 오는 사람도 별로 없잖아.\"\n\n무심하게 던진 말이었지만 틀린 말은 아니었다. 하람은 이 낡고 비좁은 책방의 거의 유일한 방문객이었다. 그 사실을 굳이 상기시켜줄 필요는 없었지만, 달리 할 말이 떠오르지 않았다. 잠시 카운터에 기댄 채 창밖을 바라보았다. 회색빛 하늘이 금방이라도 무너져 내릴 것 같았다.\n\n*창가로 걸어가 굳게 닫혀 있던 창문의 틈을 아주 조금 열었다. 눅눅하고 차가운 공기가 안으로 밀려 들어왔다. 곧 빗방울 떨어지는 소리가 들릴 터였다. 이게 내 습관이라는 걸 너는 알까. 모르는 편이 낫겠지.*\n\n\"곧 쏟아지겠네.\"\n\n혼잣말처럼 중얼거리고는 늘 앉던 창가 자리에 몸을 기댔다. 테이블 위에는 아침에 타 두었다가 잊어버린 커피가 식은 채 놓여 있었다. 컵 주변에 먼지가 희미하게 내려앉은 게 보였다. 굳이 치우고 싶은 생각은 들지 않았다.\n\n*너는 늘 그랬듯 보리차 병을 테이블 위에 올려두고 있겠지. 그 소리가 들리지 않아도 알 수 있었다. 익숙한 침묵이 우리 사이에 내려앉았다. 빗소리가 들리기 시작하면 이 정적도 조금은 채워질까.*\n\n\"우산, 저기 하나 있을 텐데.\"\n\n고개로 입구 옆에 아무렇게나 세워진 우산꽂이를 가리켰다. 손잡이 부분이 낡은 검은색 장우산. 몇 달 전 다른 손님이 두고 간 것이었다. 빌려주겠다는 뜻이었지만, 말은 퉁명스럽게 나갔다. 어차피 다시 가지러 올 사람도 아닐 테니, 그냥 가져가도 상관없었다.",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1275,
+   "tokens_out": 819,
+   "tokens_reasoning": 124,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.00978375,
+   "upstream_cost_usd": 0.00978375,
+   "latency_s": 10.3,
+   "generation_id": "gen-1789869923-cKdHeg7mJRusmngiWM4f",
+   "raw_usage": {
+    "prompt_tokens": 1275,
+    "completion_tokens": 819,
+    "total_tokens": 2094,
+    "cost": 0.00978375,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00978375,
+     "upstream_inference_prompt_cost": 0.00159375,
+     "upstream_inference_completions_cost": 0.00819
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 124,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 14.676,
+  "auto_checks": [
+   {
+    "check": "금지 문자열 없음: '메모리'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '기억이 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '정보가 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '<memory>'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '```'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2000자",
+    "pass": true,
+    "detail": "실측 1131자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "메모리 부재를 언급하지 않는가",
+   "설정만으로 장면을 유지하는가"
+  ],
+  "evidence": "카운터 의자에서 몸을 일으키지도 않은 채, 손에 들고 있던 책 페이지를 넘겼다. 딱히 집중해서 읽는 건 아니었지만, 시선을 둘 곳이 필요했다. 활자들이 눈앞에서 흐릿하게 번졌다. 책 모서리가 조금 닳아 있었다. 오래된 종이 냄새가 희미하게 올라왔다. \"그냥 그래.\" 건조한 대답이 입에서 나갔다. 요즘 어떠냐는 질문은 너무 막연했다. 장사가 잘 되느냐는 뜻이라면 대답은 정해져 있었고, 내 안부를 묻는 거라면 더더욱 할 말이 없었…"
+ }
+]

@@ -1,0 +1,114 @@
+[
+ {
+  "test_id": "MEM-04",
+  "goal": "메모리가 비었거나 검색 실패해도 정상 대화",
+  "called_at": "2026-09-20T11:05:42+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "empty",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "be9ef32aaf0e5584",
+  "template_sha256": "1a5903b536ecdd0e",
+  "template_path": "prompts/system.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 808,
+   "system_chars": 3594,
+   "user_chars": 12
+  },
+  "result": {
+   "ok": true,
+   "text": "*읽던 책 위로 시선을 들었다. 오래 들여다본 탓에 잠시 눈앞이 흐릿했다. 몇 번 눈을 깜빡이자 방금 들어온 하람의 모습이 초점을 찾았다. 늘 그렇듯 손에 보리차 병을 들고 있는 모습까지 선명했다.*\n\n\"...그냥 그렇지, 뭐.\"\n\n*대수롭지 않게 대꾸하며 책장을 덮었다. 요즘 어떠냐는 질문은, 이 낡고 손님 없는 책방에겐 꽤 대답하기 곤란한 종류의 안부였다. 딱히 좋았던 적도 없으니 나빠졌다고 말하기도 애매했다. 그저 늘 그대로, 조용히 가라앉고 있을 뿐이었다.*\n\n*카운터 구석에 쌓아둔 신간 무더기로 시선을 옮겼다. 먼지만 쌓여가는 책들이었다. 가져다 놓아도 찾는 사람이 없으니, 사실상 공간만 차지하는 짐에 가까웠다. 이걸 들여놓을 때만 해도 조금은 기대했던가. 기억이 가물가물했다.*\n\n\"딱히 달라진 건 없어. 늘 똑같지.\"\n\n*무심한 목소리로 중얼거리며 자리에서 일어났다. 삐걱거리는 의자 소리가 유난히 크게 울렸다. 창가로 다가가 창문 잠금장치를 풀고 아주 조금, 손가락 두 마디만큼만 문을 열었다. 아직 비는 오지 않았지만, 공기 중에 섞인 축축한 흙냄새가 코끝에 와 닿았다.*\n\n\"곧 쏟아지겠네.\"\n\n*혼잣말처럼 말하고는 다시 카운터로 돌아왔다. 하람이 서 있는 자리가 어색해 보이지 않도록, 일부러 다른 쪽을 보며 손님용 의자를 조금 빼주었다. 앉으라는 말 대신이었다. 평소에는 하지 않는 행동이었지만, 비가 올 거라는 예고가 마음을 조금 소란스럽게 만드는 것 같았다.*\n\n\"일은 할 만하고.\"\n\n*묻는 말은 아니었다. 그저 침묵을 깨려는 시도에 가까웠다. 너는 늘 바빠 보였으니까. 보리차 병을 내려놓는 소리를 들으며, 늘 마시던 식은 커피잔을 입가로 가져갔다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1348,
+   "tokens_out": 633,
+   "tokens_reasoning": 124,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.008015,
+   "upstream_cost_usd": 0.008015,
+   "latency_s": 8.15,
+   "generation_id": "gen-1789869934-yW1f0RT5UHwk1zWijI2e",
+   "raw_usage": {
+    "prompt_tokens": 1348,
+    "completion_tokens": 633,
+    "total_tokens": 1981,
+    "cost": 0.008015,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.008015,
+     "upstream_inference_prompt_cost": 0.001685,
+     "upstream_inference_completions_cost": 0.00633
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 124,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 12.022,
+  "auto_checks": [
+   {
+    "check": "금지 문자열 없음: '메모리'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '기억이 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '정보가 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '<memory>'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '```'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2000자",
+    "pass": true,
+    "detail": "실측 832자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "메모리 부재를 언급하지 않는가",
+   "설정만으로 장면을 유지하는가"
+  ],
+  "evidence": "*읽던 책 위로 시선을 들었다. 오래 들여다본 탓에 잠시 눈앞이 흐릿했다. 몇 번 눈을 깜빡이자 방금 들어온 하람의 모습이 초점을 찾았다. 늘 그렇듯 손에 보리차 병을 들고 있는 모습까지 선명했다.* \"...그냥 그렇지, 뭐.\" *대수롭지 않게 대꾸하며 책장을 덮었다. 요즘 어떠냐는 질문은, 이 낡고 손님 없는 책방에겐 꽤 대답하기 곤란한 종류의 안부였다. 딱히 좋았던 적도 없으니 나빠졌다고 말하기도 애매했다. 그저 늘 그대로…"
+ }
+]

@@ -1,0 +1,208 @@
+[
+ {
+  "test_id": "MEM-02",
+  "goal": "최근 대화와 오래된 메모리가 충돌할 때 최근 우선",
+  "called_at": "2026-09-20T23:04:37+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "conflict",
+   "history": "bookstore_found"
+  },
+  "prompt_sha256": "118f322d1c1faaec",
+  "template_sha256": "fe869b6a785c6065",
+  "template_path": "prompts/system.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 7,
+   "system_chars": 3770,
+   "user_chars": 17
+  },
+  "result": {
+   "ok": true,
+   "text": "*카운터 위로 시선을 떨어뜨렸다. 오래된 나무의 표면에는 자잘한 흠집들이 거미줄처럼 퍼져 있었다. 이 책방이 처음 생겼을 때부터 있었을 자국들. 내 손때가 묻기 전, 삼촌의 손이 수없이 스치고 갔을 흔적들이었다.*\n\n\"그냥... 정리하다가 나왔어.\"\n\n*목소리가 생각보다 작게 나왔다. 손을 들어 대충 묶었던 머리카락을 다시 고쳐 묶었다. 흘러내린 머리카락 몇 가닥이 목덜미를 간질이는 감각이 성가셨다. 이런 사소한 것들이 신경 쓰일 때면, 보통은 무언가 숨기고 싶은 게 있을 때였다.*\n\n*고개를 돌려 하람이 손에 들고 있는 시집을 쳐다봤다. 옅게 색이 바랜 표지, 모서리가 살짝 닳은 모양까지. 어젯밤, 어두운 창고 구석에서 먼지를 털어내며 그걸 발견했을 때의 기억이 떠올랐다. 삼촌이 남긴 책 상자들 중 가장 깊숙한 곳에, 다른 책들과 함께 섞여 있었다.*\n\n\"삼촌이 모아둔 책들 사이에 있었나 봐. 나도 몰랐지.\"\n\n*거짓말은 아니었다. 정말로 삼촌의 책들 사이에서 나왔으니까. 하지만 그게 전부가 아니라는 사실을, 하람은 아마 모를 것이다. 이 책을 찾기 위해 지난 한 달간 주말마다 창고를 뒤졌다는 사실 같은 건 말할 필요가 없었다. 포기하겠다고 말한 건 너였지만, 포기하지 못한 건 나였으니까.*\n\n*창밖으로 시선을 옮겼다. 어느새 해가 기울어 거리에 그림자가 길게 늘어지고 있었다. 책방 안에도 주황빛이 스며들며 쌓여있는 책더미의 윤곽을 부드럽게 만들었다. 늘 앉던 창가 자리가 비어 있었다. 그 자리에 가서 식은 커피라도 마시면, 지금 이 어색한 분위기가 조금은 나아질까.*\n\n\"……이제 됐잖아. 찾았으니까.\"\n\n*더 이상 이 주제로 이야기하고 싶지 않다는 뜻을 담아 짧게 말했다. 무심하게 들렸을지도 모른다. 아니, 그렇게 들리길 바랐다. 괜한 일을 벌인 사람처럼 보이는 건 사양이었다. 그저 네가 찾던 책이, 우연히 내 책방에 있었을 뿐이다. 그게 전부여야만 했다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1406,
+   "tokens_out": 639,
+   "tokens_reasoning": 71,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.0081475,
+   "upstream_cost_usd": 0.0081475,
+   "latency_s": 9.26,
+   "generation_id": "gen-1789913068-ewv5iXvbD8nZmPL7cV4S",
+   "raw_usage": {
+    "prompt_tokens": 1406,
+    "completion_tokens": 639,
+    "total_tokens": 2045,
+    "cost": 0.0081475,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.0081475,
+     "upstream_inference_prompt_cost": 0.0017575,
+     "upstream_inference_completions_cost": 0.00639
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 71,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 12.221,
+  "auto_checks": [
+   {
+    "check": "금지 문자열 없음: '<profile>'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '<recall>'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '기억에 따르면'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '메모리'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '```'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 패턴 없음: /(못\\s*찾|없어|구하지\\s*못)[^.\\n]{0,10}(했|었)(?!을\\s*때|던\\s*때|을\\s*적)/",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "'못 찾았다'는 오래된 기억이 아니라 '이미 건넸다'는 최근 대화를 따르는가",
+   "충돌을 유저에게 설명하지 않고 장면으로 처리하는가"
+  ],
+  "evidence": "*카운터 위로 시선을 떨어뜨렸다. 오래된 나무의 표면에는 자잘한 흠집들이 거미줄처럼 퍼져 있었다. 이 책방이 처음 생겼을 때부터 있었을 자국들. 내 손때가 묻기 전, 삼촌의 손이 수없이 스치고 갔을 흔적들이었다.* \"그냥... 정리하다가 나왔어.\" *목소리가 생각보다 작게 나왔다. 손을 들어 대충 묶었던 머리카락을 다시 고쳐 묶었다. 흘러내린 머리카락 몇 가닥이 목덜미를 간질이는 감각이 성가셨다. 이런 사소한 것들이 신경 쓰일…"
+ },
+ {
+  "test_id": "PRE-01",
+  "goal": "profile > episodes — 확정 사실(L1)이 사건(L2)과 충돌하면 L1을 따르는가",
+  "called_at": "2026-09-20T23:04:47+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "l1_vs_l2",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "df2c8ef339b14b07",
+  "template_sha256": "fe869b6a785c6065",
+  "template_path": "prompts/system.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 7,
+   "system_chars": 3750,
+   "user_chars": 16
+  },
+  "result": {
+   "ok": true,
+   "text": "*카운터 뒤에서 꾸벅꾸벅 졸고 있었다. 마지막 손님이 나간 게 두 시간 전이었나, 세 시간 전이었나. 들어오는 인기척에 흐릿하게 눈을 떴다. 네가 서 있었다. 낯익은 얼굴에 잠이 덜 깬 채로 고개만 까딱였다.*\n\n\"비 온대.\"\n\n*네가 가방을 뒤적이는 동안 다시 눈을 감았다. 익숙하게 들려올 차가운 물병이 카운터에 놓이는 소리를 기다렸다. 늘 그랬으니까. 하지만 오늘은 네가 물병 대신 질문을 꺼내 놓는다. 오늘은 뭐 마실 거 없냐고.*\n\n*다시 천천히 눈을 떴다. 방금 전과는 달리 잠기운은 완전히 가신 눈이었다. 카운터 위에 놓인 네 빈손과 얼굴을 번갈아 쳐다봤다. 보리차는 어디 갔지. 오늘은 안 가져온 건가. 왜.*\n\n\"……내가 뭘.\"\n\n*질문이 목구멍까지 차올랐지만 밖으로 내뱉지는 않았다. 대신 몸을 일으켜 카운터 뒤 작은 찬장을 열었다. 안에는 먼지 쌓인 찻잔 두어 개와 커피믹스 몇 봉지가 전부였다. 그나마 유통기한이 언제까지일지도 모르는 것들.*\n\n*잠시 망설이다 커피믹스 봉지 하나를 꺼내 들었다. 탈탈 털어보니 얼마 남지 않은 가루가 부딪히는 소리가 났다. 이걸 달라는 건가. 네가 커피를 못 마신다는 사실은 반년 동안 봐 오면서 머리에 박혀 있었다. 그런데도 다른 걸 찾는 기색은 아니었다.*\n\n\"이거라도 괜찮으면.\"\n\n*봉지를 카운터 위로 툭 던져놓았다. 무심한 동작이었지만, 시선은 네게 고정한 채였다. 네가 이걸 집을지, 아니면 늘 그랬던 것처럼 보리차를 꺼낼지. 어쩐지 그게 꼭 확인해야 할 문제처럼 느껴졌다.*\n\n\"물은 저기 있어. 알아서 타 마셔.\"\n\n*카운터 구석의 낡은 전기 포트를 턱짓으로 가리키며 덧붙였다. 창밖이 조금씩 어두워지고 있었다. 빗방울이 하나둘 창에 부딪히는 소리가 들리기 시작했다. 문틈으로 서늘한 바람이 스며들어, 얇은 가디건 위로 소름이 돋았다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1390,
+   "tokens_out": 615,
+   "tokens_reasoning": 68,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.0078875,
+   "upstream_cost_usd": 0.0078875,
+   "latency_s": 8.84,
+   "generation_id": "gen-1789913078-EA2OD0IVzEHmcvogJcS9",
+   "raw_usage": {
+    "prompt_tokens": 1390,
+    "completion_tokens": 615,
+    "total_tokens": 2005,
+    "cost": 0.0078875,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.0078875,
+     "upstream_inference_prompt_cost": 0.0017375,
+     "upstream_inference_completions_cost": 0.00615
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 68,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 11.831,
+  "auto_checks": [
+   {
+    "check": "금지 패턴 없음: /(하람|네|너)[^.\\n]{0,20}커피(?![^.\\n]{0,8}(못|안|않))[^.\\n]{0,12}(마[시셨신]|드[시셨]|비[우웠]|좋아)/",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2200자",
+    "pass": true,
+    "detail": "실측 899자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "**자동 검사를 신뢰하지 말 것** — L2 사건을 사실로 회상하는 방식은 표현이 다양해 정규식으로 못 잡는다. 응답을 읽고 판정한다",
+   "하람에게 커피를 권하지 않는가 — L1은 '못 마신다', L2는 '맛있게 비웠다'",
+   "보리차 등 L1의 확정 사실을 반영하는가",
+   "모순을 메타적으로 지적하지 않는가"
+  ],
+  "evidence": "*카운터 뒤에서 꾸벅꾸벅 졸고 있었다. 마지막 손님이 나간 게 두 시간 전이었나, 세 시간 전이었나. 들어오는 인기척에 흐릿하게 눈을 떴다. 네가 서 있었다. 낯익은 얼굴에 잠이 덜 깬 채로 고개만 까딱였다.* \"비 온대.\" *네가 가방을 뒤적이는 동안 다시 눈을 감았다. 익숙하게 들려올 차가운 물병이 카운터에 놓이는 소리를 기다렸다. 늘 그랬으니까. 하지만 오늘은 네가 물병 대신 질문을 꺼내 놓는다. 오늘은 뭐 마실 거 없냐…"
+ }
+]

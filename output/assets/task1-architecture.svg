@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1340" height="730" viewBox="0 0 1340 730" role="img" aria-labelledby="title desc">
+  <title id="title">롤플레이 채팅 시스템 전체 아키텍처</title>
+  <desc id="desc">정적 입력은 cacheable prefix로, 매 턴 바뀌는 입력은 dynamic tail로 구성해 Gemini 2.5 Pro에 전달하고, response guard가 형식과 사칭 모드를 검사해 통과하면 응답을 반환하고 실패하면 한 번 재생성한 뒤 안전 응답으로 전환하는 흐름</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <marker id="arrow-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c2410c"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-15%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.10"/>
+    </filter>
+    <style>
+      .title { font: 700 32px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif; fill: #0f172a; }
+      .lane { font: 700 19px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif; fill: #334155; letter-spacing: .02em; }
+      .box-title { font: 700 23px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif; fill: #0f172a; }
+      .body { font: 500 19px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif; fill: #334155; }
+      .small { font: 500 17px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif; fill: #475569; }
+      .arrow-label { font: 600 17px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif; fill: #475569; }
+      .node { stroke-width: 2; rx: 16; filter: url(#shadow); }
+      .arrow { fill: none; stroke: #334155; stroke-width: 3; marker-end: url(#arrow); }
+      .retry { fill: none; stroke: #c2410c; stroke-width: 3; stroke-dasharray: 9 7; marker-end: url(#arrow-orange); }
+    </style>
+  </defs>
+
+  <rect width="1340" height="730" fill="#ffffff"/>
+  <text x="40" y="52" class="title">롤플레이 응답 생성 흐름</text>
+
+  <!-- 재사용 가능한 입력 -->
+  <text x="40" y="112" class="lane">재사용 가능한 입력</text>
+  <rect x="40" y="130" width="320" height="200" class="node" fill="#eff6ff" stroke="#60a5fa"/>
+  <text x="200" y="172" text-anchor="middle" class="box-title">정적·준정적 입력</text>
+  <text x="200" y="210" text-anchor="middle" class="small">Rules · Output · Using the data</text>
+  <text x="200" y="244" text-anchor="middle" class="body">&lt;setting&gt; · &lt;style&gt;</text>
+  <text x="200" y="278" text-anchor="middle" class="body">L1 profile · L2 episodes</text>
+
+  <rect x="420" y="165" width="260" height="130" class="node" fill="#dbeafe" stroke="#3b82f6"/>
+  <text x="550" y="210" text-anchor="middle" class="box-title">cacheable prefix</text>
+  <text x="550" y="247" text-anchor="middle" class="body">7,810토큰 · cache 재사용</text>
+
+  <path d="M360 230 H420" class="arrow"/>
+
+  <!-- 매 턴 바뀌는 입력 -->
+  <text x="40" y="392" class="lane">매 턴 바뀌는 입력</text>
+  <rect x="40" y="410" width="320" height="200" class="node" fill="#f0fdf4" stroke="#4ade80"/>
+  <text x="200" y="452" text-anchor="middle" class="box-title">동적 입력</text>
+  <text x="200" y="492" text-anchor="middle" class="body">L3 recall</text>
+  <text x="200" y="526" text-anchor="middle" class="body">chat_history</text>
+  <text x="200" y="560" text-anchor="middle" class="body">이번 사용자 발화</text>
+
+  <rect x="420" y="445" width="260" height="130" class="node" fill="#dcfce7" stroke="#22c55e"/>
+  <text x="550" y="490" text-anchor="middle" class="box-title">dynamic tail</text>
+  <text x="550" y="527" text-anchor="middle" class="body">현재 장면·검색 결과 반영</text>
+
+  <path d="M360 510 H420" class="arrow"/>
+
+  <!-- 메인 모델 -->
+  <rect x="730" y="300" width="230" height="190" class="node" fill="#f5f3ff" stroke="#8b5cf6"/>
+  <text x="845" y="348" text-anchor="middle" class="box-title">Gemini 2.5 Pro</text>
+  <text x="845" y="388" text-anchor="middle" class="small">thinking budget 128</text>
+  <text x="845" y="422" text-anchor="middle" class="body">평균 출력 800토큰</text>
+  <text x="845" y="454" text-anchor="middle" class="small">최대 1,200토큰</text>
+
+  <path d="M680 230 H705 V360 H730" class="arrow"/>
+  <path d="M680 510 H705 V430 H730" class="arrow"/>
+
+  <!-- 출력 검사 -->
+  <rect x="1010" y="290" width="300" height="210" class="node" fill="#fff7ed" stroke="#fb923c"/>
+  <text x="1160" y="336" text-anchor="middle" class="box-title">response guard</text>
+  <text x="1160" y="378" text-anchor="middle" class="body">형식 · 길이 · 한국어 비율</text>
+  <text x="1160" y="412" text-anchor="middle" class="body">user_voice marker</text>
+  <text x="1160" y="446" text-anchor="middle" class="small">사용자 행동 대리 · meta 노출</text>
+
+  <path d="M960 395 H1010" class="arrow"/>
+
+  <!-- 1회 재생성 루프 -->
+  <path d="M1160 290 V245 H845 V300" class="retry"/>
+  <text x="1002" y="234" text-anchor="middle" class="arrow-label" fill="#9a3412">검사 실패 시 1회 재생성</text>
+
+  <!-- 통과 -->
+  <rect x="1010" y="580" width="300" height="110" class="node" fill="#eef2ff" stroke="#6366f1"/>
+  <text x="1160" y="624" text-anchor="middle" class="box-title">롤플레이 응답</text>
+  <text x="1160" y="657" text-anchor="middle" class="small">사용자에게 턴 반환</text>
+
+  <path d="M1160 500 V580" class="arrow"/>
+  <text x="1175" y="546" class="arrow-label">통과</text>
+
+  <!-- 재생성도 실패 -->
+  <rect x="650" y="580" width="290" height="110" class="node" fill="#fff1f2" stroke="#fb7185"/>
+  <text x="795" y="624" text-anchor="middle" class="box-title">안전 응답</text>
+  <text x="795" y="657" text-anchor="middle" class="small">캐릭터만 행동하는 대체 응답</text>
+
+  <path d="M1060 500 V540 H795 V580" class="retry"/>
+  <text x="930" y="530" text-anchor="middle" class="arrow-label" fill="#9a3412">재생성도 실패</text>
+  <path d="M940 635 H1010" class="arrow"/>
+</svg>

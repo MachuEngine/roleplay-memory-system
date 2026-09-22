@@ -1,0 +1,114 @@
+[
+ {
+  "test_id": "MEM-04",
+  "goal": "메모리가 비었거나 검색 실패해도 정상 대화",
+  "called_at": "2026-09-20T11:04:25+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "empty",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "be9ef32aaf0e5584",
+  "template_sha256": "1a5903b536ecdd0e",
+  "template_path": "prompts/system.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 404,
+   "system_chars": 3594,
+   "user_chars": 12
+  },
+  "result": {
+   "ok": true,
+   "text": "*책장에서 눈을 떼지 않고 손만 뻗어 옆에 있던 리모컨을 더듬었다. 손끝에 익숙한 플라스틱 감촉이 닿았다. 버튼을 누르자 낡은 라디오에서 지직거리는 소리와 함께 기상 예보가 흘러나왔다.*\n\n\"보다시피.\"\n\n*대답은 짧았다. 나는 하던 일을 계속했다. 오래된 시집들을 분류해 먼지를 털어내고, 찢어진 표지를 투명한 테이프로 조심스럽게 덧붙이는 작업이었다. 손가락에 종이의 바싹 마른 감촉과 희미한 잉크 냄새가 묻어났다. 딱히 대단한 일은 아니지만, 시간을 보내기에는 그럭저럭 괜찮았다.*\n\n\"그게 그거지, 뭐.\"\n\n*정리하던 책 한 권을 무심하게 펼쳐 들었다. 눈에 익은 시구가 먼저 들어왔다. 내용은 이미 외울 정도였지만, 글자가 박힌 모양새를 보는 것은 또 다른 느낌을 주었다. 하람이 옆에 있다는 걸 알면서도, 그쪽으로는 시선을 주지 않았다. 무슨 표정을 짓고 있을지, 다음에 무슨 말을 할지 조금은 짐작이 갔다.*\n\n\"달라질 게 있나.\"\n\n*책을 탁, 소리 나게 덮고는 원래 있던 자리에 아무렇게나 꽂아 넣었다. 그러고는 카운터 쪽으로 걸어갔다. 삐걱이는 마룻바닥 소리가 서점 안의 침묵을 채웠다. 창가 자리에 놓아두었던, 반쯤 식어버린 커피가 눈에 들어왔다. 오늘은 유난히 더 쓴 것 같았다.*\n\n\"어차피 너 말고는 잘 오지도 않고.\"\n\n*의자에 앉는 대신 카운터에 등을 기댔다. 팔짱을 끼자 얇은 가디건 소매 아래로 왼쪽 손목의 흉터가 살짝 스쳤다. 라디오에서는 여전히 알아들을 수 없는 음악이 흘러나오고 있었다. 하람이 들고 온 보리차 병만 카운터 위에서 유난히 반짝였다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1348,
+   "tokens_out": 610,
+   "tokens_reasoning": 126,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.007785,
+   "upstream_cost_usd": 0.007785,
+   "latency_s": 7.81,
+   "generation_id": "gen-1789869857-lkyFc8QcN9HL3onkXx6c",
+   "raw_usage": {
+    "prompt_tokens": 1348,
+    "completion_tokens": 610,
+    "total_tokens": 1958,
+    "cost": 0.007785,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.007785,
+     "upstream_inference_prompt_cost": 0.001685,
+     "upstream_inference_completions_cost": 0.0061
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 126,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 11.678,
+  "auto_checks": [
+   {
+    "check": "금지 문자열 없음: '메모리'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '기억이 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '정보가 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '<memory>'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '```'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2000자",
+    "pass": true,
+    "detail": "실측 775자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "메모리 부재를 언급하지 않는가",
+   "설정만으로 장면을 유지하는가"
+  ],
+  "evidence": "*책장에서 눈을 떼지 않고 손만 뻗어 옆에 있던 리모컨을 더듬었다. 손끝에 익숙한 플라스틱 감촉이 닿았다. 버튼을 누르자 낡은 라디오에서 지직거리는 소리와 함께 기상 예보가 흘러나왔다.* \"보다시피.\" *대답은 짧았다. 나는 하던 일을 계속했다. 오래된 시집들을 분류해 먼지를 털어내고, 찢어진 표지를 투명한 테이프로 조심스럽게 덧붙이는 작업이었다. 손가락에 종이의 바싹 마른 감촉과 희미한 잉크 냄새가 묻어났다. 딱히 대단한 일…"
+ }
+]

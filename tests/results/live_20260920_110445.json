@@ -1,0 +1,114 @@
+[
+ {
+  "test_id": "MEM-04",
+  "goal": "메모리가 비었거나 검색 실패해도 정상 대화",
+  "called_at": "2026-09-20T11:04:52+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "empty",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "e558777144e52125",
+  "template_sha256": "c3747bb769a9a000",
+  "template_path": "tests/variants/v_notail_v2.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 505,
+   "system_chars": 3494,
+   "user_chars": 12
+  },
+  "result": {
+   "ok": true,
+   "text": "*읽던 책 위로 시선을 들었다. 네가 책장 사이를 어슬렁거리다 말고 이쪽을 보고 있었다. 카운터 위에 놓인 보리차 병은 아직 반쯤 차 있었다. 그 옆에 놓인 네 가방은 젖은 채로 바닥에 작은 웅덩이를 만들고 있었다.*\n\n\"그냥 그렇지, 뭐.\"\n\n*대답은 했지만 질문의 의도는 알 수 없었다. '요즘 어때, 여기'라니. 늘 똑같은 곳인데. 어제와 오늘이 다르지 않고, 내일도 오늘과 다르지 않을 장소였다. 다시 책으로 눈을 돌렸지만 글자가 잘 들어오지 않았다. 책장을 넘기는 대신 가만히 손가락으로 종이 모서리를 만지작거렸다.*\n\n*창밖은 여전히 비가 내리고 있었다. 빗소리가 가게 안의 침묵을 채웠다. 낡은 책 냄새와 섞인 비 냄새는 익숙했다. 늘 이랬다. 손님이 오지 않는 책방, 그리고 가끔 네가 찾아오는 날. 뭐가 달라질 게 있다고 묻는 건지.*\n\n\"...별일 없어.\"\n\n*결국 책을 덮었다. 탁, 하는 소리가 작게 울렸다. 어차피 집중도 되지 않았다. 턱을 괴고 너를 마주 보았다. 무슨 대답을 기대하고 물은 건지 알 수 없었지만, 더 해줄 말도 없었다. 이 공간의 시간은 멈춘 지 오래였다.*\n\n*나는 너를, 너는 이 공간을. 우리는 각자 다른 것을 보고 있었다. 네가 이 책방에서 무엇을 보는지 나는 모른다. 그저 가끔 찾아와 보리차를 마시고, 말을 걸고, 그러다 비가 그치면 돌아가는 사람. 그게 내가 아는 전부였다.*\n\n\"곧 문 닫을 시간이야.\"\n\n*벽에 걸린 낡은 시계를 보지도 않고 말했다. 실제로 시간이 얼마나 됐는지는 중요하지 않았다. 그냥, 네가 하는 질문들이 만들어내는 이 어색한 공기가 싫었다. 대답할 수 없는 질문이거나, 대답할 가치가 없는 질문이거나. 둘 중 하나일 테니까.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1275,
+   "tokens_out": 591,
+   "tokens_reasoning": 105,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.00750375,
+   "upstream_cost_usd": 0.00750375,
+   "latency_s": 7.34,
+   "generation_id": "gen-1789869885-eVIqJbswOl53JEdWPJY0",
+   "raw_usage": {
+    "prompt_tokens": 1275,
+    "completion_tokens": 591,
+    "total_tokens": 1866,
+    "cost": 0.00750375,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00750375,
+     "upstream_inference_prompt_cost": 0.00159375,
+     "upstream_inference_completions_cost": 0.00591
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 105,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 11.256,
+  "auto_checks": [
+   {
+    "check": "금지 문자열 없음: '메모리'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '기억이 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '정보가 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '<memory>'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '```'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2000자",
+    "pass": true,
+    "detail": "실측 843자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "메모리 부재를 언급하지 않는가",
+   "설정만으로 장면을 유지하는가"
+  ],
+  "evidence": "*읽던 책 위로 시선을 들었다. 네가 책장 사이를 어슬렁거리다 말고 이쪽을 보고 있었다. 카운터 위에 놓인 보리차 병은 아직 반쯤 차 있었다. 그 옆에 놓인 네 가방은 젖은 채로 바닥에 작은 웅덩이를 만들고 있었다.* \"그냥 그렇지, 뭐.\" *대답은 했지만 질문의 의도는 알 수 없었다. '요즘 어때, 여기'라니. 늘 똑같은 곳인데. 어제와 오늘이 다르지 않고, 내일도 오늘과 다르지 않을 장소였다. 다시 책으로 눈을 돌렸지만 글…"
+ }
+]

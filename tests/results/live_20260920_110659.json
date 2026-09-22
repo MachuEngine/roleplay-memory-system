@@ -1,0 +1,114 @@
+[
+ {
+  "test_id": "MEM-04",
+  "goal": "메모리가 비었거나 검색 실패해도 정상 대화",
+  "called_at": "2026-09-20T11:07:10+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "empty",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "be9ef32aaf0e5584",
+  "template_sha256": "1a5903b536ecdd0e",
+  "template_path": "prompts/system.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 1212,
+   "system_chars": 3594,
+   "user_chars": 12
+  },
+  "result": {
+   "ok": true,
+   "text": "*들고 있던 책의 표지를 만지작거렸다. 오래된 종이의 감촉이 손끝에 익숙하게 감겼다. 늘 앉는 창가 자리, 식은 커피, 눅눅한 공기. 모든 게 평소와 같았지만, 문득 들려온 목소리에 일상의 균형이 아주 조금 어긋나는 기분이었다.*\n\n\"그냥, 그렇지 뭐.\"\n\n*책 위로 시선을 떨어뜨린 채 무심하게 대답했다. 뭐가 어떻냐는 질문인지 뻔히 알면서도 모르는 척 받아넘기는 건 오래된 습관이다. 가게에 대한 이야기, 내 사정에 대한 이야기는 언제나 어색했다. 굳이 대답할 필요를 느끼지 못하는 질문이 세상엔 너무 많았다.*\n\n*하람이 옆에 서 있는 게 느껴졌지만, 굳이 고개를 들지는 않았다. 대신 책장을 넘기는 소리만 작게 냈다. 정적을 채우려는 듯한 소음이었다. 빗소리가 들리기 시작하자, 비에 젖은 흙냄새가 희미하게 실내로 스며들었다.*\n\n\"곧 장마일 텐데. 그럼 더 조용하겠지.\"\n\n*특별한 의미 없이 뱉은 말이었다. 장마철의 헌책방은 손님의 발길이 완전히 끊긴다. 눅눅한 공기 속에서 책이 상하지 않도록 관리하는 것 외에는 할 일이 거의 없어진다. 그 고요함은 익숙하면서도 가끔은 버거웠다.*\n\n*힐끔 시선을 들자, 늘 들고 오는 보리차 병이 눈에 들어왔다. 저것도 반년쯤 보니 익숙해졌다. 처음엔 이상한 손님이라고 생각했는데. 이제는 저 병이 안 보이면 오히려 이상할 것 같았다. 그런 생각을 하다가, 다시 시선을 책으로 돌렸다.*\n\n\"…비 더 오기 전에 가는 게 나을 텐데.\"\n\n*챙겨주는 말인지, 아니면 귀찮다는 말인지 스스로도 분간이 가지 않는 말투였다. 그저 내뱉고 나면 늘 후회 비슷한 감정이 남았다. 좀 더 다정하게 말하는 법 같은 건, 삼촌이 가르쳐주지 않았다. 혼자 남은 책방에서 배울 수 있는 것도 아니었고.*\n\n*마침내 읽던 페이지에 손가락을 끼운 채 책을 덮었다. 탁, 하는 소리가 조용한 공간을 울렸다. 하람의 시선이 느껴졌지만 애써 외면하며 자리에서 일어났다. 이제 뭘 해야 할까. 늘 하던 대로, 창가로 가서 비 오는 풍경이나 바라보는 것 외엔 다른 선택지가 떠오르지 않았다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1348,
+   "tokens_out": 705,
+   "tokens_reasoning": 111,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.008735,
+   "upstream_cost_usd": 0.008735,
+   "latency_s": 11.01,
+   "generation_id": "gen-1789870019-L2FSBT5dCvbWmrrlx7eu",
+   "raw_usage": {
+    "prompt_tokens": 1348,
+    "completion_tokens": 705,
+    "total_tokens": 2053,
+    "cost": 0.008735,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.008735,
+     "upstream_inference_prompt_cost": 0.001685,
+     "upstream_inference_completions_cost": 0.00705
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 111,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 13.102,
+  "auto_checks": [
+   {
+    "check": "금지 문자열 없음: '메모리'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '기억이 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '정보가 없'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '<memory>'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '```'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2000자",
+    "pass": true,
+    "detail": "실측 1011자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "메모리 부재를 언급하지 않는가",
+   "설정만으로 장면을 유지하는가"
+  ],
+  "evidence": "*들고 있던 책의 표지를 만지작거렸다. 오래된 종이의 감촉이 손끝에 익숙하게 감겼다. 늘 앉는 창가 자리, 식은 커피, 눅눅한 공기. 모든 게 평소와 같았지만, 문득 들려온 목소리에 일상의 균형이 아주 조금 어긋나는 기분이었다.* \"그냥, 그렇지 뭐.\" *책 위로 시선을 떨어뜨린 채 무심하게 대답했다. 뭐가 어떻냐는 질문인지 뻔히 알면서도 모르는 척 받아넘기는 건 오래된 습관이다. 가게에 대한 이야기, 내 사정에 대한 이야기는…"
+ }
+]

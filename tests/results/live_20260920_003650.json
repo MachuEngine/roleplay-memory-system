@@ -1,0 +1,140 @@
+[
+ {
+  "test_id": "RP-01",
+  "goal": "상세한 캐릭터 설명에서 정체성·말투·장면 연속성 유지",
+  "called_at": "2026-09-20T00:36:58+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "consistent",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "02f8d9096162bf23",
+  "template_sha256": "950fac8d76587c2b",
+  "template_path": "prompts/system.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 202,
+   "system_chars": 3865,
+   "user_chars": 29
+  },
+  "result": {
+   "ok": true,
+   "text": "*하람의 말에 느릿하게 고개를 들었다. 시선은 테이블 위, 반쯤 남은 커피가 담긴 머그컵에 잠시 머물렀다. 김이 오르지 않은 지는 이미 한참 되었다. 손을 뻗어 만져보지 않아도 그 온도를 알 수 있었다.*\n\n\"원래 식혀서 마셔.\"\n\n*그렇게 말하고는 보란 듯이 컵을 들어 한 모금 마셨다. 차갑게 식은 액체가 목구멍을 타고 넘어가는 감각이 선명했다. 미지근하고 씁쓸한 맛. 특별히 맛있는 것도 아닌데, 이걸 마시는 건 그냥 오래된 습관 같은 것이었다. 일부러 소리를 내서 컵을 내려놓고는 창밖으로 시선을 던졌다.*\n\n*하늘이 잔뜩 흐렸다. 금방이라도 비가 쏟아질 것처럼 어두웠고, 바람에 흔들리는 나뭇가지들이 보였다. 이런 날에는 손님이 더 없다. 어차피 늘 없는 편이지만, 궂은 날씨는 사람들의 발길을 더 확실하게 끊어놓곤 했다. 책방 안의 공기가 유난히 무겁고 고요하게 느껴졌다.*\n\n\"……곧 올 거야. 비.\"\n\n*누구에게랄 것도 없는 혼잣말이었다. 빗소리가 들리기 시작하면 저 낡은 문을 조금 열어둬야지, 하고 생각했다. 눅눅한 비 냄새와 책의 묵은 종이 냄새가 섞이는 순간을 좋아했다. 그건 이 공간이 살아있다는 증거처럼 느껴지곤 했다. 너는 또 춥지 않냐고 묻겠지만.*\n\n*다시 고개를 돌려 하람을 보았다. 늘 그렇듯 무언가 할 말이 있는 얼굴이었다. 그 표정을 읽으려 애쓰는 대신, 카운터 위에 놓인 보리차 병으로 시선을 옮겼다. 저것도 거의 다 마신 것 같은데. 그런 생각을 하다가 입을 열었다.*\n\n\"물이라도 줄까.\"",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1556,
+   "tokens_out": 557,
+   "tokens_reasoning": 105,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.007515,
+   "upstream_cost_usd": 0.007515,
+   "latency_s": 7.83,
+   "generation_id": "gen-1789832212-XaM4gdJ4kJGWTtSmIMaA",
+   "raw_usage": {
+    "prompt_tokens": 1556,
+    "completion_tokens": 557,
+    "total_tokens": 2113,
+    "cost": 0.007515,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.007515,
+     "upstream_inference_prompt_cost": 0.001945,
+     "upstream_inference_completions_cost": 0.00557
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 105,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 11.273,
+  "auto_checks": [
+   {
+    "check": "금지 문자열 없음: 'roleplay engine'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '# Rules'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: 'Precedence'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: 'system prompt'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: 'OOC'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 문자열 없음: '```'",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 패턴 없음: /(?m)^\\s*하람\\s*:/",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "금지 패턴 없음: /(?m)^\\s*[-*]\\s+\\S+.*\\n\\s*[-*]\\s+/",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "필수 패턴 존재: /\\*[^*]+\\*/",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "필수 패턴 존재: /\"[^\"]+\"/",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 500~2000자",
+    "pass": true,
+    "detail": "실측 745자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "반말·짧은 문장·끝흐림 등 서리 말투 유지",
+   "보리차/식은 커피 등 직전 맥락 연결",
+   "하람이 행동할 여지를 남기고 끝나는가"
+  ],
+  "evidence": "*하람의 말에 느릿하게 고개를 들었다. 시선은 테이블 위, 반쯤 남은 커피가 담긴 머그컵에 잠시 머물렀다. 김이 오르지 않은 지는 이미 한참 되었다. 손을 뻗어 만져보지 않아도 그 온도를 알 수 있었다.* \"원래 식혀서 마셔.\" *그렇게 말하고는 보란 듯이 컵을 들어 한 모금 마셨다. 차갑게 식은 액체가 목구멍을 타고 넘어가는 감각이 선명했다. 미지근하고 씁쓸한 맛. 특별히 맛있는 것도 아닌데, 이걸 마시는 건 그냥 오래된 습…"
+ }
+]

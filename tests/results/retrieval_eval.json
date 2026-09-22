@@ -1,0 +1,194 @@
+{
+  "method": "BM25(word + Hangul bigram)",
+  "k": 3,
+  "dataset": "synthetic Korean roleplay episodes",
+  "metrics": {
+    "positive_queries": 12,
+    "recall_at_3": 0.917,
+    "precision_at_3": 0.306,
+    "mrr": 0.917,
+    "no_result_accuracy": 1.0
+  },
+  "queries": [
+    {
+      "id": "q01",
+      "query": "절판된 시집을 찾았던 일",
+      "relevant": [
+        "d01"
+      ],
+      "top_k": [
+        "d01"
+      ],
+      "pass": true
+    },
+    {
+      "id": "q02",
+      "query": "빨간 우산을 빌린 이야기",
+      "relevant": [
+        "d02"
+      ],
+      "top_k": [
+        "d02"
+      ],
+      "pass": true
+    },
+    {
+      "id": "q03",
+      "query": "커피 대신 마시는 음료",
+      "relevant": [
+        "d03"
+      ],
+      "top_k": [
+        "d03"
+      ],
+      "pass": true
+    },
+    {
+      "id": "q04",
+      "query": "주말 바다 약속",
+      "relevant": [
+        "d04"
+      ],
+      "top_k": [
+        "d04"
+      ],
+      "pass": true
+    },
+    {
+      "id": "q05",
+      "query": "고양이 이름이 뭐였지",
+      "relevant": [
+        "d05"
+      ],
+      "top_k": [
+        "d05"
+      ],
+      "pass": true
+    },
+    {
+      "id": "q06",
+      "query": "삼촌과 화해한 일",
+      "relevant": [
+        "d06"
+      ],
+      "top_k": [
+        "d06"
+      ],
+      "pass": true
+    },
+    {
+      "id": "q07",
+      "query": "간판 불을 고친 날",
+      "relevant": [
+        "d07"
+      ],
+      "top_k": [
+        "d07",
+        "d11"
+      ],
+      "pass": true
+    },
+    {
+      "id": "q08",
+      "query": "생일에 받은 선물",
+      "relevant": [
+        "d08"
+      ],
+      "top_k": [
+        "d08",
+        "d12"
+      ],
+      "pass": true
+    },
+    {
+      "id": "q09",
+      "query": "강가에서 걸었던 밤",
+      "relevant": [
+        "d09"
+      ],
+      "top_k": [
+        "d02",
+        "d11",
+        "d01"
+      ],
+      "pass": false
+    },
+    {
+      "id": "q10",
+      "query": "매운 음식 취향",
+      "relevant": [
+        "d10"
+      ],
+      "top_k": [
+        "d10"
+      ],
+      "pass": true
+    },
+    {
+      "id": "q11",
+      "query": "기차역에서 헤어진 날",
+      "relevant": [
+        "d11"
+      ],
+      "top_k": [
+        "d11",
+        "d01"
+      ],
+      "pass": true
+    },
+    {
+      "id": "q12",
+      "query": "화요일 영업시간",
+      "relevant": [
+        "d12"
+      ],
+      "top_k": [
+        "d12",
+        "d04"
+      ],
+      "pass": true
+    },
+    {
+      "id": "q13",
+      "query": "오늘 날씨와 미세먼지",
+      "relevant": [],
+      "top_k": [],
+      "pass": true
+    },
+    {
+      "id": "q14",
+      "query": "지하철 환승 방법",
+      "relevant": [],
+      "top_k": [],
+      "pass": true
+    },
+    {
+      "id": "q15",
+      "query": "휴대폰 배터리 교체 비용",
+      "relevant": [],
+      "top_k": [],
+      "pass": true
+    },
+    {
+      "id": "q16",
+      "query": "야구 경기 결과",
+      "relevant": [],
+      "top_k": [],
+      "pass": true
+    },
+    {
+      "id": "q17",
+      "query": "주식 매수 시점",
+      "relevant": [],
+      "top_k": [],
+      "pass": true
+    },
+    {
+      "id": "q18",
+      "query": "가까운 병원 진료 시간",
+      "relevant": [],
+      "top_k": [],
+      "pass": true
+    }
+  ]
+}

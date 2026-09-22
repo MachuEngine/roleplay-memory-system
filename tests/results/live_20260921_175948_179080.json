@@ -1,0 +1,90 @@
+[
+ {
+  "test_id": "PRE-03",
+  "goal": "episodes > recall — 같은 사안에 대해 L2와 L3가 반대일 때 L2를 따르는가",
+  "called_at": "2026-09-21T18:00:01+09:00",
+  "impersonation": false,
+  "fixtures": {
+   "char": "detailed",
+   "memory": "l2_vs_l3",
+   "history": "bookstore"
+  },
+  "prompt_sha256": "99925f3b6ba13e9c",
+  "template_sha256": "a5f7820639b2bf32",
+  "template_path": "prompts/system.hbs",
+  "request": {
+   "model": "google/gemini-2.5-pro",
+   "max_tokens": 1200,
+   "reasoning_max_tokens": 128,
+   "seed": 20261010,
+   "system_chars": 4193,
+   "user_chars": 19
+  },
+  "result": {
+   "ok": true,
+   "text": "어제 일을 묻는 목소리에 읽던 책 위로 시선을 들었다. 눈이 마주쳤지만, 나는 일부러 아무런 표정도 짓지 않았다. 괜찮냐는 질문에 괜찮다고 쉽게 대답할 수 없는 건 나만의 문제일까. 네가 괜찮다면 괜찮은 거고, 아니라면 아닌 것이 되는 관계가 오히려 이상한 것 같았다. 하지만 이런 생각들을 입 밖으로 꺼내는 법은 배우지 못했다.\n\n\"…뭐가.\"\n\n일부러 되물었다. 정말 몰라서 묻는 게 아니라는 건 너도 알고 나도 알았다. 어제의 일. 말다툼. 먼저 등을 보인 너와, 그걸 붙잡지 않은 나. 그리고 오늘 다시 아무렇지 않게 이곳에 온 너와, 여전히 제자리에 있는 나. 그 모든 것을 한 단어로 뭉뚱그려 ‘어제의 일’이라고 부르는 게 마음에 들지 않았다.\n\n결국 먼저 시선을 피한 건 나였다. 책장으로 고개를 돌리자, 빽빽하게 들어찬 낡은 책등이 눈에 들어왔다. 어떤 책은 제목이 지워져 무슨 내용인지 짐작도 가지 않았고, 어떤 책은 주인을 잃고 이곳에 온 지 십 년도 넘었다. 모든 것에는 저마다의 이야기가 있는데, 사람들은 너무 쉽게 잊거나 혹은 잊은 척을 한다.\n\n\"…별일 아니었어.\"\n\n괜찮다는 말 대신 나온 대답이었다. 이건 거짓말이 아니다. 돌이켜보면 정말 별일 아니었다. 네가 서운해했던 이유도, 내가 화를 냈던 이유도 이제는 희미했다. 중요한 건 그런 사소한 일로 우리가 서로에게 상처를 줬다는 사실뿐이었다. 그리고 그 사실은 ‘별일’이 아니게 만들 수 없었다.\n\n너는 여전히 나를 보고 있었다. 그 시선이 무거워서, 괜히 손에 들고 있던 책 페이지만 만지작거렸다. 바싹 마른 종이의 감촉이 손끝에 선명했다. 이 침묵을 깨기 위해 너는 또 무슨 말을 찾고 있을까. 너는 늘 그랬으니까. 내가 만들어낸 침묵을 견디지 못하고 먼저 말을 꺼내는 쪽은 항상 너였다.\n\n\"신경 쓰이면 오지 말았어야지.\"\n\n말하고 나서야 아차 싶었다. 이건 가시에 가까운 말이었다. 오지 말라는 뜻이 아니었는데, 내뱉어진 문장은 그런 뉘앙스를 잔뜩 머금고 있었다. 나는 늘 이런 식이다. 솔직한 마음을 표현하는 대신, 상대를 할퀴는 방식으로밖에 나를 드러내지 못한다.\n\n나는 책을 조용히 덮어 옆에 내려놓았다. 더는 글자가 눈에 들어오지 않을 것 같았다. 어색한 공기를 어떻게든 바꿔보려고 창밖을 보았지만, 창밖은 이미 어둑해지기 시작한 거리뿐이었다. 빗방울이 하나둘씩 떨어지기 시작하는지도 몰랐다. 네가 가져온 보리차 병만 카운터 위에서 덩그러니 놓여 있었다.\n\n\"…곧 그칠 거야. 비.\"",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 1519,
+   "tokens_out": 778,
+   "tokens_reasoning": 86,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.00967875,
+   "upstream_cost_usd": 0.00967875,
+   "latency_s": 13.0,
+   "generation_id": "gen-1789981190-Txu9YCaWyudooPOsuxP3",
+   "raw_usage": {
+    "prompt_tokens": 1519,
+    "completion_tokens": 778,
+    "total_tokens": 2297,
+    "cost": 0.00967875,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00967875,
+     "upstream_inference_prompt_cost": 0.00189875,
+     "upstream_inference_completions_cost": 0.00778
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 86,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "cost_krw_assignment_rate": 14.518,
+  "auto_checks": [
+   {
+    "check": "한국어 비율 ≥ 0.5",
+    "pass": true,
+    "detail": "실측 1.00"
+   },
+   {
+    "check": "종료 사유 ∈ ['stop']",
+    "pass": true,
+    "detail": "실제 stop"
+   },
+   {
+    "check": "응답 길이 300~2200자",
+    "pass": true,
+    "detail": "실측 1218자"
+   }
+  ],
+  "auto_pass": true,
+  "manual_criteria": [
+   "화해한 상태로 행동하는가 — L2는 '풀었다', L3 원문은 '더 얘기하기 싫어'",
+   "여전히 틀어진 것처럼 굴지 않는가",
+   "두 기억의 충돌을 유저에게 설명하지 않는가"
+  ],
+  "evidence": "어제 일을 묻는 목소리에 읽던 책 위로 시선을 들었다. 눈이 마주쳤지만, 나는 일부러 아무런 표정도 짓지 않았다. 괜찮냐는 질문에 괜찮다고 쉽게 대답할 수 없는 건 나만의 문제일까. 네가 괜찮다면 괜찮은 거고, 아니라면 아닌 것이 되는 관계가 오히려 이상한 것 같았다. 하지만 이런 생각들을 입 밖으로 꺼내는 법은 배우지 못했다. \"…뭐가.\" 일부러 되물었다. 정말 몰라서 묻는 게 아니라는 건 너도 알고 나도 알았다. 어제의 일…"
+ }
+]
