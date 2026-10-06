@@ -15,7 +15,7 @@ from memory_sim import Episode, Fact, Turn
 EXTRACT_MAX_TOKENS = 500
 
 # 측정에 쓴 지시문은 형식 예시에 실제 내용(호칭: 선배, 시집)을 담고 있어, 입력이 빈약하면
-# Flash-Lite가 예시를 그대로 기억으로 복사했다(데모 스모크 테스트). 데모는 예시만 자리표시자로
+# Flash-Lite가 예시를 그대로 기억으로 복사했다(플레이그라운드 스모크 테스트). 플레이그라운드는 예시만 자리표시자로
 # 바꾼 변형을 쓴다. 공용 지시문이 바뀌면 아래 치환이 실패해 바로 드러난다.
 _EXAMPLE = ("<profile>\n- 호칭: 선배\n</profile>\n<episodes>\n- 시집을 찾아 건넸고 사용자가 받았다\n"
             "</episodes>")

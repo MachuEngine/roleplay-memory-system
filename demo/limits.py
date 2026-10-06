@@ -1,4 +1,4 @@
-"""데모 사용량 상한.
+"""플레이그라운드 사용량 상한.
 
 세션 상한은 세션 상태가, 일일 상한은 이 모듈의 프로세스 메모리 카운터가 맡는다.
 프로세스가 재시작되면 일일 카운터도 초기화되므로, 비용의 최종 상한은
@@ -49,5 +49,5 @@ def check_turn(session_used: int, daily: DailyCounter,
     if session_used >= session_limit:
         return f"이 세션의 대화 한도({session_limit}턴)를 모두 사용했습니다. '대화 시작'으로 새 세션을 열어 주세요."
     if not daily.try_acquire():
-        return "오늘 데모 전체 사용량이 한도에 도달했습니다. 내일 다시 시도해 주세요."
+        return "오늘 플레이그라운드 전체 사용량이 한도에 도달했습니다. 내일 다시 시도해 주세요."
     return None

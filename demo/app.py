@@ -1,4 +1,4 @@
-"""롤플레이 memory 데모 (Gradio).
+"""롤플레이 memory 플레이그라운드 (Gradio).
 
 캐릭터 설정을 입력하고 대화하면서, 말투 유지 · 기억 반영 · 사용자 행동 대리 금지가
 실제로 동작하는지 확인하는 화면이다. 대화 처리는 engine.py가 맡는다.
@@ -35,14 +35,14 @@ def make_clients():
     try:
         return OpenRouterClient(MAIN_MODEL), OpenRouterClient(EXTRACT_MODEL), None
     except MissingKey:
-        return None, None, "데모 키가 설정되지 않아 지금은 대화할 수 없습니다."
+        return None, None, "API 키가 설정되지 않아 지금은 대화할 수 없습니다."
 
 
 MAIN_CLIENT, EXTRACT_CLIENT, CLIENT_NOTICE = make_clients()
 
-INTRO = f"""## 롤플레이 memory 데모
+INTRO = f"""## 롤플레이 memory 플레이그라운드
 
-캐릭터를 설정하고 대화해 보세요. 이 데모에서 확인할 수 있는 것은 세 가지입니다.
+캐릭터를 설정하고 대화해 보세요. 이 플레이그라운드에서 확인할 수 있는 것은 세 가지입니다.
 
 - **말투 유지**: 입력한 말투와 대화 예시를 대화 내내 지킵니다.
 - **기억 반영**: 대화 {E.MEMORY_BATCH}회마다 확정된 사실(L1)과 사건(L2)을 정리해 다음 응답에 넣습니다. 대화창 아래 '기억' 패널에서 볼 수 있습니다.
@@ -128,7 +128,7 @@ def extract(session):
     return session, memory_md(session)
 
 
-with gr.Blocks(title="롤플레이 memory 데모") as demo:
+with gr.Blocks(title="롤플레이 memory 플레이그라운드") as demo:
     session_state = gr.State(None)
     gr.Markdown(INTRO)
     with gr.Row():

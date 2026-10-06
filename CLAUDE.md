@@ -5,7 +5,7 @@
 ## 검증
 
 ```bash
-bash scripts/check_local.sh   # 구문 검사 + 원가 계산·검산 + memory 18건 + response guard 5건 + 데모 엔진 24건
+bash scripts/check_local.sh   # 구문 검사 + 원가 계산·검산 + memory 18건 + response guard 5건 + 플레이그라운드 엔진 27건
 ```
 
 - 키 없이 1초 안에 끝나고 파일을 쓰지 않는다. 작업을 마치기 전에 반드시 통과시킨다.
@@ -28,9 +28,9 @@ bash scripts/check_local.sh   # 구문 검사 + 원가 계산·검산 + memory 1
 - `.claude/settings.json`의 `ask` 규칙으로 실행 전 확인을 받는다.
 - `scripts/run_*.sh`는 저장소 루트의 `.env`를 읽고 `.venv/bin/python`으로 실행한다.
 
-## 데모 (`demo/`)
+## 플레이그라운드 (`demo/`)
 
-- `prompts/system.hbs`는 측정 기록(토큰 902/879)과 연결된 원본이라 고치지 않는다. 데모 프롬프트는 `demo/prompts/system.hbs`에서 바꾼다.
+- `prompts/system.hbs`는 측정 기록(토큰 902/879)과 연결된 원본이라 고치지 않는다. 플레이그라운드 프롬프트는 `demo/prompts/system.hbs`에서 바꾼다.
 - 대화 처리는 `demo/engine.py`, 화면은 `demo/app.py`가 맡는다. 엔진은 gradio 없이 테스트할 수 있게 유지한다.
 - 키 없이 화면을 볼 때는 `DEMO_FAKE_LLM=1 .venv/bin/python demo/app.py`를 쓴다.
 - 배포는 Render 무료 웹 서비스(`render.yaml`)다. GitHub `main`에 push하면 자동으로 다시 배포되므로, push는 외부 공개 작업으로 보고 실행 직전에 사용자 확인을 받는다.

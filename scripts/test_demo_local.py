@@ -1,4 +1,4 @@
-"""데모 엔진 로컬 검증 (API 호출 없음).
+"""플레이그라운드 엔진 로컬 검증 (API 호출 없음).
 
 demo/engine.py의 프롬프트 조립, response guard 흐름, memory 추출 시점, 사용량 상한을
 가짜 클라이언트로 실행해 확인한다. 응답 품질이 아니라 흐름과 경계 조건이 검증 대상이다.
@@ -189,7 +189,7 @@ def main() -> None:
     for fn in (t_template, t_guard_flow, t_history_and_extraction, t_parse, t_limits, t_setup):
         fn()
     width = max(len(n) for n, _, _ in RESULTS)
-    print("## 데모 엔진 로컬 검증\n")
+    print("## 플레이그라운드 엔진 로컬 검증\n")
     for name, ok, detail in RESULTS:
         print(f"{'PASS' if ok else 'FAIL'}  {name:<{width}}  {detail}")
     failed = sum(not ok for _, ok, _ in RESULTS)

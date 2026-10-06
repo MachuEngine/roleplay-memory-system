@@ -29,6 +29,6 @@ run "원가 계산 (cost_model)" "$PY" scripts/cost_model.py
 run "원가 독립 검산 (verify_cost)" "$PY" scripts/verify_cost.py
 run "memory 참조 구현 (test_memory_local)" "$PY" scripts/test_memory_local.py
 run "response guard (test_response_guard_local)" "$PY" scripts/test_response_guard_local.py
-run "데모 엔진 (test_demo_local)" "$PY" scripts/test_demo_local.py
+run "플레이그라운드 엔진 (test_demo_local)" "$PY" scripts/test_demo_local.py
 
 exit $failed
