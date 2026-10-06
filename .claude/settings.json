@@ -1,0 +1,51 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bash scripts/check_local.sh)",
+      "Bash(python3 scripts/cost_model.py*)",
+      "Bash(python3 scripts/verify_cost.py*)",
+      "Bash(python3 scripts/test_memory_local.py*)",
+      "Bash(python3 scripts/test_response_guard_local.py*)",
+      "Bash(python3 scripts/count_tokens.py*)",
+      "Bash(python3 scripts/prompt_render.py*)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)"
+    ],
+    "ask": [
+      "Bash(*run_live_tests.py*)",
+      "Bash(*evaluate_extraction_quality.py*)",
+      "Bash(*evaluate_embedding_retrieval.py*)",
+      "Bash(*measure_extraction_latency.py*)",
+      "Bash(*measure_prompt_tokens.py*)",
+      "Bash(*measure_language_ratio.py*)",
+      "Bash(*probe_thinking.py*)",
+      "Bash(*probe_direct_cache.py*)",
+      "Bash(*test_cache_*.py*)",
+      "Bash(*test_explicit_cache.py*)",
+      "Bash(*test_injection_profile.py*)",
+      "Bash(*test_length_variants.py*)",
+      "Bash(*test_openrouter_cache_control.py*)",
+      "Bash(*scripts/run_*.sh*)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Edit(./.env)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/check_after_edit.sh",
+            "timeout": 60,
+            "statusMessage": "로컬 검증 실행 중"
+          }
+        ]
+      }
+    ]
+  }
+}

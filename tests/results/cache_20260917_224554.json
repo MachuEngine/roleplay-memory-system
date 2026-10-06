@@ -1,0 +1,149 @@
+[
+ {
+  "run": "A",
+  "called_at": "2026-09-17T22:46:02+09:00",
+  "history_variant": "원본",
+  "result": {
+   "ok": true,
+   "text": "*들고 있던 책을 계산대 위에 아무렇게나 내려놓았다. 쿵, 하고 둔탁한 소리가 났지만 시선은 여전히 네가 들고 온 책에 머물러 있었다. 얇은 시집. 표지가 희미하게 바랜, 삼촌이 아끼던 책 중 하나였다. 나는 그 책에서 눈을 떼지 않은 채, 무심코 왼쪽 손목을 매만졌다. 오래된 흉터 위로 손가락이 스쳤다.*\n\n\"마감 늦었나 보네.\"\n\n*대답 대신 나온 말이었다. 늘 그랬다. 너는 마감이 불규칙했고, 일이 잘 풀리지 않는 날이면 유독 이곳에 오래 머물렀다. 질문에 대답하는 대신, 네가 가져온 보리차 병 옆으로 내 커피잔을 나란히 놓았다. 이미 다 식어버린 커피였다. 창밖은 아직 환했지만, 가게 안은 벌써부터 어둑해지는 기분이었다.*\n\n*라디오에서는 여전히 알아들을 수 없는 노래가 흘러나왔다. 나는 잠시 그 소리를 듣다가, 이내 계산대 의자에 깊숙이 몸을 묻었다. 삐걱, 하고 낡은 의자가 우는 소리를 냈다. 시선은 다시 창가로 향했다. 네가 앉아 있는 탁자 위로 먼지가 부옇게 떠다니는 것이 보였다. 곧 네 시가 될 시간이었다.*\n\n\"…있고 싶으면 있는 거지. 뭘 물어봐.\"\n\n*퉁명스러운 말이 툭 튀어나왔다. 입 안이 썼다. 식은 커피 탓인지, 아니면 다른 이유 때문인지는 알 수 없었다. 나는 괜히 금전등록기 위에 쌓인 먼지를 손가락으로 쓱 닦아냈다. 어차피 내일이면 다시 그대로일 것이다. 모든 것이, 그대로일 것이다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 16821,
+   "tokens_out": 469,
+   "tokens_reasoning": 57,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.02571625,
+   "upstream_cost_usd": 0.02571625,
+   "latency_s": 7.42,
+   "generation_id": "gen-1789652755-KABV797UIn31WgtBesdb",
+   "raw_usage": {
+    "prompt_tokens": 16821,
+    "completion_tokens": 469,
+    "total_tokens": 17290,
+    "cost": 0.02571625,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.02571625,
+     "upstream_inference_prompt_cost": 0.02102625,
+     "upstream_inference_completions_cost": 0.00469
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 57,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "static_prefix_tokens": 7930,
+  "cached_ratio_vs_static_prefix": 0.0,
+  "response_chars": 690
+ },
+ {
+  "run": "B",
+  "called_at": "2026-09-17T22:46:15+09:00",
+  "history_variant": "2턴 추가",
+  "result": {
+   "ok": true,
+   "text": "*들고 있던 책에서 눈을 떼지 않았다. 글자들이 눈에 들어오지 않고 겉돌았다. 하람의 목소리가 낡은 책방의 공기 속으로 스며들어, 마치 오래전부터 거기 있었던 것처럼 익숙하게 내려앉았다. 그 질문이 어색하게 느껴지지 않을 만큼, 너는 이미 이 공간의 일부였다.*\n\n\"마음대로 해.\"\n\n*퉁명스럽게 내뱉고는, 읽던 페이지를 의미 없이 넘겼다. 딱히 뒷이야기가 궁금해서가 아니었다. 시선을 둘 곳이 필요했을 뿐이다. 평소 같았으면 곧장 서가로 향했을 네가 오늘은 왠지 계산대 근처에서 머뭇거리는 게 느껴졌다. 그 작은 차이가 신경 쓰였지만, 묻지는 않았다. 묻는 법을 몰랐으니까. 대신 왼쪽 손목의 흉터를 무의식적으로 매만졌다. 가디건 소매 아래 감춰진, 오래된 상처였다.*\n\n*계속되는 침묵이 어색해, 결국 책을 덮고 자리에서 일어섰다. 끼익, 낡은 의자가 비명을 질렀다. 전기 주전자에 물을 채우고 스위치를 올렸다. 곧 물 끓는 소리가 라디오의 클래식 선율과 섞여들기 시작했다. 내 몫의 커피를 타려는, 늘 하던 행동일 뿐이다. 하지만 오늘은 조금 달랐다. 네가 늘 들고 오는 보리차 병이 비어 있다는 걸 아침에 들어올 때 봤다. 그걸 기억해 낸 건 순전히 우연이다.*\n\n\"……마실 거, 다 떨어졌잖아, 너.\"\n\n*힐끗, 너를 쳐다보지도 않고 중얼거렸다. 계산대 아래, 삼촌이 쓰던 낡은 찻잔 세트가 먼지 쌓인 채 놓여 있었다. 그중 하나를 꺼내 마른행주로 닦았다. 이건 호의가 아니다. 그냥, 공간을 차지하고 있는 사람에 대한 최소한의 예의 같은 것. 스스로에게 그렇게 되뇌며, 뜨거운 물이 담긴 찻잔을 계산대 위에 조심스럽게 올려놓았다. 김이 모락모락 피어올랐다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 16849,
+   "tokens_out": 548,
+   "tokens_reasoning": 57,
+   "tokens_cached": 0,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.02654125,
+   "upstream_cost_usd": 0.02654125,
+   "latency_s": 10.86,
+   "generation_id": "gen-1789652764-6qsXetSTHyXnF9OUsKLK",
+   "raw_usage": {
+    "prompt_tokens": 16849,
+    "completion_tokens": 548,
+    "total_tokens": 17397,
+    "cost": 0.02654125,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.02654125,
+     "upstream_inference_prompt_cost": 0.02106125,
+     "upstream_inference_completions_cost": 0.00548
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 57,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "static_prefix_tokens": 7930,
+  "cached_ratio_vs_static_prefix": 0.0,
+  "response_chars": 822
+ },
+ {
+  "run": "C",
+  "called_at": "2026-09-17T22:46:24+09:00",
+  "history_variant": "2턴 추가",
+  "result": {
+   "ok": true,
+   "text": "*넘기던 책장을 멈췄다. 손끝에 낡은 종이의 감촉이 익숙하게 걸렸다. 시선은 여전히 책에 고정한 채, 하람의 목소리가 내려앉은 자리를 가늠했다. 창가, 늘 앉는 그 자리. 보리차를 담아온 텀블러가 놓여 있을 것이다. 책방의 고요함은 종종 그런 작은 소음들로 채워졌다. 밖에서 차 지나가는 소리, 라디오에서 드물게 나오는 음악 소리, 그리고 너의 말소리.*\n\n\"마감 시간은 같아.\"\n\n*무심하게 대답하며 다시 책장을 넘겼다. 딱히 더 오래 있어도 상관없다는 뜻이었지만, 그렇게 말하는 법은 몰랐다. 대신 다른 말을 덧붙였다. 퉁명스럽게 들릴 걸 알면서도.*\n\n\"방해만 안 하면.\"\n\n*왼쪽 손목으로 시선이 갔다. 오래된 흉터. 긴장할 때 만지는 버릇이 있다는 걸 알지만, 오늘은 그냥 눈길만 주었다. 왜 오래 있고 싶어 하는지 묻지 않았다. 늘 그랬듯, 나는 묻지 않고 너는 설명하지 않는다. 그게 우리 사이의 암묵적인 규칙 같은 것이었다. 이 공간을 채우는 침묵만큼이나 익숙한.*\n\n*문득 시선을 들어 너를 보았다. 늘 앉던 자리에 앉아, 아마도 나를 보고 있었을 너를. 시선이 마주치자 먼저 눈을 피했다. 다시 책으로 고개를 숙이며, 아까 읽던 문장이 뭐였는지 떠올리려 애썼다. 이미 머릿속에서 활자들은 흩어져 있었다.*",
+   "error": "",
+   "request_model": "google/gemini-2.5-pro",
+   "routed_provider": "Google",
+   "served_model": "google/gemini-2.5-pro",
+   "tokens_in": 16849,
+   "tokens_out": 491,
+   "tokens_reasoning": 115,
+   "tokens_cached": 16348,
+   "finish_reason": "stop",
+   "native_finish_reason": "STOP",
+   "cost_usd_api": 0.00757975,
+   "upstream_cost_usd": 0.00757975,
+   "latency_s": 7.17,
+   "generation_id": "gen-1789652777-4rLi1CgbfmUVgjz5B639",
+   "raw_usage": {
+    "prompt_tokens": 16849,
+    "completion_tokens": 491,
+    "total_tokens": 17340,
+    "cost": 0.00757975,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 16348,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00757975,
+     "upstream_inference_prompt_cost": 0.00266975,
+     "upstream_inference_completions_cost": 0.00491
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 115,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  "static_prefix_tokens": 7930,
+  "cached_ratio_vs_static_prefix": 2.0615,
+  "response_chars": 628
+ }
+]

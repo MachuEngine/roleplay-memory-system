@@ -1,0 +1,190 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="960" viewBox="0 0 1520 960" role="img" aria-labelledby="title desc">
+  <title id="title">memory system 전체 아키텍처</title>
+  <desc id="desc">매 턴 원문을 durable log에 저장하고, 최대 6턴 단위로 Flash-Lite가 L1·L2를 추출·병합하며 예산 초과분은 roll-up으로 L1에 승격한다. outbox를 소비해 원문을 전량 색인하고, 매 턴 검색 결과를 prompt에 주입하는 흐름</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-15%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.10"/>
+    </filter>
+    <style>
+      .title { font: 700 32px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif; fill: #0f172a; }
+      .lane { font: 700 20px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif; fill: #334155; letter-spacing: .02em; }
+      .box-title { font: 700 22px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif; fill: #0f172a; }
+      .body { font: 500 18px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif; fill: #334155; }
+      .small { font: 500 16px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif; fill: #475569; }
+      .label { font: 600 16px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif; fill: #475569; }
+      .label-orange { font: 600 16px 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif; fill: #9a3412; }
+      .node { stroke-width: 2; rx: 14; filter: url(#shadow); }
+      .arrow { fill: none; stroke: #334155; stroke-width: 3; }
+      .arrow-head { fill: #334155; }
+      .fallback { fill: none; stroke: #c2410c; stroke-width: 3; stroke-dasharray: 9 7; stroke-linejoin: round; }
+      .fallback-head { fill: #c2410c; }
+      .divider { stroke: #e2e8f0; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <rect width="1520" height="960" fill="#ffffff"/>
+  <text x="40" y="52" class="title">memory 저장·갱신·retrieval 흐름</text>
+
+  <!-- ===== 1. 매 턴 원문 저장 ===== -->
+  <text x="40" y="100" class="lane">1. 매 턴 원문 저장</text>
+
+  <rect x="40" y="120" width="170" height="110" class="node" fill="#eff6ff" stroke="#60a5fa"/>
+  <text x="125" y="162" text-anchor="middle" class="box-title">대화 1턴</text>
+  <text x="125" y="196" text-anchor="middle" class="body">사용자 + AI 원문</text>
+
+  <rect x="250" y="120" width="230" height="110" class="node" fill="#eff6ff" stroke="#3b82f6"/>
+  <text x="365" y="159" text-anchor="middle" class="box-title">durable log</text>
+  <text x="365" y="191" text-anchor="middle" class="body">매 턴 즉시 저장</text>
+  <text x="365" y="216" text-anchor="middle" class="small">extraction_status=pending</text>
+
+  <rect x="1230" y="120" width="220" height="110" class="node" fill="#f8fafc" stroke="#94a3b8"/>
+  <text x="1340" y="159" text-anchor="middle" class="box-title">chat_history</text>
+  <text x="1340" y="191" text-anchor="middle" class="body">최근·pending 원문</text>
+  <text x="1340" y="216" text-anchor="middle" class="small">commit 전 제거 금지</text>
+
+  <path d="M210 175 H250" class="arrow"/>
+  <path d="M250 175 L237 167 L237 183 Z" class="arrow-head"/>
+  <path d="M480 175 H1230" class="arrow"/>
+  <path d="M1230 175 L1217 167 L1217 183 Z" class="arrow-head"/>
+  <text x="855" y="160" text-anchor="middle" class="label">최근 대화와 미처리 원문 유지</text>
+
+  <line x1="40" y1="270" x2="1450" y2="270" class="divider"/>
+
+  <!-- ===== 2. memory 갱신 ===== -->
+
+  <rect x="250" y="330" width="200" height="110" class="node" fill="#fff7ed" stroke="#fb923c"/>
+  <text x="350" y="369" text-anchor="middle" class="box-title">batch trigger</text>
+  <text x="350" y="401" text-anchor="middle" class="body">최대 6턴</text>
+  <text x="350" y="426" text-anchor="middle" class="small">idle · 종료 시 flush</text>
+
+  <rect x="490" y="330" width="200" height="110" class="node" fill="#f5f3ff" stroke="#8b5cf6"/>
+  <text x="590" y="369" text-anchor="middle" class="box-title">Flash-Lite</text>
+  <text x="590" y="401" text-anchor="middle" class="body">L1·L2 추출·병합</text>
+  <text x="590" y="426" text-anchor="middle" class="small">승격 판단 포함 · 1회 호출</text>
+
+  <rect x="730" y="330" width="240" height="110" class="node" fill="#f0fdf4" stroke="#22c55e"/>
+  <text x="850" y="369" text-anchor="middle" class="box-title">atomic commit</text>
+  <text x="850" y="401" text-anchor="middle" class="body">L1·L2 + cursor + outbox</text>
+  <text x="850" y="426" text-anchor="middle" class="small">batch_id로 중복 방지</text>
+
+  <rect x="1030" y="330" width="240" height="110" class="node" fill="#dbeafe" stroke="#3b82f6"/>
+  <text x="1150" y="369" text-anchor="middle" class="box-title">L1 profile · L2 episodes</text>
+  <text x="1150" y="401" text-anchor="middle" class="body">상태 300 · 사건 600</text>
+  <text x="1150" y="426" text-anchor="middle" class="small">cacheable prefix</text>
+
+  <rect x="250" y="485" width="200" height="110" class="node" fill="#fff7ed" stroke="#fb923c"/>
+  <text x="350" y="524" text-anchor="middle" class="box-title">BM25 fallback</text>
+  <text x="350" y="556" text-anchor="middle" class="body">미처리 원문 검색</text>
+  <text x="350" y="581" text-anchor="middle" class="small">추출 전 · 색인 전 구간</text>
+
+  <rect x="490" y="485" width="200" height="110" class="node" fill="#f0fdf4" stroke="#4ade80"/>
+  <text x="590" y="524" text-anchor="middle" class="box-title">outbox 소비</text>
+  <text x="590" y="556" text-anchor="middle" class="body">L3 indexing</text>
+  <text x="590" y="581" text-anchor="middle" class="small">발화 단위 청크</text>
+
+  <rect x="730" y="485" width="240" height="110" class="node" fill="#f0fdf4" stroke="#22c55e"/>
+  <text x="850" y="524" text-anchor="middle" class="box-title">vector store</text>
+  <text x="850" y="556" text-anchor="middle" class="body">구독자 원문 전량 색인</text>
+  <text x="850" y="581" text-anchor="middle" class="small">선별 없음 · 상한 없음</text>
+
+  <rect x="1030" y="485" width="240" height="110" class="node" fill="#dbeafe" stroke="#60a5fa"/>
+  <text x="1150" y="524" text-anchor="middle" class="box-title">roll-up</text>
+  <text x="1150" y="556" text-anchor="middle" class="body">L2 예산 초과분 접기</text>
+  <text x="1150" y="581" text-anchor="middle" class="small">지속 상태는 L1로 승격</text>
+
+  <path d="M365 230 V285 H350 V330" class="arrow"/>
+  <path d="M350 330 L342 317 L358 317 Z" class="arrow-head"/>
+  <path d="M450 385 H490" class="arrow"/>
+  <path d="M490 385 L477 377 L477 393 Z" class="arrow-head"/>
+  <path d="M690 385 H730" class="arrow"/>
+  <path d="M730 385 L717 377 L717 393 Z" class="arrow-head"/>
+  <path d="M970 385 H1030" class="arrow"/>
+  <path d="M1030 385 L1017 377 L1017 393 Z" class="arrow-head"/>
+  <path d="M850 440 V462 H590 V485" class="arrow"/>
+  <path d="M590 485 L582 472 L598 472 Z" class="arrow-head"/>
+  <path d="M690 540 H730" class="arrow"/>
+  <path d="M730 540 L717 532 L717 548 Z" class="arrow-head"/>
+
+  <!-- L2 예산 초과 → roll-up → 지속 상태는 L1으로 -->
+  <path d="M1110 440 V485" class="arrow"/>
+  <path d="M1110 485 L1102 472 L1118 472 Z" class="arrow-head"/>
+  <text x="1098" y="470" text-anchor="end" class="label">600토큰 초과</text>
+  <path d="M1190 485 V440" class="arrow"/>
+  <path d="M1190 440 L1182 453 L1198 453 Z" class="arrow-head"/>
+
+  <!-- 추출·색인 지연 시 fallback -->
+  <path d="M250 200 H225 V540 H250" class="fallback"/>
+  <path d="M250 540 L237 532 L237 548 Z" class="fallback-head"/>
+  <text x="213" y="462" text-anchor="end" class="label-orange">추출·색인 지연 시</text>
+  <rect x="34" y="286" width="258" height="26" fill="#ffffff"/>
+  <text x="40" y="305" class="lane">2. memory 갱신 · background</text>
+
+  <line x1="40" y1="648" x2="1450" y2="648" class="divider"/>
+
+  <!-- ===== 3. 요청 시 retrieval ===== -->
+  <text x="40" y="683" class="lane">3. 요청 시 retrieval · online</text>
+
+  <rect x="40" y="712" width="170" height="110" class="node" fill="#fff7ed" stroke="#fb923c"/>
+  <text x="125" y="754" text-anchor="middle" class="box-title">현재 발화</text>
+  <text x="125" y="788" text-anchor="middle" class="body">사용자 1턴</text>
+
+  <rect x="250" y="712" width="200" height="110" class="node" fill="#fff7ed" stroke="#fb923c"/>
+  <text x="350" y="754" text-anchor="middle" class="box-title">query embedding</text>
+  <text x="350" y="788" text-anchor="middle" class="body">현재 의도 벡터화</text>
+
+  <rect x="490" y="712" width="200" height="110" class="node" fill="#f0fdf4" stroke="#22c55e"/>
+  <text x="590" y="751" text-anchor="middle" class="box-title">vector search</text>
+  <text x="590" y="783" text-anchor="middle" class="body">threshold 적용</text>
+  <text x="590" y="808" text-anchor="middle" class="small">점수순 정렬</text>
+
+  <rect x="730" y="712" width="240" height="110" class="node" fill="#f0fdf4" stroke="#4ade80"/>
+  <text x="850" y="751" text-anchor="middle" class="box-title">L3 recall</text>
+  <text x="850" y="783" text-anchor="middle" class="body">최대 300토큰 주입</text>
+  <text x="850" y="808" text-anchor="middle" class="small">온전한 청크만 · 초과분 제외</text>
+
+  <rect x="1030" y="692" width="240" height="150" class="node" fill="#f5f3ff" stroke="#8b5cf6"/>
+  <text x="1150" y="730" text-anchor="middle" class="box-title">prompt 조립</text>
+  <text x="1150" y="764" text-anchor="middle" class="body">L1·L2 + L3 recall</text>
+  <text x="1150" y="792" text-anchor="middle" class="body">chat_history + 현재 발화</text>
+  <text x="1150" y="820" text-anchor="middle" class="small">중복 source_turn_ids 제외</text>
+
+  <rect x="1030" y="872" width="240" height="72" class="node" fill="#ede9fe" stroke="#7c3aed"/>
+  <text x="1150" y="903" text-anchor="middle" class="box-title">Gemini 2.5 Pro</text>
+  <text x="1150" y="929" text-anchor="middle" class="small">다음 롤플레이 응답</text>
+
+  <path d="M210 767 H250" class="arrow"/>
+  <path d="M250 767 L237 759 L237 775 Z" class="arrow-head"/>
+  <path d="M450 767 H490" class="arrow"/>
+  <path d="M490 767 L477 759 L477 775 Z" class="arrow-head"/>
+  <path d="M690 767 H730" class="arrow"/>
+  <path d="M730 767 L717 759 L717 775 Z" class="arrow-head"/>
+  <path d="M970 767 H1030" class="arrow"/>
+  <path d="M1030 767 L1017 759 L1017 775 Z" class="arrow-head"/>
+
+  <!-- 색인된 원문 → 매 턴 검색 -->
+  <path d="M850 595 V712" class="arrow"/>
+  <path d="M850 712 L842 699 L858 699 Z" class="arrow-head"/>
+
+  <!-- 현재 발화 원문은 user 역할로 따로 전달 -->
+  <path d="M125 822 V880 H985 V830 H1030" class="arrow"/>
+  <path d="M1030 830 L1017 822 L1017 838 Z" class="arrow-head"/>
+  <text x="600" y="872" text-anchor="middle" class="label">현재 발화 원문</text>
+
+  <!-- fallback → 임시 주입 -->
+  <path d="M350 595 V628 H1000 V712 H1030" class="fallback"/>
+  <path d="M1030 712 L1017 704 L1017 720 Z" class="fallback-head"/>
+  <text x="672" y="617" text-anchor="middle" class="label-orange">overlap 상한 초과 시 임시 주입</text>
+
+  <!-- L1·L2 → 주입 (오른쪽 경로) -->
+  <path d="M1270 420 H1380 V735 H1270" class="arrow"/>
+  <path d="M1270 735 L1283 727 L1283 743 Z" class="arrow-head"/>
+  <text x="1374" y="664" text-anchor="end" class="label">L1·L2 주입</text>
+
+  <!-- chat_history → 주입 (가장 바깥 경로) -->
+  <path d="M1450 175 H1476 V790 H1270" class="arrow"/>
+  <path d="M1270 790 L1283 782 L1283 798 Z" class="arrow-head"/>
+  <text x="1470" y="700" text-anchor="end" class="label">최근 대화</text>
+
+  <path d="M1150 842 V872" class="arrow"/>
+  <path d="M1150 872 L1142 859 L1158 859 Z" class="arrow-head"/>
+</svg>

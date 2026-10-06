@@ -1,0 +1,177 @@
+[
+ {
+  "run": 1,
+  "prompt_tokens": 9774,
+  "cached_tokens": 9766,
+  "cache_write_tokens": 9766,
+  "cost": 0.006853,
+  "cost_details": {
+   "upstream_inference_cost": 0.006853,
+   "upstream_inference_prompt_cost": 0.004893,
+   "upstream_inference_completions_cost": 0.00196
+  },
+  "usage_raw": {
+   "prompt_tokens": 9774,
+   "completion_tokens": 196,
+   "total_tokens": 9970,
+   "cost": 0.006853,
+   "is_byok": false,
+   "prompt_tokens_details": {
+    "cached_tokens": 9766,
+    "cache_write_tokens": 9766,
+    "audio_tokens": 0,
+    "video_tokens": 0
+   },
+   "cost_details": {
+    "upstream_inference_cost": 0.006853,
+    "upstream_inference_prompt_cost": 0.004893,
+    "upstream_inference_completions_cost": 0.00196
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 106,
+    "image_tokens": 0,
+    "audio_tokens": 0
+   }
+  }
+ },
+ {
+  "run": 2,
+  "prompt_tokens": 9795,
+  "cached_tokens": 9766,
+  "cache_write_tokens": 0,
+  "cost": 0.003217,
+  "cost_details": {
+   "upstream_inference_cost": 0.003217,
+   "upstream_inference_prompt_cost": 0.001257,
+   "upstream_inference_completions_cost": 0.00196
+  },
+  "usage_raw": {
+   "prompt_tokens": 9795,
+   "completion_tokens": 196,
+   "total_tokens": 9991,
+   "cost": 0.003217,
+   "is_byok": false,
+   "prompt_tokens_details": {
+    "cached_tokens": 9766,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0,
+    "video_tokens": 0
+   },
+   "cost_details": {
+    "upstream_inference_cost": 0.003217,
+    "upstream_inference_prompt_cost": 0.001257,
+    "upstream_inference_completions_cost": 0.00196
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 51,
+    "image_tokens": 0,
+    "audio_tokens": 0
+   }
+  }
+ },
+ {
+  "run": 3,
+  "prompt_tokens": 9795,
+  "cached_tokens": 9766,
+  "cache_write_tokens": 0,
+  "cost": 0.003217,
+  "cost_details": {
+   "upstream_inference_cost": 0.003217,
+   "upstream_inference_prompt_cost": 0.001257,
+   "upstream_inference_completions_cost": 0.00196
+  },
+  "usage_raw": {
+   "prompt_tokens": 9795,
+   "completion_tokens": 196,
+   "total_tokens": 9991,
+   "cost": 0.003217,
+   "is_byok": false,
+   "prompt_tokens_details": {
+    "cached_tokens": 9766,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0,
+    "video_tokens": 0
+   },
+   "cost_details": {
+    "upstream_inference_cost": 0.003217,
+    "upstream_inference_prompt_cost": 0.001257,
+    "upstream_inference_completions_cost": 0.00196
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 51,
+    "image_tokens": 0,
+    "audio_tokens": 0
+   }
+  }
+ },
+ {
+  "run": 4,
+  "prompt_tokens": 9793,
+  "cached_tokens": 9766,
+  "cache_write_tokens": 0,
+  "cost": 0.0032145,
+  "cost_details": {
+   "upstream_inference_cost": 0.0032145,
+   "upstream_inference_prompt_cost": 0.0012545,
+   "upstream_inference_completions_cost": 0.00196
+  },
+  "usage_raw": {
+   "prompt_tokens": 9793,
+   "completion_tokens": 196,
+   "total_tokens": 9989,
+   "cost": 0.0032145,
+   "is_byok": false,
+   "prompt_tokens_details": {
+    "cached_tokens": 9766,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0,
+    "video_tokens": 0
+   },
+   "cost_details": {
+    "upstream_inference_cost": 0.0032145,
+    "upstream_inference_prompt_cost": 0.0012545,
+    "upstream_inference_completions_cost": 0.00196
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 52,
+    "image_tokens": 0,
+    "audio_tokens": 0
+   }
+  }
+ },
+ {
+  "run": 5,
+  "prompt_tokens": 9797,
+  "cached_tokens": 9766,
+  "cache_write_tokens": 0,
+  "cost": 0.0032095,
+  "cost_details": {
+   "upstream_inference_cost": 0.0032095,
+   "upstream_inference_prompt_cost": 0.0012595,
+   "upstream_inference_completions_cost": 0.00195
+  },
+  "usage_raw": {
+   "prompt_tokens": 9797,
+   "completion_tokens": 195,
+   "total_tokens": 9992,
+   "cost": 0.0032095,
+   "is_byok": false,
+   "prompt_tokens_details": {
+    "cached_tokens": 9766,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0,
+    "video_tokens": 0
+   },
+   "cost_details": {
+    "upstream_inference_cost": 0.0032095,
+    "upstream_inference_prompt_cost": 0.0012595,
+    "upstream_inference_completions_cost": 0.00195
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 102,
+    "image_tokens": 0,
+    "audio_tokens": 0
+   }
+  }
+ }
+]
