@@ -17,7 +17,7 @@ sys.path.insert(0, str(ROOT / "demo"))
 import engine as E  # noqa: E402
 from extraction import ExtractionError, parse  # noqa: E402
 from limits import KST, DailyCounter  # noqa: E402
-from memory_sim import Turn  # noqa: E402
+from memory_sim import Fact, Turn  # noqa: E402
 
 RESULTS: list[tuple[str, bool, str]] = []
 SAMPLE = json.loads((ROOT / "demo" / "sample_character.json").read_text("utf-8"))
@@ -151,10 +151,39 @@ def t_parse() -> None:
     facts, eps = parse("<profile>\n</profile>\n<episodes>\n</episodes>", turns)
     check("파싱: 빈 블록은 저장할 내용 없음", facts == [] and eps == [])
     try:
+        parse("<profile>\n- 생일: 목요일\n</profile>\n<episodes>\n- 바다에 가기로", turns)
+        check("파싱: 닫는 태그가 빠진(잘린) 응답은 실패로 처리", False)
+    except ExtractionError:
+        check("파싱: 닫는 태그가 빠진(잘린) 응답은 실패로 처리", True)
+    try:
         parse("저장할 내용이 없습니다.", turns)
         check("파싱: 블록이 없으면 실패로 처리", False)
     except ExtractionError:
         check("파싱: 블록이 없으면 실패로 처리", True)
+
+
+def t_extraction_call() -> None:
+    class Stub:
+        def __init__(self, finish: str) -> None:
+            self.finish, self.user = finish, ""
+
+        def complete(self, system, user, **_):
+            self.user = user
+            return E.ChatResult(ok=True, finish_reason=self.finish,
+                                text="<profile>\n- 생일: 목요일\n</profile>\n<episodes>\n</episodes>")
+
+    s, d = sample_session(), DailyCounter(100)
+    for i in range(E.MEMORY_BATCH):
+        E.respond(s, f"{i}번째 이야기.", E.FakeClient(), d)
+    pending = len(s.store.pending_turns(s.scope))
+    ok = E.run_extraction(s, Stub("length"))
+    check("추출: 출력 상한에서 잘리면 실패, 대기 턴 보존",
+          not ok and len(s.store.pending_turns(s.scope)) == pending)
+    s.store._store_fact(s.scope, Fact("호칭", '"너"라고 부른다', 0, [0]))
+    stub = Stub("stop")
+    ok = E.run_extraction(s, stub)
+    check("추출: 기존 기억은 escape를 풀어 전달",
+          ok and '"너"라고 부른다' in stub.user and "&quot;" not in stub.user)
 
 
 def t_limits() -> None:
@@ -186,7 +215,8 @@ def t_setup() -> None:
 
 
 def main() -> None:
-    for fn in (t_template, t_guard_flow, t_history_and_extraction, t_parse, t_limits, t_setup):
+    for fn in (t_template, t_guard_flow, t_history_and_extraction, t_parse, t_extraction_call,
+               t_limits, t_setup):
         fn()
     width = max(len(n) for n, _, _ in RESULTS)
     print("## 플레이그라운드 엔진 로컬 검증\n")

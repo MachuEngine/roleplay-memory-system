@@ -197,7 +197,8 @@ def extraction_due(session: Session) -> bool:
 
 def run_extraction(session: Session, client) -> bool:
     """대기 중인 턴에서 L1·L2를 추출한다. 실패하면 큐가 남아 다음 차례에 다시 시도한다."""
-    existing = session.store.build_keywordbook(session.scope, paid=False)
+    # keywordbook은 프롬프트 주입용으로 escape되어 있다. 추출 모델에는 원문으로 보낸다.
+    existing = html.unescape(session.store.build_keywordbook(session.scope, paid=False))
     n = len(session.store.pending_turns(session.scope))
     ok = session.store.run_extraction(session.scope, make_extractor(client, existing))
     session.extraction_runs.append({"ok": ok, "turns": n})
