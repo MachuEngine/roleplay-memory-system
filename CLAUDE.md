@@ -33,7 +33,8 @@ bash scripts/check_local.sh   # 구문 검사 + 원가 계산·검산 + memory 1
 - `prompts/system.hbs`는 측정 기록(토큰 902/879)과 연결된 원본이라 고치지 않는다. 데모 프롬프트는 `demo/prompts/system.hbs`에서 바꾼다.
 - 대화 처리는 `demo/engine.py`, 화면은 `demo/app.py`가 맡는다. 엔진은 gradio 없이 테스트할 수 있게 유지한다.
 - 키 없이 화면을 볼 때는 `DEMO_FAKE_LLM=1 .venv/bin/python demo/app.py`를 쓴다.
-- HF Space에는 `demo/**`와 데모가 import하는 `scripts/` 모듈만 올린다. 배포(업로드)는 외부 공개 작업이라 실행 직전에 사용자 확인을 받는다.
+- 배포는 Render 무료 웹 서비스(`render.yaml`)다. GitHub `main`에 push하면 자동으로 다시 배포되므로, push는 외부 공개 작업으로 보고 실행 직전에 사용자 확인을 받는다.
+- `OPENROUTER_API_KEY`는 Render 대시보드에만 둔다. `render.yaml`에 값을 쓰지 않는다(`sync: false`).
 
 ## 보안
 

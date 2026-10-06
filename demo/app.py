@@ -170,4 +170,6 @@ with gr.Blocks(title="롤플레이 memory 데모") as demo:
 
 
 if __name__ == "__main__":
-    demo.queue(default_concurrency_limit=4, api_open=False).launch(theme=gr.themes.Soft())
+    port = os.environ.get("PORT")              # Render 같은 호스팅이 지정하는 포트
+    demo.queue(default_concurrency_limit=4, api_open=False).launch(
+        theme=gr.themes.Soft(), server_port=int(port) if port else None)

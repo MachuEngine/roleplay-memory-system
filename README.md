@@ -89,6 +89,8 @@ DEMO_FAKE_LLM=1 .venv/bin/python demo/app.py   # 키 없이 화면 확인 (고�
 
 세션당 20턴, 하루 200턴으로 제한하며 `DEMO_SESSION_TURN_LIMIT`, `DEMO_DAILY_TURN_LIMIT`로 바꿀 수 있다.
 
+배포는 Render 무료 웹 서비스(`render.yaml`)를 쓴다. 무료 인스턴스는 15분간 요청이 없으면 꺼져서 다음 접속 때 약 1분을 기다려야 한다. 일일 턴 카운터는 서버 메모리에 있어 재시작되면 초기화되므로, 비용 상한은 OpenRouter 키의 크레딧 한도로 따로 둔다. 대화 내용은 서버에 저장하지 않는다.
+
 ## 검증 범위
 
 | 방법 | 내용 |

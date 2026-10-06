@@ -1,0 +1,25 @@
+# Render Blueprint: demo/app.py를 무료 웹 서비스로 띄운다.
+# 무료 인스턴스는 15분간 요청이 없으면 꺼지고, 다음 접속 때 다시 켜는 데 약 1분 걸린다.
+# OPENROUTER_API_KEY는 저장소에 넣지 않고 Render 대시보드에서 직접 입력한다(sync: false).
+services:
+  - type: web
+    name: roleplay-memory-demo
+    runtime: python
+    plan: free
+    buildCommand: pip install -r demo/requirements.txt
+    startCommand: python demo/app.py
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.15
+      - key: GRADIO_SERVER_NAME
+        value: 0.0.0.0
+      - key: GRADIO_ANALYTICS_ENABLED
+        value: "False"
+      - key: DEMO_SESSION_TURN_LIMIT
+        value: "20"
+      - key: DEMO_DAILY_TURN_LIMIT
+        value: "200"
+      - key: OPENROUTER_API_KEY
+        sync: false
