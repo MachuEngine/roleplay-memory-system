@@ -17,7 +17,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from llm_client import MissingKey, OpenRouterClient  # noqa: E402
-from measure_extraction_latency import INSTRUCTION  # noqa: E402
+from extraction_prompt import INSTRUCTION  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 CASES = ROOT / "tests" / "cases" / "extraction_eval.json"

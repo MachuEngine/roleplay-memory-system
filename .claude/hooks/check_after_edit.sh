@@ -9,7 +9,7 @@ file=$(jq -r '.tool_response.filePath // .tool_input.file_path // empty')
 
 case "$file" in
   "$root"/scripts/*.py | "$root"/prompts/* | "$root"/docs/*.md | \
-  "$root"/tests/cases/* | "$root"/tests/fixtures/*) ;;
+  "$root"/tests/cases/* | "$root"/tests/fixtures/* | "$root"/demo/*) ;;
   *) exit 0 ;;
 esac
 

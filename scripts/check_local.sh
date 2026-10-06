@@ -24,10 +24,11 @@ run() {
   fi
 }
 
-run "구문 검사 (scripts/*.py)" "$PY" -m py_compile scripts/*.py
+run "구문 검사 (scripts/*.py, demo/*.py)" "$PY" -m py_compile scripts/*.py demo/*.py
 run "원가 계산 (cost_model)" "$PY" scripts/cost_model.py
 run "원가 독립 검산 (verify_cost)" "$PY" scripts/verify_cost.py
 run "memory 참조 구현 (test_memory_local)" "$PY" scripts/test_memory_local.py
 run "response guard (test_response_guard_local)" "$PY" scripts/test_response_guard_local.py
+run "데모 엔진 (test_demo_local)" "$PY" scripts/test_demo_local.py
 
 exit $failed

@@ -26,7 +26,8 @@
       "Bash(*test_injection_profile.py*)",
       "Bash(*test_length_variants.py*)",
       "Bash(*test_openrouter_cache_control.py*)",
-      "Bash(*scripts/run_*.sh*)"
+      "Bash(*scripts/run_*.sh*)",
+      "Bash(*run_demo_smoke.py*)"
     ],
     "deny": [
       "Read(./.env)",

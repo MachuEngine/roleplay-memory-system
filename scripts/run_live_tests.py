@@ -25,6 +25,7 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from llm_client import UNKNOWN, ChatResult, MissingKey, OpenRouterClient  # noqa: E402
 from prompt_render import render_system, unresolved  # noqa: E402
+from text_metrics import korean_ratio  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = json.loads((ROOT / "tests" / "fixtures" / "fixtures.json").read_text("utf-8"))
@@ -56,13 +57,6 @@ def build_inputs(case: dict[str, Any]) -> tuple[str, str, dict[str, Any]]:
 
 
 # ---------------------------------------------------------------- 규칙 기반 판정
-def korean_ratio(text: str) -> float:
-    letters = [c for c in text if c.isalpha()]
-    if not letters:
-        return 0.0
-    return sum("가" <= c <= "힣" for c in letters) / len(letters)
-
-
 def run_checks(case: dict[str, Any], res: ChatResult) -> list[dict[str, Any]]:
     """자동 판정 결과. 판정할 수 없는 항목은 아예 만들지 않는다."""
     c, t, out = case["checks"], res.text, []

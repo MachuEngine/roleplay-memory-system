@@ -18,27 +18,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from llm_client import MissingKey, OpenRouterClient  # noqa: E402
+from extraction_prompt import INSTRUCTION  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "tests" / "results" / "extraction_latency.json"
-
-INSTRUCTION = """한국어 롤플레이 대화에서 장기 기억만 추출한다.
-다음 두 블록만 정확히 출력한다:
-<profile>
-- 호칭: 선배
-</profile>
-<episodes>
-- 시집을 찾아 건넸고 사용자가 받았다
-</episodes>
-태그 안의 항목명과 값은 모두 한국어로 쓴다. 중첩 XML 태그를 만들지 않는다.
-위 내용은 형식 예시일 뿐이며 입력에 없는 선배·시집 정보를 복사하지 않는다.
-저장할 내용이 없으면 해당 블록을 비워 둔다.
-profile: 확정된 관계, 호칭, 말투, 약속, 사용자가 직접 밝힌 사실의 현재값만 저장한다.
-episodes: 이후 상태를 바꾼 사건과 최종 결과만 저장한다.
-원문 보존(L3)은 이 호출의 일이 아니다. 대상 구간은 전량 색인되므로 발췌를 고르지 않는다.
-사용자가 직접 말했거나 장면에서 실제로 확정된 정보만 저장한다. 부정되거나 확인되지 않은
-추측, 가정, 취소된 계획을 활성 약속으로 만든 내용, 장식 묘사, 캐릭터 설정에 이미 있는 사실은
-두 블록 모두에서 제외한다. 충돌 시 사용자 명시 > 추론, 최신 > 과거, profile > episodes 순이다."""
 
 
 USER_LINES = [

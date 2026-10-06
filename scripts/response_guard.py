@@ -14,7 +14,7 @@ import re
 from pathlib import Path
 
 from impersonation_guard import validate as validate_impersonation
-from run_live_tests import FIXTURES, SUITE, korean_ratio
+from text_metrics import korean_ratio
 
 META = re.compile(
     r"(?:Synthesize and Plan|Drafting the Response|Core Conflict|"
@@ -58,6 +58,8 @@ def validate(text: str, user_name: str, impersonation: bool) -> list[str]:
 
 
 def main() -> None:
+    from run_live_tests import FIXTURES, SUITE  # 저장된 결과 재판정에만 필요하다
+
     parser = argparse.ArgumentParser()
     parser.add_argument("files", nargs="+", type=Path)
     args = parser.parse_args()

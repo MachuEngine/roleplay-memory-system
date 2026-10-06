@@ -13,6 +13,7 @@
 
 | 경로 | 내용 |
 |---|---|
+| `demo/` | 설계를 직접 대화로 확인하는 Gradio 데모 |
 | `output/assets/` | 아키텍처 다이어그램 |
 | `prompts/system.hbs` | 롤플레이 시스템 프롬프트 (핸들바 템플릿) |
 | `scripts/` | 원가 계산, 토큰 측정, 평가 스크립트 |
@@ -64,6 +65,7 @@ python3 scripts/cost_model.py               # 원가표 전체
 python3 scripts/verify_cost.py              # 독립 검산
 python3 scripts/test_memory_local.py        # memory 참조 구현 18건
 python3 scripts/test_response_guard_local.py
+bash scripts/check_local.sh                 # 위 검증과 데모 엔진 테스트를 한 번에
 ```
 
 모델을 호출하는 스크립트는 키가 필요하다.
@@ -74,6 +76,18 @@ cp .env.example .env    # API 키 입력
 ```
 
 OpenRouter를 경유하는 호출은 표준 라이브러리만 쓰고, `google-genai`는 Gemini API를 직접 부르는 스크립트에만 필요하다. 키가 없으면 실행하지 않고 멈춘다.
+
+## 데모
+
+`demo/`는 이 설계로 실제 대화를 해 볼 수 있는 Gradio 앱이다. 캐릭터 설정을 고정 정체성 / 초기 상태 / 말투 / 대화 예시로 나눠 입력받고, L1·L2 memory와 response guard를 거쳐 응답한다. 사칭 모드는 빼고 사용자 행동 대리 금지 규칙만 둔다. 규칙 기반 사용자 행동 판정은 3인칭 서술에서 오탐이 많아 데모에서는 차단하지 않고 의심 문장으로만 표시한다. L3 recall은 넣지 않았다.
+
+```bash
+.venv/bin/pip install -r demo/requirements.txt
+DEMO_FAKE_LLM=1 .venv/bin/python demo/app.py   # 키 없이 화면 확인 (고정 응답)
+.venv/bin/python demo/app.py                   # OPENROUTER_API_KEY 필요
+```
+
+세션당 20턴, 하루 200턴으로 제한하며 `DEMO_SESSION_TURN_LIMIT`, `DEMO_DAILY_TURN_LIMIT`로 바꿀 수 있다.
 
 ## 검증 범위
 
