@@ -11,7 +11,7 @@
         "tests/results/demo_smoke_20261007_174711.json"
       ],
       "required": [
-        {"name": "생일", "from_turn": 2, "match": "생일", "value": "목요일"},
+        {"name": "생일", "from_turn": 2, "match": "^생일", "value": "목요일"},
         {"name": "바다 약속", "from_turn": 3, "match": "바다", "value": "마감|이번 달"}
       ],
       "forbidden": [
@@ -27,7 +27,7 @@
         "tests/results/demo_smoke_20261007_173851.json"
       ],
       "required": [
-        {"name": "어머니 생신", "from_turn": 2, "match": "생신|생일", "value": "금요일"},
+        {"name": "어머니 생신", "from_turn": 2, "match": "^(생신|생일)", "value": "금요일"},
         {"name": "노란색 선호", "from_turn": 3, "match": "노란|색", "value": "노란"},
         {"name": "꽃시장 약속", "from_turn": 7, "match": "꽃시장", "value": "토요일"}
       ],

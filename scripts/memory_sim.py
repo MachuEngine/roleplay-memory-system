@@ -210,9 +210,11 @@ class MemoryStore:
         return [e for _, e in sorted(scored, key=lambda p: -p[0])[:k]]
 
     # ---------------------------------- 6~7) 예산 압축 → char_keywordbook 주입
-    def build_keywordbook(self, scope: Scope, query: str = "", *, paid: bool = True) -> str:
+    def build_keywordbook(self, scope: Scope, query: str = "", *, paid: bool = True,
+                          fact_key=None) -> str:
+        """fact_key가 있으면 L1을 그 순서로 예산에 채운다. 없으면 최근 순."""
         facts = sorted(self.facts.get(scope.profile_key(), {}).values(),
-                       key=lambda f: -f.turn)
+                       key=fact_key or (lambda f: -f.turn))
         eps = sorted([e for e in self.episodes.get(scope, []) if not e.invalidated],
                      key=lambda e: -e.turn)
         rec = self.recall(scope, query) if (paid and query) else []

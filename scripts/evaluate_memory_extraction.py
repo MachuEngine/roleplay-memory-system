@@ -19,6 +19,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / "scripts"), str(ROOT / "demo")]
 import engine as E  # noqa: E402
+from extraction import STATE_PREFIXES  # noqa: E402
 from llm_client import MissingKey, OpenRouterClient  # noqa: E402
 
 GOLD = ROOT / "tests" / "cases" / "memory_gold.json"
@@ -36,7 +37,12 @@ class CostRecorder:
 
 
 def score(facts: list[str], spec: dict, turn: int) -> dict:
-    """L1 항목('항목: 값')을 정답과 비교한다. turn까지 나온 사실만 요구한다."""
+    """L1 항목('항목: 값')을 정답과 비교한다. turn까지 나온 사실만 요구한다.
+
+    이 정답은 사용자 사실만 다루므로 상태 변화 항목(소유·호칭·관계·약속상태)은 채점에서 뺀다.
+    상태 변화는 scripts/evaluate_state_changes.py가 따로 잰다.
+    """
+    facts = [f for f in facts if not f.startswith(STATE_PREFIXES)]
     found, wrong, missing = [], [], []
     for req in spec["required"]:
         if req["from_turn"] > turn:

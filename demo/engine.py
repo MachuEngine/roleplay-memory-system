@@ -24,7 +24,8 @@ for p in (ROOT / "scripts", DEMO):
         sys.path.insert(0, str(p))
 
 from extraction import (EPISODE_INSTRUCTION, FACT_INSTRUCTION, PROMOTE_INSTRUCTION,  # noqa: E402
-                        SUMMARY_INSTRUCTION, make_extractor, make_roller)
+                        STATE_INSTRUCTION, STATE_PREFIXES, SUMMARY_INSTRUCTION,
+                        make_extractor, make_roller)
 from judge import flagged_sentences, invents_posture  # noqa: E402
 from limits import DailyCounter, check_turn  # noqa: E402
 from llm_client import ChatResult  # noqa: E402
@@ -128,6 +129,11 @@ def chat_history(session: Session) -> str:
     return "\n".join(reversed(picked))
 
 
+def l1_priority(fact) -> tuple[int, int]:
+    """L1 예산(300토큰)을 사용자 사실·약속부터 채우고, 상태 변화는 그다음 최근 순으로 채운다."""
+    return (1 if fact.subject.startswith(STATE_PREFIXES) else 0, -fact.turn)
+
+
 def build_system(session: Session) -> str:
     c, p = session.character, session.persona
     ctx = {
@@ -135,7 +141,8 @@ def build_system(session: Session) -> str:
         "char_identity": c.identity, "char_initial_state": c.initial_state,
         "char_speech": c.speech, "style_examples": c.examples,
         "user_description": p.description,
-        "char_keywordbook": session.store.build_keywordbook(session.scope, paid=False),
+        "char_keywordbook": session.store.build_keywordbook(session.scope, paid=False,
+                                                            fact_key=l1_priority),
         "chat_history": chat_history(session),
     }
     system = render_system(ctx, TEMPLATE)
@@ -213,8 +220,10 @@ def run_extraction(session: Session, client) -> bool:
     existing = dict(session.store.facts.get(session.scope.profile_key(), {}))
     promoter, summarizer = make_roller(
         client, lambda: set(session.store.facts.get(session.scope.profile_key(), {})))
+    c, p = session.character, session.persona
+    setting = f"{c.identity}\n{c.initial_state}\n{c.speech}\n{p.description}"
     ok = session.store.run_extraction(
-        session.scope, make_extractor(client, session.persona.name, existing),
+        session.scope, make_extractor(client, session.persona.name, existing, setting),
         promoter=promoter, summarizer=summarizer)
     # memory_sim은 추출 한 번에 롤업을 한 번(3개 → 1줄)만 한다. 한 번에 여러 항목이 늘면
     # 상한(L2_ITEM_CAP)을 넘은 채 남으므로, 플레이그라운드에서는 상한 안으로 들 때까지 반복한다.
@@ -257,9 +266,11 @@ class FakeClient:
             if self.extraction is not None:
                 return ChatResult(ok=True, text=self.extraction)
             said = re.search(r"^\[사용자 (\S+)\] (.+)$", user, re.MULTILINE)
-            facts = [{"subject": f"호칭({said.group(1)})", "value": "너",
+            facts = [{"subject": f"선호({said.group(1)})", "value": "보리차",
                       "evidence": said.group(2)[:40], "status": "확정"}] if said else []
             return ChatResult(ok=True, text=json.dumps({"facts": facts}, ensure_ascii=False))
+        if system == STATE_INSTRUCTION:
+            return ChatResult(ok=True, text='{"states": []}')
         if system == EPISODE_INSTRUCTION:
             return ChatResult(ok=True, text='{"episodes": ["비 오는 오후에 둘이 책방에서 이야기를 나눴다"]}')
         if self.replies:

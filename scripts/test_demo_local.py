@@ -16,7 +16,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "demo"))
 import engine as E  # noqa: E402
 from extraction import (ExtractionError, build_fact_request, canonical_subject,  # noqa: E402
-                        make_roller, parse_episodes, parse_facts)
+                        make_roller, parse_episodes, parse_facts, parse_states,
+                        salvage_facts, salvage_states)
 from judge import invents_posture  # noqa: E402
 from limits import KST, DailyCounter  # noqa: E402
 from memory_sim import Episode, Fact, Turn  # noqa: E402
@@ -196,6 +197,8 @@ def t_parse() -> None:
     check("항목명 통일: '하람의 생일'·'하람과의 약속' → '생일(하람)'·'약속(하람)'",
           [canonical_subject(x) for x in ("하람의 생일", "하람과의 약속", "약속(바다)", "생일")]
           == ["생일(하람)", "약속(하람)", "약속(바다)", "생일"])
+    check("항목명 통일: 관계 항목은 두 이름 순서와 무관하게 같은 이름",
+          canonical_subject("관계(하람, 서리)") == canonical_subject("관계(서리,하람)") == "관계(서리, 하람)")
     for bad in ("저장할 내용이 없습니다.", '{"facts": "없음"}', '{"facts": [}'):
         try:
             parse_facts(bad, turns, U, {})
@@ -208,23 +211,95 @@ def t_parse() -> None:
           and "컵을 내려놓았다" not in req)
 
 
+def t_states() -> None:
+    turns = [Turn(4, "하람", '"이번 달 말에 같이 바다 가자."'),
+             Turn(5, "서리", '*서랍에서 시집을 꺼내 하람에게 건넸다.* "……그래. 가자."'),
+             Turn(6, "서리", '*식은 커피를 마셨다.*')]
+    sx = lambda states: json.dumps({"states": states}, ensure_ascii=False)  # noqa: E731
+    got = parse_states(sx([
+        {"subject": "소유(시집)", "value": "서리가 하람에게 줌", "evidence": "서랍에서 시집을 꺼내 하람에게 건넸다"},
+        {"subject": "약속상태(바다)", "value": "서리가 받아들임", "evidence": "그래. 가자."},
+        {"subject": "생일(하람)", "value": "금요일", "evidence": "그래. 가자."},
+        {"subject": "관계(서리, 하람)", "value": "가까워짐", "evidence": "둘은 손을 잡았다"},
+        {"subject": "소유(커피)", "value": "서리가 마심", "evidence": "식은 커피를 마셨다"},
+    ]), turns, {}, setting="손님이 없을 때 창가 자리에서 식은 커피를 마신다.", promises={"약속(바다)"})
+    check("상태 파싱: 허용 항목명·실제 근거만, 설정 문장 근거는 버림",
+          [(f.subject, f.source_turns) for f in got] == [("소유(시집)", [5]), ("약속상태(바다)", [5])],
+          str([(f.subject, f.source_turns) for f in got]))
+    got = parse_states(sx([{"subject": "관계(서리, 하람)", "value": "화해",
+                            "evidence": "하람: 지난번엔 내가 너무했어\n서리: 그래. 가자."}]), turns, {})
+    check("상태 파싱: 근거 앞 화자 이름을 떼고, 여러 줄이면 가장 최근 줄을 출처로",
+          [(f.subject, f.source_turns) for f in got] == [("관계(서리, 하람)", [5])],
+          str([(f.subject, f.source_turns) for f in got]))
+    got = parse_states(sx([
+        {"subject": "호칭(서리→하람)", "value": "하람", "evidence": "서랍에서 시집을 꺼내 하람에게 건넸다"},
+        {"subject": "소유(커피잔)", "value": "서리가 하람에게 줌", "evidence": "그래. 가자."},
+        {"subject": "약속상태(일하기)", "value": "서리가 거절", "evidence": "그래. 가자."},
+    ]), turns, {})
+    check("상태 파싱: 대사에 없는 호칭·주고받는 동사 없는 소유·대응 약속 없는 약속상태는 버림", got == [],
+          str([f.subject for f in got]))
+    q_turns = [Turn(7, "하람", '"너는 왜 맨날 창가에 앉아? 거기서 뭐 봐?"')]
+    qx = parse_facts(json.dumps({"facts": [{"subject": "선호(하람)", "value": "창가", "evidence":
+                                            "너는 왜 맨날 창가에 앉아", "status": "확정"}]}, ensure_ascii=False),
+                     q_turns, "하람", {})
+    check("사실 파싱: 질문을 근거로 든 사실은 버림", qx == [])
+    cut = '{"states": [{"subject": "소유(시집)", "value": "서리가 줌", "evidence": "서랍에서 시집을 꺼내 하람에게 건넸다"}, {"subject": "약속상태(바다)", "val'
+    check("상태 파싱: 잘린 JSON에서 완성된 항목만 건짐",
+          [s["subject"] for s in salvage_states(cut)] == ["소유(시집)"]
+          and [f.subject for f in parse_states(cut, turns, {})] == ["소유(시집)"])
+    fx = parse_facts(json.dumps({"facts": [{"subject": "호칭(서리→하람)", "value": "하람",
+                                            "evidence": "이번 달 말에 같이 바다 가자", "status": "확정"}]},
+                                ensure_ascii=False), turns, "하람", {})
+    check("사실 파싱: 상태 변화 항목명은 사용자 사실 단계에서 버림", fx == [])
+    facts = [Fact("소유(시집)", "서리가 줌", 9, [9]), Fact("생일(하람)", "목요일", 2, [2]),
+             Fact("약속(바다)", "마감 후", 3, [3]), Fact("관계(서리, 하람)", "화해", 8, [8])]
+    order = [f.subject for f in sorted(facts, key=E.l1_priority)]
+    check("L1 주입 순서: 사용자 사실·약속 먼저, 상태 변화는 그다음 최근 순",
+          order == ["약속(바다)", "생일(하람)", "소유(시집)", "관계(서리, 하람)"], str(order))
+
+
 def t_extraction_call() -> None:
     class Stub:
         def __init__(self, finish: str) -> None:
             self.finish = finish
 
         def complete(self, system, user, **_):
-            return E.ChatResult(ok=True, finish_reason=self.finish, text='{"facts": [], "episodes": []}')
+            return E.ChatResult(ok=True, finish_reason=self.finish,
+                                text='{"facts": [], "states": [], "episodes": []}')
 
     s, d = sample_session(), DailyCounter(100)
     for i in range(E.MEMORY_BATCH):
         E.respond(s, f"{i}번째 이야기.", E.FakeClient(), d)
     pending = len(s.store.pending_turns(s.scope))
     ok = E.run_extraction(s, Stub("length"))
-    check("추출: 출력 상한에서 잘리면 실패, 대기 턴 보존",
+    check("추출: 사실·사건 출력이 상한에서 잘리면 실패, 대기 턴 보존",
           not ok and len(s.store.pending_turns(s.scope)) == pending)
     ok = E.run_extraction(s, Stub("stop"))
     check("추출: 정상 응답이면 대기 턴을 비움", ok and not s.store.pending_turns(s.scope))
+
+    class Flaky:
+        """첫 호출은 반복 출력으로 잘리고 두 번째는 정상인 모델."""
+        def __init__(self) -> None:
+            self.calls = 0
+
+        def complete(self, system, user, **_):
+            self.calls += 1
+            if self.calls == 1:
+                return E.ChatResult(ok=True, finish_reason="length", text='{"facts": [{"subject": "생')
+            return E.ChatResult(ok=True, finish_reason="stop",
+                                text='{"facts": [], "states": [], "episodes": []}')
+
+    s2 = sample_session()
+    for i in range(E.MEMORY_BATCH):
+        E.respond(s2, f"{i}번째 이야기.", E.FakeClient(), d)
+    flaky = Flaky()
+    check("추출: 잘린 응답은 한 번 더 호출해 성공", E.run_extraction(s2, flaky) and flaky.calls == 4,
+          f"호출 {flaky.calls}회")
+    looped = ('{"facts": [' + ', '.join(['{"subject": "생일(하람)", "value": "다음 주 목요일", '
+              '"evidence": "다음 주 목요일이 내 생일이야", "status": "확정"}'] * 3) + ', {"subject": "약')
+    check("사실 건지기: 반복된 같은 항목은 하나로, 잘린 꼬리는 버림",
+          json.loads(salvage_facts(looped))["facts"] == [{"subject": "생일(하람)", "value": "다음 주 목요일",
+                                                          "evidence": "다음 주 목요일이 내 생일이야", "status": "확정"}])
 
 
 def t_rollup() -> None:
@@ -316,7 +391,7 @@ def t_setup() -> None:
 
 
 def main() -> None:
-    for fn in (t_template, t_guard_flow, t_history_and_extraction, t_parse, t_extraction_call,
+    for fn in (t_template, t_guard_flow, t_history_and_extraction, t_parse, t_states, t_extraction_call,
                t_rollup, t_user_action_rule, t_limits, t_setup):
         fn()
     width = max(len(n) for n, _, _ in RESULTS)

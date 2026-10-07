@@ -18,26 +18,51 @@ from __future__ import annotations
 
 import json
 import re
+from difflib import SequenceMatcher
 
 from memory_sim import Episode, Fact, Turn
 
-FACT_MAX_TOKENS = 600
+FACT_MAX_TOKENS = 1000
 EPISODE_MAX_TOKENS = 400
 SPEECH_MAX_CHARS = 300       # 캐릭터 줄은 대사만, 이 길이까지
 
 FACT_INSTRUCTION = """롤플레이 대화에서 사용자가 직접 밝힌 사실만 뽑는다.
-뽑을 것: 사용자의 생일·일정·계획, 사용자와 캐릭터의 약속, 사용자나 사용자 가족의 선호·사정, 호칭이나 관계의 변화.
-뽑지 않을 것: 캐릭터의 행동·감정·서술, 캐릭터 설정, 사용자가 묻기만 한 질문, <existing_profile>과 같은 내용.
+뽑을 것: 사용자의 생일·일정·계획, 사용자가 제안한 약속의 내용, 사용자나 사용자 가족의 선호·사정.
+뽑지 않을 것: 캐릭터의 행동·감정·서술, 캐릭터 설정, 사용자가 묻기만 한 질문, <existing_profile>과 같은 내용,
+호칭·관계·물건 이동·약속 수락 같은 상태 변화(다른 단계가 맡는다).
 사용자가 나중에 취소하거나 농담이라고 한 내용은 status를 "취소"로 둔다.
 
 항목명 규칙: 생일은 '생일(누구)', 약속은 '약속(대상)', 일정·계획은 '일정(대상)', 선호는 '선호(누구)'.
+약속의 대상은 사람 이름이 아니라 함께 하기로 한 일이나 장소를 짧게 쓴다. 예: '약속(바다)', '약속(꽃시장)'
 <existing_profile>에 같은 사실이 있으면 같은 항목명을 쓴다.
 약속은 value 끝에 캐릭터의 반응을 괄호로 붙인다. 예: "마감 후 같이 가자고 함 (캐릭터는 확답을 피함)"
-evidence에는 근거가 된 사용자 줄의 문장을 그대로 복사한다. 근거가 없으면 그 사실을 쓰지 않는다.
+evidence에는 근거가 된 사용자 문장 하나를 그대로 복사하되, 화자 이름·따옴표·별표는 빼고 쓴다. 근거가 없으면 그 사실을 쓰지 않는다.
 
 JSON 하나만 출력한다.
 {"facts": [{"subject": "항목명", "value": "현재값", "evidence": "사용자 발화 원문", "status": "확정"}]}
 새 사실이 없으면 {"facts": []}"""
+
+# 대사만 보는 사실 추출로는 캐릭터의 행동·대사로 생긴 상태 변화(선물, 호칭·관계 변화, 약속 수락)를
+# 잡을 수 없다. 이것은 서술까지 보는 별도 호출이 맡고, 항목 영역을 나눠 사용자 사실을 덮어쓰지 못하게 한다.
+STATE_INSTRUCTION = """롤플레이 대화에서 이후에도 계속 유효한 상태 변화만 뽑는다. 캐릭터의 서술과 대사도 근거가 된다.
+뽑을 것:
+- 소유: 물건을 주고받아 가진 사람이 바뀜. 항목명 '소유(물건)', 값 '누가 누구에게 줌'
+- 호칭: 부르는 말이 바뀜. 항목명 '호칭(부르는 사람→듣는 사람)', 값 '새 호칭'
+- 관계: 두 사람 관계가 분명히 바뀜(화해, 다툼, 고백, 출입 금지 등). 항목명 '관계(두 사람)', 값 '바뀐 관계'
+- 약속상태: 약속이 받아들여지거나 거절·이행·취소됨. 항목명 '약속상태(대상)', 값 '누가 어떻게 응답함'.
+  대상은 <existing_profile>의 '약속(대상)'과 같은 이름을 쓰고, 없으면 함께 할 일이나 장소를 짧게 쓴다. 예: '약속상태(바다)'
+뽑지 않을 것: 생각·바람·추측('~하고 싶었다', '~할까'), 일시적인 감정이나 동작, 캐릭터 설정에 이미 있는 내용,
+사용자의 생일·선호·일정(다른 단계가 맡는다), <existing_profile>과 같은 내용.
+evidence에는 근거가 된 문장 하나를 그대로 복사하되, 화자 이름·따옴표·별표는 빼고 쓴다. 실제로 일어난 행동이나 말만 근거가 된다.
+
+같은 항목은 한 번만 쓰고, 최대 5개까지만 쓴다.
+
+JSON 하나만 출력한다.
+{"states": [{"subject": "항목명", "value": "현재값", "evidence": "대화 원문 문장"}]}
+변화가 없으면 {"states": []}"""
+STATE_MAX_TOKENS = 500
+# 상태 변화 단계가 쓸 수 있는 항목명. 사용자 사실 단계는 이 이름을 쓸 수 없다.
+STATE_PREFIXES = ("소유", "호칭", "관계", "약속상태")
 
 EPISODE_INSTRUCTION = """롤플레이 대화 구간에서 이후 관계나 상황을 바꾼 사건을 최대 4개 고른다.
 각 사건은 한국어 한 문장(60자 이내)으로, 누가 무엇을 해서 어떻게 끝났는지 쓴다.
@@ -77,8 +102,12 @@ def _norm(s: str) -> str:
 
 
 def canonical_subject(subject: str) -> str:
-    """'하람의 생일', '하람과의 약속'을 '생일(하람)', '약속(하람)'으로 맞춰 같은 항목이 두 번 쌓이지 않게 한다."""
+    """'하람의 생일' → '생일(하람)', '관계(하람, 서리)' → '관계(서리, 하람)'처럼 같은 항목의 이름을 하나로 맞춘다."""
     subject = subject.strip()
+    pair = re.fullmatch(r"관계\((.+)\)", subject)
+    if pair:                                   # '관계(하람, 서리)'와 '관계(서리, 하람)'는 같은 항목
+        names = sorted(n.strip() for n in pair.group(1).split(","))
+        return f"관계({', '.join(names)})"
     m = re.fullmatch(r"(.+?)(?:과의|와의|의)\s*(\S+)", subject)
     return f"{m.group(2)}({m.group(1)})" if m and "(" not in subject else subject
 
@@ -128,12 +157,16 @@ def parse_facts(text: str, turns: list[Turn], user_name: str,
         subject = canonical_subject(str(item.get("subject", "")))
         value = str(item.get("value", "")).strip()
         evidence = _norm(str(item.get("evidence", "")))
+        if subject.startswith(STATE_PREFIXES):
+            continue                                   # 상태 변화는 별도 단계가 맡는다
         if (not subject or subject in _CATEGORY_SUBJECTS or subject.startswith("말투")
                 or value.rstrip(".") in _EMPTY_VALUES | {""} or len(evidence) < 4):
             continue
-        source = next((t for t in reversed(user_turns) if evidence in _norm(t.text)), None)
+        source = _find_source(item.get("evidence", ""), user_turns)
         if source is None:
             continue                                   # 사용자가 말하지 않은 사실
+        if _is_question(item.get("evidence", ""), source.text):
+            continue                                   # 질문은 사실이 아니다("너는 왜 창가에 앉아?")
         if re.match(r"생일|생신", subject) and not _DATE.search(value):
             continue
         if str(item.get("status", "")).strip() == "취소":
@@ -153,6 +186,118 @@ def parse_facts(text: str, turns: list[Turn], user_name: str,
     return out
 
 
+def build_state_request(turns: list[Turn], existing: dict[str, Fact]) -> str:
+    profile = "\n".join(f"- {f.subject}: {f.value}" for f in existing.values()) or "(없음)"
+    return (f"<existing_profile>\n{profile}\n</existing_profile>\n"
+            "<transcript>\n" + "\n".join(f"{t.speaker}: {t.text}" for t in turns) + "\n</transcript>")
+
+
+_STATE_ITEM = re.compile(r'\{\s*"subject"\s*:\s*"([^"]*)"\s*,\s*"value"\s*:\s*"([^"]*)"\s*,'
+                         r'\s*"evidence"\s*:\s*"((?:[^"\\]|\\.)*)"\s*\}')
+
+
+def salvage_states(text: str) -> list[dict]:
+    """잘리거나 깨진 JSON에서 끝까지 완성된 항목만 건진다."""
+    return [{"subject": s, "value": v, "evidence": e} for s, v, e in _STATE_ITEM.findall(text)]
+
+
+def parse_states(text: str, turns: list[Turn], existing: dict[str, Fact],
+                 setting: str = "", promises: set[str] | None = None) -> list[Fact]:
+    """근거가 대화 어느 줄에든 실제로 있는 상태 변화만 남긴다. 항목명은 STATE_PREFIXES로 제한한다."""
+    try:
+        raw = _json(text).get("states")
+    except ExtractionError:
+        raw = salvage_states(text)
+    if not isinstance(raw, list):
+        raise ExtractionError("states 목록이 없음")
+    out: list[Fact] = []
+    for item in raw:
+        if not isinstance(item, dict):
+            continue
+        subject = canonical_subject(str(item.get("subject", "")))
+        value = str(item.get("value", "")).strip()
+        evidence = _norm(str(item.get("evidence", "")))
+        if (not subject.startswith(STATE_PREFIXES) or value.rstrip(".") in _EMPTY_VALUES | {""}
+                or len(evidence) < 4):
+            continue
+        source = _find_source(item.get("evidence", ""), turns)
+        if source is None:
+            continue                                   # 대화에 없는 근거
+        if setting and _mostly_in(evidence, _norm(setting)):
+            continue                                   # 설정 문장을 근거로 든 것은 변화가 아니다
+        if not _supports(subject, value, str(item.get("evidence", "")), source, turns,
+                         set(existing) | (promises or set())):
+            continue                                   # 근거 문장이 주장을 뒷받침하지 않음
+        prev = existing.get(subject)
+        if prev is not None and (_norm(prev.value) == _norm(value) or prev.turn >= source.idx):
+            continue
+        same = next((f for f in out if f.subject == subject), None)
+        if same is not None:                           # 한 번에 같은 항목이 여러 개면 마지막 상태를 쓴다
+            if source.idx >= same.turn:
+                same.value, same.turn, same.source_turns = value, source.idx, [source.idx]
+            continue
+        out.append(Fact(subject, value, source.idx, [source.idx]))
+    return out
+
+
+_TRANSFER = re.compile(r"건네|건넸|줬|주었|준다|줄게|줄께|가져가|받아|받았|받았다|선물|내밀|쥐여|쥐어|돌려주|돌려줬|넘겨")
+
+
+def _is_question(evidence: str, text: str) -> bool:
+    """근거 문장이 원문에서 물음표로 끝나는 질문인지."""
+    if "?" in str(evidence):
+        return True
+    ev = _norm(str(evidence))
+    for sent in re.findall(r"[^.!?…\n]+[.!?…]*", text):
+        if ev and ev in _norm(sent):
+            return sent.rstrip(' "*”').endswith("?")
+    return False
+
+
+def _supports(subject: str, value: str, evidence: str, source: Turn, turns: list[Turn],
+              profile: set[str]) -> bool:
+    """상태 변화 유형별로 근거가 주장을 뒷받침하는지 결정적으로 확인한다.
+
+    실측 대화에서 "근거 문장이 대화에 있다"만으로는 통과하는 오탐이 있었다:
+    한 번도 부르지 않은 호칭, 꺼내 놓기만 한 물건의 소유 이동, 약속이 아닌 부탁의 '약속상태'.
+    """
+    if subject.startswith("호칭"):
+        caller = re.match(r"호칭\((.+?)→", subject)
+        spoken = [q for t in turns if caller is None or t.speaker == caller.group(1).strip()
+                  for q in re.findall(r'"([^"]+)"', t.text)]
+        name = _norm(re.sub(r"\(.*?\)", "", value))
+        return bool(name) and any(name in _norm(q) for q in spoken)
+    if subject.startswith("소유"):
+        # 근거 턴 안에 물건 이름과 주고받는 동사가 함께 있어야 한다(근거로 '꺼냈다' 문장만 고른 경우도 통과).
+        thing = re.search(r"\((.+?)\)", subject)
+        return bool(_TRANSFER.search(source.text)) and (
+            thing is None or _norm(thing.group(1)) in _norm(source.text))
+    if subject.startswith("약속상태"):
+        target = subject[len("약속상태"):]
+        return f"약속{target}" in profile
+    return True
+
+
+def _find_source(evidence: str, turns: list[Turn]) -> Turn | None:
+    """근거 문장이 들어 있는 가장 최근 턴. 앞의 '이름:'은 떼고, 여러 줄이면 줄마다 찾는다."""
+    found = None
+    for part in re.split(r"\n+", str(evidence)):
+        part = _norm(re.sub(r"^\s*[^:\s\"*]{1,20}\s*:", "", part))
+        if len(part) < 4:
+            continue
+        hit = next((t for t in reversed(turns) if part in _norm(t.text)), None)
+        if hit is not None and (found is None or hit.idx > found.idx):
+            found = hit
+    return found
+
+
+def _mostly_in(evidence: str, setting: str) -> bool:
+    """근거의 60% 이상이 설정과 이어서 겹치면 설정을 옮긴 것으로 본다("마셨다"/"마신다" 같은 어미 차이 허용)."""
+    m = SequenceMatcher(None, evidence, setting, autojunk=False).find_longest_match(
+        0, len(evidence), 0, len(setting))
+    return m.size >= max(6, 0.6 * len(evidence))
+
+
 def parse_episodes(text: str, turns: list[Turn]) -> list[Episode]:
     raw = _json(text).get("episodes")
     if not isinstance(raw, list):
@@ -162,22 +307,60 @@ def parse_episodes(text: str, turns: list[Turn]) -> list[Episode]:
     return [Episode(x, max(idxs), 0.5, list(idxs)) for x in items[:4] if x]
 
 
-def make_extractor(client, user_name: str, existing: dict[str, Fact]):
-    """MemoryStore.run_extraction()에 넘길 추출 함수를 만든다."""
-    def ask(system: str, user: str, max_tokens: int) -> str:
-        res = client.complete(system, user, max_tokens=max_tokens, reasoning_max_tokens=0,
-                              temperature=0.0, seed=None)
-        if not res.ok:
-            raise ExtractionError(res.error or "추출 호출 실패")
-        if res.finish_reason == "length":
-            raise ExtractionError("추출 출력이 상한에서 잘림")
-        return res.text
+_FACT_ITEM = re.compile(r'\{\s*"subject"\s*:\s*"([^"]*)"\s*,\s*"value"\s*:\s*"((?:[^"\\]|\\.)*)"\s*,'
+                        r'\s*"evidence"\s*:\s*"((?:[^"\\]|\\.)*)"\s*,\s*"status"\s*:\s*"([^"]*)"\s*\}')
+
+
+def salvage_facts(text: str) -> str:
+    """잘린 출력에서 완성된 사실만 모아 JSON으로 다시 만든다. 반복된 같은 항목은 하나로 합친다."""
+    seen, items = set(), []
+    for s, v, e, st in _FACT_ITEM.findall(text):
+        if (s, v, e) not in seen:
+            seen.add((s, v, e))
+            items.append({"subject": s, "value": v, "evidence": e, "status": st})
+    return json.dumps({"facts": items}, ensure_ascii=False)
+
+
+def make_extractor(client, user_name: str, existing: dict[str, Fact], setting: str = ""):
+    """MemoryStore.run_extraction()에 넘길 추출 함수를 만든다.
+
+    Flash-Lite는 temperature 0에서도 가끔 같은 항목을 반복하다 출력 상한에 걸린다(같은 입력을
+    다시 부르면 정상 종료). 그래서 응답이 잘리거나 형식이 틀리면 한 번 더 부르고, 그래도 잘리면
+    완성된 항목만 건진다.
+    """
+    def ask(system: str, user: str, max_tokens: int, parse, salvage=None):
+        last = "추출 호출 실패"
+        for attempt in range(2):
+            res = client.complete(system, user, max_tokens=max_tokens, reasoning_max_tokens=0,
+                                  temperature=0.0, seed=None)
+            if not res.ok:
+                last = res.error or last
+                continue
+            if res.finish_reason != "length":
+                try:
+                    return parse(res.text)
+                except ExtractionError as exc:
+                    last = str(exc)
+                    continue
+            last = "추출 출력이 상한에서 잘림"
+            if salvage is not None and attempt == 1:     # 두 번째도 잘리면 건진다
+                return parse(salvage(res.text))
+        raise ExtractionError(last)
 
     def extract(turns: list[Turn]) -> tuple[list[Fact], list[Episode]]:
-        facts = parse_facts(ask(FACT_INSTRUCTION, build_fact_request(user_name, turns, existing),
-                                FACT_MAX_TOKENS), turns, user_name, existing)
-        episodes = parse_episodes(ask(EPISODE_INSTRUCTION, build_episode_request(turns),
-                                      EPISODE_MAX_TOKENS), turns)
+        facts = ask(FACT_INSTRUCTION, build_fact_request(user_name, turns, existing), FACT_MAX_TOKENS,
+                    lambda x: parse_facts(x, turns, user_name, existing), salvage=salvage_facts)
+        # 상태 변화 호출이 실패해도 사용자 사실과 사건은 저장한다(반복 출력으로 잘린 사례가 있었다).
+        try:
+            states = ask(STATE_INSTRUCTION, build_state_request(turns, existing), STATE_MAX_TOKENS,
+                         lambda x: parse_states(x, turns, existing, setting,
+                                                promises={f.subject for f in facts}),
+                         salvage=lambda x: x)       # parse_states가 잘린 JSON을 스스로 건진다
+        except ExtractionError:
+            states = []
+        facts += [s for s in states if s.subject not in {f.subject for f in facts}]
+        episodes = ask(EPISODE_INSTRUCTION, build_episode_request(turns), EPISODE_MAX_TOKENS,
+                       lambda x: parse_episodes(x, turns))
         return facts, episodes
     return extract
 
