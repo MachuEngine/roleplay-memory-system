@@ -5,7 +5,7 @@
 ## 검증
 
 ```bash
-bash scripts/check_local.sh   # 구문 검사 + 원가 계산·검산 + memory 18건 + response guard 5건 + 플레이그라운드 엔진 61건
+bash scripts/check_local.sh   # 구문 검사 + 원가 계산·검산 + memory 18건 + response guard 5건 + 플레이그라운드 엔진 64건
 ```
 
 - 키 없이 1초 안에 끝나고 파일을 쓰지 않는다. 작업을 마치기 전에 반드시 통과시킨다.

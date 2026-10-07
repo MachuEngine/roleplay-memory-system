@@ -8,6 +8,7 @@ usage: .venv/bin/python scripts/test_demo_local.py
 from __future__ import annotations
 
 import json
+import re
 import sys
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -15,8 +16,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "demo"))
 import engine as E  # noqa: E402
-from extraction import (ExtractionError, build_fact_request, canonical_subject,  # noqa: E402
-                        make_roller, parse_episodes, parse_facts, parse_states,
+from extraction import (EXTRACT_SEED, FACT_INSTRUCTION, FACT_SCHEMA, STATE_SCHEMA,  # noqa: E402
+                        ExtractionError, build_fact_request, canonical_subject, make_roller, parse_episodes, parse_facts, parse_states,
                         salvage_facts, salvage_states)
 from judge import invents_posture  # noqa: E402
 from limits import KST, DailyCounter  # noqa: E402
@@ -133,6 +134,8 @@ def t_history_and_extraction() -> None:
     ok = E.run_extraction(s, E.FakeClient(extraction="형식 없는 응답"))
     check("추출 실패 시 대기 턴 보존",
           not ok and len(s.store.pending_turns(s.scope)) == pending, f"대기 {pending}턴")
+    check("추출 실패 사유를 기록", s.extraction_runs[-1]["error"].startswith("ExtractionError"),
+          s.extraction_runs[-1]["error"])
 
     long = sample_session()
     for i in range(40):
@@ -277,24 +280,55 @@ def t_extraction_call() -> None:
     ok = E.run_extraction(s, Stub("stop"))
     check("추출: 정상 응답이면 대기 턴을 비움", ok and not s.store.pending_turns(s.scope))
 
-    class Flaky:
-        """첫 호출은 반복 출력으로 잘리고 두 번째는 정상인 모델."""
+    class LoopsOnLong:
+        """사용자 발화가 4개 이상인 사실 요청에서는 반복하다 잘리고, 짧은 구간은 첫 사용자 발화를 사실로 돌려주는 모델."""
         def __init__(self) -> None:
-            self.calls = 0
+            self.fact_turns, self.kw = [], []
 
-        def complete(self, system, user, **_):
-            self.calls += 1
-            if self.calls == 1:
+        def complete(self, system, user, **kw):
+            self.kw.append(kw)
+            if system != FACT_INSTRUCTION:
+                return E.ChatResult(ok=True, finish_reason="stop", text='{"states": [], "episodes": []}')
+            said = re.findall(r"\[사용자 하람\] (\d+)번째", user)
+            self.fact_turns.append(len(said))
+            if len(said) > 3:
                 return E.ChatResult(ok=True, finish_reason="length", text='{"facts": [{"subject": "생')
-            return E.ChatResult(ok=True, finish_reason="stop",
-                                text='{"facts": [], "states": [], "episodes": []}')
+            fact = {"subject": f"일정(구간{said[0]})", "value": "다음 주",
+                    "evidence": f"{said[0]}번째 이야기", "status": "확정"}
+            return E.ChatResult(ok=True, finish_reason="stop", text=json.dumps({"facts": [fact]}))
 
     s2 = sample_session()
     for i in range(E.MEMORY_BATCH):
         E.respond(s2, f"{i}번째 이야기.", E.FakeClient(), d)
-    flaky = Flaky()
-    check("추출: 잘린 응답은 한 번 더 호출해 성공", E.run_extraction(s2, flaky) and flaky.calls == 4,
-          f"호출 {flaky.calls}회")
+    model = LoopsOnLong()
+    ok = E.run_extraction(s2, model)
+    l1 = E.memory_view(s2)[0]
+    check("추출: 사실 출력이 잘리면 구간을 반으로 나눠 다시 추출, 두 구간 사실 모두 저장",
+          ok and model.fact_turns == [6, 3, 3] and len([f for f in l1 if f.startswith("일정(구간")]) == 2,
+          f"구간별 사용자 발화 {model.fact_turns}, L1 {l1}")
+    check("추출: 모든 호출에 고정 seed, 사실·상태 호출에 JSON 스키마",
+          all(k.get("seed") == EXTRACT_SEED for k in model.kw)
+          and model.kw[0].get("response_format") == FACT_SCHEMA
+          and STATE_SCHEMA in [k.get("response_format") for k in model.kw])
+
+    class BrokenOnce:
+        """첫 사실 응답만 JSON이 깨진(잘리지는 않은) 모델."""
+        def __init__(self) -> None:
+            self.seeds = []
+
+        def complete(self, system, user, **kw):
+            if system == FACT_INSTRUCTION:
+                self.seeds.append(kw.get("seed"))
+                if len(self.seeds) == 1:
+                    return E.ChatResult(ok=True, finish_reason="stop", text='{"facts": [{"subject": "생일" "x"}]}')
+            return E.ChatResult(ok=True, finish_reason="stop", text='{"facts": [], "states": [], "episodes": []}')
+
+    s3 = sample_session()
+    for i in range(E.MEMORY_BATCH):
+        E.respond(s3, f"{i}번째 이야기.", E.FakeClient(), d)
+    broken = BrokenOnce()
+    check("추출: 잘리지 않았는데 JSON이 깨지면 seed를 바꿔 한 번 더 호출",
+          E.run_extraction(s3, broken) and broken.seeds == [EXTRACT_SEED, EXTRACT_SEED + 1], str(broken.seeds))
     looped = ('{"facts": [' + ', '.join(['{"subject": "생일(하람)", "value": "다음 주 목요일", '
               '"evidence": "다음 주 목요일이 내 생일이야", "status": "확정"}'] * 3) + ', {"subject": "약')
     check("사실 건지기: 반복된 같은 항목은 하나로, 잘린 꼬리는 버림",

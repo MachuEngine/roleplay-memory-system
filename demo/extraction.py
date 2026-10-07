@@ -1,8 +1,8 @@
-"""L1·L2 memory 추출: 사실 추출과 사건 요약을 두 호출로 나눈다.
+"""L1·L2 memory 추출: 사용자 사실, 상태 변화, 사건 요약을 세 호출로 나눈다.
 
 처음에는 한 호출(scripts/extraction_prompt.py 지시문 변형)이 L1·L2를 함께 뽑았다. 정답 세트
-(tests/cases/memory_gold.json)로 재 보니 temperature 0에서 3회 반복 결과가 같아 편차가 아니라
-체계적 오류였고, 원인은 작업 설계였다.
+(tests/cases/memory_gold.json)로 재 보니 같은 오류가 3회 반복 실행 모두에서 나와 우연한 편차가
+아니라 체계적 오류였고, 원인은 작업 설계였다.
   - 입력 대부분이 캐릭터의 긴 서술이라 사용자의 짧은 발화(생일, 선호)가 묻혀 누락됐다
   - 캐릭터 발언·설정에서 사실을 만들어 기존 값을 덮어쓰거나 설정을 복사했다
   - L1·L2를 한꺼번에 길게 쓰다 출력 상한에서 잘렸다
@@ -10,7 +10,8 @@
 그래서
   1) 사실 추출: 사용자 발화 전문과 캐릭터 대사만 넣고, JSON으로 사실과 '근거 사용자 발화'를 받는다.
      근거가 실제 사용자 발화에 없으면 버린다. 사용자가 말하지 않은 사실은 L1에 들어갈 수 없다.
-  2) 사건 요약: 전체 대화에서 상태를 바꾼 사건 최대 4개를 짧은 문장으로 받는다.
+  2) 상태 변화: 서술까지 보고 소유·호칭·관계·약속상태 변화를 받는다. 유형별 근거 검증을 거친다.
+  3) 사건 요약: 전체 대화에서 상태를 바꾼 사건 최대 4개를 짧은 문장으로 받는다.
 기존 L1 값은 더 최근 사용자 발화에 근거가 있을 때만 바뀐다. 호출이나 파싱이 실패하면 예외를
 던지고, MemoryStore.run_extraction()이 대기 턴을 보존해 다음 차례에 다시 시도한다.
 """
@@ -25,6 +26,28 @@ from memory_sim import Episode, Fact, Turn
 FACT_MAX_TOKENS = 1000
 EPISODE_MAX_TOKENS = 400
 SPEECH_MAX_CHARS = 300       # 캐릭터 줄은 대사만, 이 길이까지
+# seed가 없으면 temperature 0에서도 출력이 갈렸다(같은 입력 10회 중 2가지). 앞 추출 결과가 다음
+# 추출의 <existing_profile>로 들어가므로, 고정하지 않으면 같은 대화도 실행마다 다른 기억이 쌓인다.
+# 고정해도 완전히 같아지지는 않는다(정답 세트 반복 실행에서 문구가 가끔 달라졌다).
+EXTRACT_SEED = 7
+
+
+def _json_schema(name: str, key: str, fields: tuple[str, ...], max_items: int) -> dict:
+    """항목 수를 제한한 JSON 스키마 응답 형식.
+
+    Flash-Lite는 이미 아는 사실을 다시 묻는 구간에서 기존 항목을 근거만 바꿔 되풀이하다 출력 상한에
+    걸렸다(실측 입력 30/30, seed와 무관, frequency·presence·repetition penalty도 효과 없음).
+    같은 입력에 스키마를 걸면 정상 종료했다.
+    """
+    item = {"type": "object", "properties": {f: {"type": "string"} for f in fields},
+            "required": list(fields), "additionalProperties": False}
+    return {"type": "json_schema", "json_schema": {"name": name, "strict": True, "schema": {
+        "type": "object", "properties": {key: {"type": "array", "maxItems": max_items, "items": item}},
+        "required": [key], "additionalProperties": False}}}
+
+
+FACT_SCHEMA = _json_schema("facts", "facts", ("subject", "value", "evidence", "status"), 6)
+STATE_SCHEMA = _json_schema("states", "states", ("subject", "value", "evidence"), 5)
 
 FACT_INSTRUCTION = """롤플레이 대화에서 사용자가 직접 밝힌 사실만 뽑는다.
 뽑을 것: 사용자의 생일·일정·계획, 사용자가 제안한 약속의 내용, 사용자나 사용자 가족의 선호·사정.
@@ -321,46 +344,69 @@ def salvage_facts(text: str) -> str:
     return json.dumps({"facts": items}, ensure_ascii=False)
 
 
+def _halves(turns: list[Turn]) -> tuple[list[Turn], list[Turn]]:
+    """대기 구간을 반으로 나눈다. 사용자·캐릭터 한 쌍이 갈라지지 않게 짝수 위치에서 자른다."""
+    half = len(turns) // 2
+    half -= half % 2
+    return turns[:half], turns[half:]
+
+
 def make_extractor(client, user_name: str, existing: dict[str, Fact], setting: str = ""):
     """MemoryStore.run_extraction()에 넘길 추출 함수를 만든다.
 
-    Flash-Lite는 temperature 0에서도 가끔 같은 항목을 반복하다 출력 상한에 걸린다(같은 입력을
-    다시 부르면 정상 종료). 그래서 응답이 잘리거나 형식이 틀리면 한 번 더 부르고, 그래도 잘리면
-    완성된 항목만 건진다.
+    출력이 잘리는 원인은 입력에 따라 거의 매번 재현되는 반복이라(실측 입력 30/30), 같은 입력을 다시
+    부르지 않는다. 사실 출력이 잘리면 구간을 반으로 나눠 다시 추출한다(그 입력도 반으로 나누면 두 쪽
+    모두 정상 종료했다). 2턴 이하로 줄어도 잘리면 완성된 항목만 건진다.
+    잘리지 않았는데 JSON이 깨진 응답은 같은 입력에서 재현되지 않는 일시적 오류였다(정답 세트 실측
+    약 2%, 같은 기록 192회 재실행에서 0회). 이때만 seed를 바꿔 한 번 더 부른다.
     """
-    def ask(system: str, user: str, max_tokens: int, parse, salvage=None):
-        last = "추출 호출 실패"
-        for attempt in range(2):
+    def ask(system: str, user: str, max_tokens: int, schema: dict | None, parse, on_length):
+        error: ExtractionError | None = None
+        for seed in (EXTRACT_SEED, EXTRACT_SEED + 1):
             res = client.complete(system, user, max_tokens=max_tokens, reasoning_max_tokens=0,
-                                  temperature=0.0, seed=None)
+                                  temperature=0.0, seed=seed, response_format=schema)
             if not res.ok:
-                last = res.error or last
-                continue
-            if res.finish_reason != "length":
-                try:
-                    return parse(res.text)
-                except ExtractionError as exc:
-                    last = str(exc)
-                    continue
-            last = "추출 출력이 상한에서 잘림"
-            if salvage is not None and attempt == 1:     # 두 번째도 잘리면 건진다
-                return parse(salvage(res.text))
-        raise ExtractionError(last)
+                raise ExtractionError(res.error or "추출 호출 실패")   # 일시 오류 재시도는 client가 맡는다
+            if res.finish_reason == "length":
+                return on_length(res.text)
+            try:
+                return parse(res.text)
+            except ExtractionError as exc:
+                error = exc
+        raise error
+
+    def facts_for(turns: list[Turn]) -> list[Fact]:
+        def parse(text: str) -> list[Fact]:
+            return parse_facts(text, turns, user_name, existing)
+
+        def split(text: str) -> list[Fact]:
+            first, second = _halves(turns)
+            if not first:
+                return parse(salvage_facts(text))
+            merged = {f.subject: f for f in facts_for(first)}
+            merged.update((f.subject, f) for f in facts_for(second))   # 같은 항목이면 뒤 구간이 최신
+            return list(merged.values())
+
+        return ask(FACT_INSTRUCTION, build_fact_request(user_name, turns, existing), FACT_MAX_TOKENS,
+                   FACT_SCHEMA, parse, split)
+
+    def episodes_too_long(_: str) -> list[Episode]:
+        raise ExtractionError("사건 출력이 상한에서 잘림")
 
     def extract(turns: list[Turn]) -> tuple[list[Fact], list[Episode]]:
-        facts = ask(FACT_INSTRUCTION, build_fact_request(user_name, turns, existing), FACT_MAX_TOKENS,
-                    lambda x: parse_facts(x, turns, user_name, existing), salvage=salvage_facts)
+        facts = facts_for(turns)
         # 상태 변화 호출이 실패해도 사용자 사실과 사건은 저장한다(반복 출력으로 잘린 사례가 있었다).
+        # 잘린 출력은 parse_states가 완성된 항목만 건진다.
+        def parse(text: str) -> list[Fact]:
+            return parse_states(text, turns, existing, setting, promises={f.subject for f in facts})
         try:
             states = ask(STATE_INSTRUCTION, build_state_request(turns, existing), STATE_MAX_TOKENS,
-                         lambda x: parse_states(x, turns, existing, setting,
-                                                promises={f.subject for f in facts}),
-                         salvage=lambda x: x)       # parse_states가 잘린 JSON을 스스로 건진다
+                         STATE_SCHEMA, parse, parse)
         except ExtractionError:
             states = []
         facts += [s for s in states if s.subject not in {f.subject for f in facts}]
-        episodes = ask(EPISODE_INSTRUCTION, build_episode_request(turns), EPISODE_MAX_TOKENS,
-                       lambda x: parse_episodes(x, turns))
+        episodes = ask(EPISODE_INSTRUCTION, build_episode_request(turns), EPISODE_MAX_TOKENS, None,
+                       lambda x: parse_episodes(x, turns), episodes_too_long)
         return facts, episodes
     return extract
 
@@ -373,7 +419,7 @@ def make_roller(client, known_subjects=lambda: set()):
     """
     def ask(system: str, user: str, max_tokens: int) -> str | None:
         res = client.complete(system, user, max_tokens=max_tokens, reasoning_max_tokens=0,
-                              temperature=0.0, seed=None)
+                              temperature=0.0, seed=EXTRACT_SEED)
         if not res.ok or res.finish_reason == "length":
             return None
         return res.text.strip()

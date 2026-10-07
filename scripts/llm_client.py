@@ -93,7 +93,8 @@ class OpenRouterClient:
 
     def complete(self, system: str, user: str, *, max_tokens: int = 1200,
                  reasoning_max_tokens: int | None = 128,
-                 temperature: float = 1.0, seed: int | None = 7) -> ChatResult:
+                 temperature: float = 1.0, seed: int | None = 7,
+                 response_format: dict[str, Any] | None = None) -> ChatResult:
         body: dict[str, Any] = {
             "model": self.model,
             "messages": [
@@ -105,6 +106,8 @@ class OpenRouterClient:
         }
         if seed is not None:
             body["seed"] = seed
+        if response_format is not None:
+            body["response_format"] = response_format
         if self.provider:
             body["provider"] = {"order": [self.provider], "allow_fallbacks": False}
         if reasoning_max_tokens is not None:

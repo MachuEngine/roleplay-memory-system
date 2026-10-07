@@ -28,9 +28,12 @@ GOLD = ROOT / "tests" / "cases" / "memory_gold.json"
 class CostRecorder:
     def __init__(self, client) -> None:
         self.client, self.model, self.cost = client, client.model, 0.0
+        self.calls, self.truncated = 0, 0
 
     def complete(self, system, user, **kw):
         res = self.client.complete(system, user, **kw)
+        self.calls += 1
+        self.truncated += res.finish_reason == "length"     # 반복 출력으로 상한에 걸린 호출
         if isinstance(res.cost_usd_api, float):
             self.cost += res.cost_usd_api
         return res
@@ -68,10 +71,12 @@ def replay(log: list[dict], spec: dict, client) -> list[dict]:
         s.store.append_turn(s.scope, spec["char"], r["reply"])
         if E.extraction_due(s):
             ok = E.run_extraction(s, client)
-            checks.append({**score(E.memory_view(s)[0], spec, r["turn"]), "ok": ok})
+            checks.append({**score(E.memory_view(s)[0], spec, r["turn"]), "ok": ok,
+                           "error": s.extraction_runs[-1]["error"]})
     if s.store.pending_turns(s.scope):                       # 세션 종료 정리(flush)
         ok = E.run_extraction(s, client)
-        checks.append({**score(E.memory_view(s)[0], spec, log[-1]["turn"]), "ok": ok, "final": True})
+        checks.append({**score(E.memory_view(s)[0], spec, log[-1]["turn"]), "ok": ok, "final": True,
+                       "error": s.extraction_runs[-1]["error"]})
     return checks
 
 
@@ -112,6 +117,11 @@ def main() -> None:
         "forbidden_items": sum(len(c["forbidden"]) for c in all_checks),
         "runs_with_any_error": sum(any(c["wrong"] or c["forbidden"] for c in r["checks"]) for r in runs),
         "runs": len(runs), "extraction_failures": sum(not c["ok"] for c in all_checks),
+        "calls": client.calls, "truncated_calls": client.truncated,
+        "errors": [c["error"] for c in all_checks if c["error"]],
+        # seed를 고정했으므로 같은 기록의 반복 실행은 최종 L1이 같아야 한다
+        "repeat_mismatch": sum(r["checks"][-1]["l1"] != runs[i - 1]["checks"][-1]["l1"]
+                               for i, r in enumerate(runs) if r["repeat"] > 0),
     }
     print(f"\n요약: {summary} | ${client.cost:.4f}")
     stamp = datetime.now(timezone.utc).astimezone().strftime("%Y%m%d_%H%M%S")

@@ -222,9 +222,17 @@ def run_extraction(session: Session, client) -> bool:
         client, lambda: set(session.store.facts.get(session.scope.profile_key(), {})))
     c, p = session.character, session.persona
     setting = f"{c.identity}\n{c.initial_state}\n{c.speech}\n{p.description}"
-    ok = session.store.run_extraction(
-        session.scope, make_extractor(client, session.persona.name, existing, setting),
-        promoter=promoter, summarizer=summarizer)
+    extractor, error = make_extractor(client, session.persona.name, existing, setting), []
+
+    def recorded(turns):                    # memory_sim은 예외를 삼키므로 실패 사유를 여기서 남긴다
+        try:
+            return extractor(turns)
+        except Exception as exc:
+            error.append(f"{type(exc).__name__}: {exc}"[:200])
+            raise
+
+    ok = session.store.run_extraction(session.scope, recorded,
+                                      promoter=promoter, summarizer=summarizer)
     # memory_sim은 추출 한 번에 롤업을 한 번(3개 → 1줄)만 한다. 한 번에 여러 항목이 늘면
     # 상한(L2_ITEM_CAP)을 넘은 채 남으므로, 플레이그라운드에서는 상한 안으로 들 때까지 반복한다.
     for _ in range(5):
@@ -232,7 +240,7 @@ def run_extraction(session: Session, client) -> bool:
         if not ok or len(alive) <= L2_ITEM_CAP:
             break
         session.store._rollup(session.scope, promoter, summarizer)
-    session.extraction_runs.append({"ok": ok, "turns": n})
+    session.extraction_runs.append({"ok": ok, "turns": n, "error": error[0] if error else ""})
     return ok
 
 
