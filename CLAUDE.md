@@ -5,7 +5,7 @@
 ## 검증
 
 ```bash
-bash scripts/check_local.sh   # 구문 검사 + 원가 계산·검산 + memory 18건 + response guard 5건 + 플레이그라운드 엔진 27건
+bash scripts/check_local.sh   # 구문 검사 + 원가 계산·검산 + memory 18건 + response guard 5건 + 플레이그라운드 엔진 44건
 ```
 
 - 키 없이 1초 안에 끝나고 파일을 쓰지 않는다. 작업을 마치기 전에 반드시 통과시킨다.
@@ -24,8 +24,8 @@ bash scripts/check_local.sh   # 구문 검사 + 원가 계산·검산 + memory 1
 
 모델 API를 호출하는 스크립트는 비용이 들고 결과가 매번 달라진다. **사용자가 요청하지 않으면 실행하지 않는다.** 실행 전에 대상 케이스 수, seed, `--budget-usd` 상한을 먼저 알린다.
 
-- 해당 스크립트: `run_live_tests.py`, `evaluate_extraction_quality.py`, `evaluate_embedding_retrieval.py`, `measure_*.py`, `probe_*.py`, `test_cache_*.py`, `test_explicit_cache.py`, `test_injection_profile.py`, `test_length_variants.py`, `test_openrouter_cache_control.py`, `run_demo_smoke.py`, `scripts/run_*.sh`
-- `.claude/settings.json`의 `ask` 규칙으로 실행 전 확인을 받는다.
+- 해당 스크립트: `run_live_tests.py`, `evaluate_extraction_quality.py`, `evaluate_embedding_retrieval.py`, `measure_*.py`, `probe_*.py`, `test_cache_*.py`, `test_explicit_cache.py`, `test_injection_profile.py`, `test_length_variants.py`, `test_openrouter_cache_control.py`, `run_demo_smoke.py`, `evaluate_user_action_judge.py`, `scripts/run_*.sh`
+- 확인 창(`ask` 규칙)은 쓰지 않는다. 사용자가 작업을 맡기며 실행을 허락한 경우에만 예산 상한을 걸고 실행한다.
 - `scripts/run_*.sh`는 저장소 루트의 `.env`를 읽고 `.venv/bin/python`으로 실행한다.
 
 ## 플레이그라운드 (`demo/`)

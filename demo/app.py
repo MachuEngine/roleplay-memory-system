@@ -76,7 +76,7 @@ def log_md(session: E.Session | None) -> str:
     clip = lambda s: s.replace("|", "/")[:120] or "-"  # noqa: E731
     for i, r in enumerate(session.records, 1):
         reason = "; ".join(e for errs in r.errors for e in errs)
-        warning = "; ".join(w.split(": ", 1)[-1] for w in r.warnings)
+        warning = " / ".join(r.warnings)
         rows.append(f"| {i} | {r.status} | {clip(reason)} | {clip(warning)} |")
     return "\n".join(rows)
 

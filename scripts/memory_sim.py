@@ -114,7 +114,7 @@ class MemoryStore:
                 facts.pop(subject, None)
 
     # ------------------------------------------- 2~3) 비동기 추출 → 구조화 저장
-    def run_extraction(self, scope: Scope, extractor, promoter=None) -> bool:
+    def run_extraction(self, scope: Scope, extractor, promoter=None, summarizer=None) -> bool:
         """큐에 쌓인 턴을 한 번에 처리한다. 성공한 경우에만 큐를 비운다.
 
         실패 시 원문을 지우지 않으므로 다음 실행에서 다시 시도할 수 있다.
@@ -135,7 +135,7 @@ class MemoryStore:
             if any(x.text == e.text and not x.invalidated for x in eps):
                 continue                        # 중복 저장 방지
             eps.append(e)
-        self._rollup(scope, promoter)
+        self._rollup(scope, promoter, summarizer)
         self.queue[scope] = []
         self.extracted_upto[scope] = max(pending) + 1
         return True
@@ -152,12 +152,13 @@ class MemoryStore:
         versions.append(fact)
         store[fact.subject] = fact
 
-    def _rollup(self, scope: Scope, promoter=None) -> None:
+    def _rollup(self, scope: Scope, promoter=None, summarizer=None) -> None:
         """문서 3.2절: 상한 도달 시 가장 오래된 3개를 한 줄로 접는다.
 
         롤업은 압축이 아니라 **사건에서 상태를 추출하는 단계**다. 접기 전에
         promoter가 확정 사실을 찾아내면 L2에서 빼고 L1으로 승격한다.
         promoter는 운영에서 보조 LLM이 맡을 판단이라 주입 가능하게 둔다.
+        summarizer(접을 에피소드 목록) -> 한 줄 요약도 주입할 수 있다. 없으면 이어 붙여 120자로 자른다.
         """
         eps = [e for e in self.episodes.get(scope, []) if not e.invalidated]
         if len(eps) <= L2_ITEM_CAP:
@@ -181,7 +182,8 @@ class MemoryStore:
             self.episodes[scope] = keep
             return
         merged = Episode(
-            text="(요약) " + " / ".join(e.text for e in old)[:120],
+            text=(summarizer(old) if summarizer is not None
+                  else "(요약) " + " / ".join(e.text for e in old)[:120]),
             turn=max(e.turn for e in old),
             importance=max(e.importance for e in old),
             source_turns=sorted({t for e in old for t in e.source_turns}),

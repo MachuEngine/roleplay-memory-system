@@ -15,9 +15,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "demo"))
 import engine as E  # noqa: E402
-from extraction import ExtractionError, parse  # noqa: E402
+from extraction import ExtractionError, canonical_subject, make_roller, parse  # noqa: E402
+from judge import invents_posture  # noqa: E402
 from limits import KST, DailyCounter  # noqa: E402
-from memory_sim import Fact, Turn  # noqa: E402
+from memory_sim import Episode, Fact, Turn  # noqa: E402
 
 RESULTS: list[tuple[str, bool, str]] = []
 SAMPLE = json.loads((ROOT / "demo" / "sample_character.json").read_text("utf-8"))
@@ -32,6 +33,9 @@ IMPERSONATING = (
     "재촉하지도 않았다. 빗소리만 가게 안을 채웠고 주전자가 낮게 끓기 시작했다.*\n\n\"……앉든지.\""
 )
 
+# 사용자의 말을 가리키는 수식어라 정규식에는 걸리지만 위반은 아닌 응답
+SUSPECT_ONLY = E._fake_scene("서리").replace(
+    "*서리는 카운터 아래에서", "*하람이 던진 말에 서리는 대답 대신 숨을 골랐다. 서리는 카운터 아래에서", 1)
 NO_ASTERISK = E._fake_scene("서리").lstrip("*")             # 행동 문단으로 시작하지 않음
 NAME_LABEL = E._fake_scene("서리") + '\n\n하람: "응, 앉을게."'  # 사용자 대사를 이름표로 씀
 
@@ -80,10 +84,15 @@ def t_guard_flow() -> None:
     check("guard: 정상 응답은 1회 호출로 통과", rec.status == "통과" and len(rec.calls) == 1,
           rec.status)
     s = sample_session()
-    text, rec = E.respond(s, "안녕.", E.FakeClient([IMPERSONATING]), d)
-    check("사용자 행동 의심: 막지 않고 의심 문장으로 표시",
-          rec.status == "통과" and text == IMPERSONATING and len(rec.calls) == 1
-          and any(w.startswith(E.WARN_ONLY_PREFIX) for w in rec.warnings), str(rec.warnings[:1]))
+    text, rec = E.respond(s, "안녕.", E.FakeClient([SUSPECT_ONLY]), d)
+    check("사용자 행동 의심(자세 단정 아님): 막지 않고 의심 문장으로 표시",
+          rec.status == "통과" and text == SUSPECT_ONLY and len(rec.calls) == 1
+          and any("하람이 던진 말" in w for w in rec.warnings), str(rec.warnings[:1]))
+    s = sample_session()
+    text, rec = E.respond(s, "안녕.", E.FakeClient([IMPERSONATING, E._fake_scene("서리")]), d)
+    check("사용자 자세 단정: 재생성 후 통과",
+          rec.status == "재생성 후 통과" and rec.errors[0]
+          and rec.errors[0][0].startswith(E.POSTURE_PREFIX), str(rec.errors[0][:1]))
     s = sample_session()
     text, rec = E.respond(s, "안녕.", E.FakeClient([NO_ASTERISK, E._fake_scene("서리")]), d)
     check("guard: 형식 위반 → 재생성 후 통과",
@@ -143,11 +152,19 @@ def t_parse() -> None:
     check("파싱: '항목: 값'과 콜론 없는 항목",
           [(f.subject, f.value) for f in facts] == [("호칭", "너"), ("보리차를 가져온다", "확정")]
           and [e.text for e in eps] == ["시집을 건넸다"] and facts[0].source_turns == [3, 4])
-    facts, eps = parse("<profile>\n- 호칭: 선배\n- 항목명: 현재값\n- 호칭:\n- 약속: 없음\n- 생일: 다음 주 목요일\n</profile>\n"
+    facts, eps = parse("<profile>\n- 호칭: 선배\n- 항목명: 현재값\n- 호칭:\n- 약속: 없음\n- 사용자가 직접 밝힌 사실: 생일 목요일\n- 생일: 다음 주 목요일\n</profile>\n"
                        "<episodes>\n- 시집을 찾아 건넸고 사용자가 받았다\n- 바다에 가기로 했다\n</episodes>", turns)
-    check("파싱: 지시문 예시·자리표시자·빈 값·'없음'은 버림",
+    check("파싱: 지시문 예시·자리표시자·빈 값·'없음'·분류 이름 항목은 버림",
           [(f.subject, f.value) for f in facts] == [("생일", "다음 주 목요일")]
           and [e.text for e in eps] == ["바다에 가기로 했다"])
+    facts, _ = parse("<profile>\n- 금기: 가족 이야기가 나오면 화제를 돌린다.\n- 생일: 목요일\n</profile>\n"
+                     "<episodes>\n</episodes>", turns, setting=SAMPLE["character"]["identity"])
+    _, eps = parse("<profile>\n</profile>\n<episodes>\n- 1. 바다에 가기로 했다\n</episodes>", turns)
+    check("항목명 통일: '하람의 생일'·'하람과의 약속' → '생일(하람)'·'약속(하람)'",
+          [canonical_subject(x) for x in ("하람의 생일", "하람과의 약속", "약속(바다)", "생일")]
+          == ["생일(하람)", "약속(하람)", "약속(바다)", "생일"])
+    check("파싱: L2 항목 앞 번호 제거", [e.text for e in eps] == ["바다에 가기로 했다"])
+    check("파싱: 설정 문장을 그대로 옮긴 항목은 버림", [f.subject for f in facts] == ["생일"])
     facts, eps = parse("<profile>\n</profile>\n<episodes>\n</episodes>", turns)
     check("파싱: 빈 블록은 저장할 내용 없음", facts == [] and eps == [])
     try:
@@ -186,6 +203,62 @@ def t_extraction_call() -> None:
           ok and '"너"라고 부른다' in stub.user and "&quot;" not in stub.user)
 
 
+def t_rollup() -> None:
+    class Stub:
+        def __init__(self, replies, ok=True):
+            self.replies, self.ok = list(replies), ok
+
+        def complete(self, system, user, **_):
+            if not self.ok:
+                return E.ChatResult(ok=False, error="down")
+            return E.ChatResult(ok=True, text=self.replies.pop(0), finish_reason="stop")
+
+    eps = [Episode(f"{i}번째 사건", i, 0.5, [i]) for i in range(3)]
+    promoter, summarizer = make_roller(Stub(["약속: 마감 후 바다 (확답 피함)", "없음", "- 생일: 목요일",
+                                             "세 사건을 묶은 한 문장"]))
+    got = [promoter(e) for e in eps]
+    check("롤업 승격: '항목: 값'은 L1 후보, '없음'은 승격 안 함",
+          got == [("약속", "마감 후 바다 (확답 피함)"), None, ("생일", "목요일")], str(got))
+    check("롤업 요약: 모델 요약 한 문장을 사용", summarizer(eps) == "세 사건을 묶은 한 문장")
+    _, numbered = make_roller(Stub(["1. 번호가 붙은 요약"]))
+    check("롤업 요약: 앞 번호 제거", numbered(eps) == "번호가 붙은 요약")
+    _, fallback = make_roller(Stub([], ok=False))
+    check("롤업 요약: 호출 실패 시 기본 요약으로 대체", fallback(eps).startswith("(요약) 0번째 사건"))
+
+    s = sample_session()
+    s.store.episodes[s.scope] = [Episode(f"사건 {i}", i, 0.5, [i]) for i in range(11)]
+    s.store._rollup(s.scope, *make_roller(Stub(["없음", "약속: 바다", "없음", "사건 0과 2를 묶은 요약"])))
+    facts, eps_now = E.memory_view(s)
+    s2 = sample_session()
+    for i in range(E.MEMORY_BATCH):
+        E.respond(s2, f"{i}번째 이야기.", E.FakeClient(), DailyCounter(100))
+    s2.store.episodes[s2.scope] = [Episode(f"옛 사건 {i}", i, 0.5, [i]) for i in range(14)]
+    E.run_extraction(s2, E.FakeClient())
+    alive = [ep for ep in s2.store.episodes[s2.scope] if not ep.invalidated]
+    check("롤업: 추출 뒤 L2가 상한(10개) 안으로 들 때까지 반복", len(alive) <= 10, f"{len(alive)}개")
+    check("롤업: 승격된 사건은 L1으로, 나머지는 요약 한 줄로 접힘",
+          "약속: 바다" in facts and eps_now[0] == "사건 0과 2를 묶은 요약" and len(eps_now) == 9,
+          f"L1 {facts}, L2 {len(eps_now)}개")
+
+
+def t_user_action_rule() -> None:
+    data = json.loads((ROOT / "tests" / "cases" / "user_action_judge.json").read_text("utf-8"))
+    rows = [(it["violation"], invents_posture(it["sentence"], data["user_name"],
+                                              it["recent_user_messages"])) for it in data["items"]]
+    tp = sum(v and p for v, p in rows)
+    fp = sum(p and not v for v, p in rows)
+    pos = sum(v for v, _ in rows)
+    check("사용자 자세 규칙: 라벨셋 오탐 0, 재현율 0.8 이상",
+          fp == 0 and tp / pos >= 0.8, f"TP {tp}/{pos}, FP {fp}")
+    check("사용자 자세 규칙: '매일같이 서 있던'은 습관",
+          not invents_posture("매일같이 윤이 서 있던 그 자리가 텅 비어버릴 것 같았다.", "윤", ["안녕."]))
+    check("사용자 자세 규칙: '가라앉다'는 자세가 아님",
+          not invents_posture("하람이 문을 닫자 눅눅한 공기가 서점 안에 가라앉았다.", "하람", ["안녕."]))
+    check("사용자 자세 규칙: 사용자가 앉았다고 쓴 뒤의 재언급은 위반 아님",
+          not invents_posture("서리는 창가에 앉아 있는 하람을 봤다.", "하람",
+                              ['*창가 자리에 앉았다.* "비 오네."']))
+
+
 def t_limits() -> None:
     s, cl = sample_session(), E.FakeClient()
     s.turns_used = 20
@@ -216,7 +289,7 @@ def t_setup() -> None:
 
 def main() -> None:
     for fn in (t_template, t_guard_flow, t_history_and_extraction, t_parse, t_extraction_call,
-               t_limits, t_setup):
+               t_rollup, t_user_action_rule, t_limits, t_setup):
         fn()
     width = max(len(n) for n, _, _ in RESULTS)
     print("## 플레이그라운드 엔진 로컬 검증\n")

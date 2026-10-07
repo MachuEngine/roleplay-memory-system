@@ -39,6 +39,19 @@ class GuardResult:
     display_text: str
 
 
+def user_action_matches(text: str, user_name: str) -> list[re.Match[str]]:
+    """사용자 행동·반응으로 의심되는 구간. 위치는 user_voice 본문을 가린 텍스트(m.string) 기준이다."""
+    # 사용자/2인칭이 문법적 주어이거나 사용자 신체·소지품이 새 상태를 만드는 경우.
+    subject = (
+        rf"(?:{re.escape(user_name)}(?:은|는|이|가)|너(?:는|가)|네가|"
+        rf"네\s*(?:손|시선|표정|목소리|가방|발|어깨|입술|눈|손가락))"
+    )
+    action_pattern = re.compile(subject + rf"[^.!?\n\"]{{0,70}}(?:{ACTION})")
+    # 허용된 user_voice 본문은 검사에서 가린다. 발화 외 사용자 행동은 그대로 잡힌다.
+    masked = VOICE.sub("<allowed_user_voice>", text)
+    return [*action_pattern.finditer(masked), *IMPLICIT_USER_STATE.finditer(masked)]
+
+
 def validate(text: str, user_name: str, impersonation: bool) -> GuardResult:
     errors: list[str] = []
     voices = VOICE.findall(text)
@@ -54,16 +67,7 @@ def validate(text: str, user_name: str, impersonation: bool) -> GuardResult:
     if re.search(rf"(?m)^\s*{re.escape(user_name)}\s*:", text):
         errors.append("사용자 이름표 대사")
 
-    # 사용자/2인칭이 문법적 주어이거나 사용자 신체·소지품이 새 상태를 만드는 경우.
-    subject = (
-        rf"(?:{re.escape(user_name)}(?:은|는|이|가)|너(?:는|가)|네가|"
-        rf"네\s*(?:손|시선|표정|목소리|가방|발|어깨|입술|눈|손가락))"
-    )
-    action_pattern = re.compile(subject + rf"[^.!?\n\"]{{0,70}}(?:{ACTION})")
-    # 허용된 user_voice 본문은 검사에서 가린다. 발화 외 사용자 행동은 그대로 잡힌다.
-    masked = VOICE.sub("<allowed_user_voice>", text)
-    action_hits = [m.group(0)[:100] for m in action_pattern.finditer(masked)]
-    action_hits.extend(m.group(0)[:100] for m in IMPLICIT_USER_STATE.finditer(masked))
+    action_hits = [m.group(0)[:100] for m in user_action_matches(text, user_name)]
     if action_hits:
         errors.append("사용자 행동·반응 생성: " + " / ".join(action_hits[:3]))
 

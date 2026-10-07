@@ -22,10 +22,12 @@ for p in (ROOT / "scripts", DEMO):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 
-from extraction import DEMO_INSTRUCTION, make_extractor  # noqa: E402
+from extraction import (DEMO_INSTRUCTION, PROMOTE_INSTRUCTION, SUMMARY_INSTRUCTION,  # noqa: E402
+                        make_extractor, make_roller)
+from judge import flagged_sentences, invents_posture  # noqa: E402
 from limits import DailyCounter, check_turn  # noqa: E402
 from llm_client import ChatResult  # noqa: E402
-from memory_sim import MemoryStore, Scope, est_tokens  # noqa: E402
+from memory_sim import L2_ITEM_CAP, Fact, MemoryStore, Scope, est_tokens  # noqa: E402
 from prompt_render import render_system, unresolved  # noqa: E402
 from response_guard import safe_fallback, validate  # noqa: E402
 
@@ -36,9 +38,11 @@ HISTORY_BUDGET = 6000          # chat_history 토큰 추정 상한 (docs/03-assu
 SETTING_BUDGET = 6000          # 캐릭터 + 페르소나 입력 상한
 MEMORY_BATCH = 6               # 미추출 대화 6회(사용자 1턴 + AI 1턴)마다 추출
 NAME_MAX, MESSAGE_MAX = 20, 500
-# 규칙 기반 사용자 행동 판정은 3인칭 서술에서 오탐이 많다("하람이 던진 질문에" 같은 수식어,
-# 캐릭터의 기대 표현). 플레이그라운드에서는 이 판정만 막지 않고 의심 문장으로 표시한다.
+# 1단계 정규식의 사용자 행동 판정은 3인칭 서술에서 오탐이 많다("하람이 던진 질문에" 같은 수식어,
+# 캐릭터의 기대 표현). 2단계(judge.py)에서 사용자가 쓰지 않은 자세를 단정한 문장만 위반으로 확정해
+# 재생성하고, 나머지 의심 문장은 막지 않고 표시한다.
 WARN_ONLY_PREFIX = "사용자 행동·반응 생성"
+POSTURE_PREFIX = "사용자 자세 단정"
 
 
 @dataclass
@@ -61,7 +65,7 @@ class TurnRecord:
     """턴 하나의 검사 결과. UI의 검사 패널과 스모크 테스트 기록에 쓴다."""
     status: str                          # 통과 / 재생성 후 통과 / 대체 응답 / 호출 실패 / 차단
     errors: list[list[str]] = field(default_factory=list)   # 시도별 차단 사유
-    warnings: list[str] = field(default_factory=list)       # 표시한 응답의 의심 문장
+    warnings: list[str] = field(default_factory=list)       # 표시한 응답의 의심 문장(차단하지 않음)
     calls: list[dict[str, Any]] = field(default_factory=list)
     rejected: list[str] = field(default_factory=list)   # guard가 막은 응답 원문 (분석용)
 
@@ -162,6 +166,9 @@ def respond(session: Session, message: str, client, daily: DailyCounter) -> tupl
     user_turn = session.store.append_turn(session.scope, p.name, message)
     record = TurnRecord("통과")
     text = ""
+    # 자세 판정 기준: 이번 세션에서 사용자가 쓴 메시지 전체 (앞에서 앉았다고 썼으면 이후 묘사는 허용)
+    user_said = [t.text for t in session.store.turns.get(session.scope, [])
+                 if t.speaker == p.name and not t.deleted]
     for attempt in range(2):
         res = client.complete(system, message, max_tokens=MAIN_MAX_TOKENS,
                               reasoning_max_tokens=THINKING_BUDGET, temperature=1.0, seed=None)
@@ -174,10 +181,14 @@ def respond(session: Session, message: str, client, daily: DailyCounter) -> tupl
         candidate = html.unescape(res.text).strip()
         found = validate(candidate, p.name, impersonation=False)
         errors = [e for e in found if not e.startswith(WARN_ONLY_PREFIX)]
+        suspects = flagged_sentences(candidate, p.name) if len(errors) < len(found) else []
+        invented = [s for s in suspects if invents_posture(s, p.name, user_said)]
+        if invented:
+            errors.append(f"{POSTURE_PREFIX}: " + " / ".join(s[:80] for s in invented[:2]))
         record.errors.append(errors)
         if not errors:
             text = candidate
-            record.warnings = [e for e in found if e.startswith(WARN_ONLY_PREFIX)]
+            record.warnings = suspects
             record.status = "통과" if attempt == 0 else "재생성 후 통과"
             break
         record.rejected.append(candidate)
@@ -200,7 +211,34 @@ def run_extraction(session: Session, client) -> bool:
     # keywordbook은 프롬프트 주입용으로 escape되어 있다. 추출 모델에는 원문으로 보낸다.
     existing = html.unescape(session.store.build_keywordbook(session.scope, paid=False))
     n = len(session.store.pending_turns(session.scope))
-    ok = session.store.run_extraction(session.scope, make_extractor(client, existing))
+    c, p = session.character, session.persona
+    setting = (f"{c.name}: {c.identity}\n{c.initial_state}\n"
+               f"{p.name}: {p.description}")
+    promoter, summarizer = make_roller(client)
+    before_texts = {ep.text for ep in session.store.episodes.get(session.scope, [])}
+    ok = session.store.run_extraction(session.scope, make_extractor(client, existing, setting),
+                                      promoter=promoter, summarizer=summarizer)
+    # 추출 모델은 생일·약속을 지시와 달리 L2에만 쓰는 경우가 많았다(20턴 테스트에서 6·12턴 L1 비어 있음).
+    # 이번에 새로 들어온 L2 항목마다 승격 판정을 한 번 더 해 지속 상태를 L1에 바로 올린다.
+    # L2 항목은 그대로 두므로 사건 기록과 현재 상태가 둘 다 남는다.
+    if ok:
+        known = before_texts
+        for ep in session.store.episodes.get(session.scope, []):
+            if ep.invalidated or ep.text in known:
+                continue
+            got = promoter(ep)
+            # 승격 단계는 새 항목만 더한다. 이미 있는 값의 갱신은 추출 단계가 맡는다
+            # (사건 한 줄에서 다시 뽑으면 기존 값보다 막연해지는 경우가 있었다).
+            if got is not None and got[0] not in session.store.facts.get(session.scope.profile_key(), {}):
+                session.store._store_fact(session.scope,
+                                          Fact(got[0], got[1], ep.turn, list(ep.source_turns)))
+    # memory_sim은 추출 한 번에 롤업을 한 번(3개 → 1줄)만 한다. 한 번에 여러 항목이 늘면
+    # 상한(L2_ITEM_CAP)을 넘은 채 남으므로, 플레이그라운드에서는 상한 안으로 들 때까지 반복한다.
+    for _ in range(5):
+        alive = [ep for ep in session.store.episodes.get(session.scope, []) if not ep.invalidated]
+        if not ok or len(alive) <= L2_ITEM_CAP:
+            break
+        session.store._rollup(session.scope, promoter, summarizer)
     session.extraction_runs.append({"ok": ok, "turns": n})
     return ok
 
@@ -227,6 +265,10 @@ class FakeClient:
         self.calls.append((system, user))
         if self.fail:
             return ChatResult(ok=False, error="fake failure")
+        if system == PROMOTE_INSTRUCTION:
+            return ChatResult(ok=True, text="없음")
+        if system == SUMMARY_INSTRUCTION:
+            return ChatResult(ok=True, text="비 오는 오후 책방에서 둘이 나눈 이야기를 요약한 문장.")
         if system == DEMO_INSTRUCTION:
             text = self.extraction if self.extraction is not None else (
                 "<profile>\n- 호칭: 상대를 '너'라고 부른다\n</profile>\n"

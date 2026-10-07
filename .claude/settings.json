@@ -12,23 +12,6 @@
       "Bash(git diff*)",
       "Bash(git log*)"
     ],
-    "ask": [
-      "Bash(*run_live_tests.py*)",
-      "Bash(*evaluate_extraction_quality.py*)",
-      "Bash(*evaluate_embedding_retrieval.py*)",
-      "Bash(*measure_extraction_latency.py*)",
-      "Bash(*measure_prompt_tokens.py*)",
-      "Bash(*measure_language_ratio.py*)",
-      "Bash(*probe_thinking.py*)",
-      "Bash(*probe_direct_cache.py*)",
-      "Bash(*test_cache_*.py*)",
-      "Bash(*test_explicit_cache.py*)",
-      "Bash(*test_injection_profile.py*)",
-      "Bash(*test_length_variants.py*)",
-      "Bash(*test_openrouter_cache_control.py*)",
-      "Bash(*scripts/run_*.sh*)",
-      "Bash(*run_demo_smoke.py*)"
-    ],
     "deny": [
       "Read(./.env)",
       "Edit(./.env)"

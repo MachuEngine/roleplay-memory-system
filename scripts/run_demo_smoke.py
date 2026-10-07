@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from dataclasses import asdict
 from datetime import datetime, timezone
@@ -68,8 +69,9 @@ class CostRecorder:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--budget-usd", type=float, default=0.5)
-    ap.add_argument("--turns", type=int, default=8, choices=range(1, len(SCRIPT) + 1),
-                    metavar=f"1~{len(SCRIPT)}")
+    ap.add_argument("--turns", type=int, default=8, help="샘플 시나리오 앞에서부터 몇 턴을 쓸지")
+    ap.add_argument("--sample", default="seori", choices=["seori", "haeden"],
+                    help="seori: demo/sample_character.json, haeden: tests/fixtures/sample_haeden.json")
     args = ap.parse_args()
     try:
         main_client = OpenRouterClient("google/gemini-2.5-pro")
@@ -77,9 +79,14 @@ def main() -> None:
     except MissingKey as exc:
         raise SystemExit(str(exc))
 
-    sample = json.loads((ROOT / "demo" / "sample_character.json").read_text("utf-8"))
+    if args.sample == "haeden":
+        sample = json.loads((ROOT / "tests" / "fixtures" / "sample_haeden.json").read_text("utf-8"))
+        base_script = sample["script"]
+    else:
+        sample = json.loads((ROOT / "demo" / "sample_character.json").read_text("utf-8"))
+        base_script = SCRIPT
     session = E.new_session(E.Character(**sample["character"]), E.Persona(**sample["persona"]))
-    script = SCRIPT[:args.turns]
+    script = base_script[:args.turns]
     daily = DailyCounter(len(script))
     spent, turns, extractions = 0.0, [], []
 
@@ -108,17 +115,33 @@ def main() -> None:
             print(f"    추출 {'성공' if ok else '실패'} | L1 {facts} | L2 {eps}")
 
     statuses = [t["status"] for t in turns]
+    shown = [t for t in turns if t["status"] not in ("차단", "호출 실패")]
+    narr = lambda s: " ".join(re.findall(r"\*([^*]+)\*", s))  # noqa: E731
+    speech = lambda s: " ".join(re.findall(r'"([^"]+)"', s))  # noqa: E731
+    metrics = {
+        "avg_chars": round(sum(len(t["reply"]) for t in shown) / max(1, len(shown))),
+        "over_1200_chars": sum(len(t["reply"]) > 1200 for t in shown),
+        "narration_first_second_person": sum(
+            bool(re.search(r"(^|\s)(나는|내가|네가|너는)\s", narr(t["reply"]))) for t in shown),
+        "warning_turns": sum(bool(t["warnings"]) for t in shown),
+        "regenerated_for_posture": sum(any(e.startswith(E.POSTURE_PREFIX) for errs in t["errors"]
+                                           for e in errs) for t in turns),
+        "speech_polite_turns": sum(bool(re.search(r"(요[.?!~…]|니다|세요)", speech(t["reply"])))
+                                   for t in shown),
+    }
     stamp = datetime.now(timezone.utc).astimezone().strftime("%Y%m%d_%H%M%S")
     out = ROOT / "tests" / "results" / f"demo_smoke_{stamp}.json"
     payload = {
         "measured_at": datetime.now(timezone.utc).astimezone().isoformat(timespec="seconds"),
         "main_model": main_client.model, "extract_model": extract_client.model,
-        "turns": len(turns), "status_counts": {s: statuses.count(s) for s in set(statuses)},
+        "sample": args.sample, "turns": len(turns),
+        "status_counts": {s: statuses.count(s) for s in set(statuses)}, "metrics": metrics,
         "main_cost_usd": round(spent, 6), "extract_cost_usd": round(extract_client.cost, 6),
         "extractions": extractions, "log": turns,
     }
     out.write_text(json.dumps(payload, ensure_ascii=False, indent=2), "utf-8")
-    print(f"\n{payload['status_counts']} | 메인 ${spent:.4f} + 추출 ${extract_client.cost:.4f}")
+    print(f"\n{payload['status_counts']} | {metrics}")
+    print(f"메인 ${spent:.4f} + 추출 ${extract_client.cost:.4f}")
     print(f"저장: {out.relative_to(ROOT)}")
 
 
