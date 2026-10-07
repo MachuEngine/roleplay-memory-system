@@ -15,7 +15,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "demo"))
 import engine as E  # noqa: E402
-from extraction import ExtractionError, canonical_subject, make_roller, parse  # noqa: E402
+from extraction import (ExtractionError, build_fact_request, canonical_subject,  # noqa: E402
+                        make_roller, parse_episodes, parse_facts)
 from judge import invents_posture  # noqa: E402
 from limits import KST, DailyCounter  # noqa: E402
 from memory_sim import Episode, Fact, Turn  # noqa: E402
@@ -146,48 +147,74 @@ def t_history_and_extraction() -> None:
 
 
 def t_parse() -> None:
-    turns = [Turn(3, "하람", "a"), Turn(4, "서리", "b")]
-    facts, eps = parse("<profile>\n- 호칭: 너\n- 보리차를 가져온다\n</profile>\n"
-                       "<episodes>\n- 시집을 건넸다\n</episodes>", turns)
-    check("파싱: '항목: 값'과 콜론 없는 항목",
-          [(f.subject, f.value) for f in facts] == [("호칭", "너"), ("보리차를 가져온다", "확정")]
-          and [e.text for e in eps] == ["시집을 건넸다"] and facts[0].source_turns == [3, 4])
-    facts, eps = parse("<profile>\n- 호칭: 선배\n- 항목명: 현재값\n- 호칭:\n- 약속: 없음\n- 사용자가 직접 밝힌 사실: 생일 목요일\n- 생일: 다음 주 목요일\n</profile>\n"
-                       "<episodes>\n- 시집을 찾아 건넸고 사용자가 받았다\n- 바다에 가기로 했다\n</episodes>", turns)
-    check("파싱: 지시문 예시·자리표시자·빈 값·'없음'·분류 이름 항목은 버림",
-          [(f.subject, f.value) for f in facts] == [("생일", "다음 주 목요일")]
-          and [e.text for e in eps] == ["바다에 가기로 했다"])
-    facts, _ = parse("<profile>\n- 금기: 가족 이야기가 나오면 화제를 돌린다.\n- 생일: 목요일\n</profile>\n"
-                     "<episodes>\n</episodes>", turns, setting=SAMPLE["character"]["identity"])
-    _, eps = parse("<profile>\n</profile>\n<episodes>\n- 1. 바다에 가기로 했다\n</episodes>", turns)
+    U = "하람"
+    turns = [Turn(2, U, '"다음 주 목요일이 내 생일이야. 그냥 말해 본 거야."'),
+             Turn(3, "서리", '*컵을 내려놓았다.* "그래서."'),
+             Turn(4, U, '"이번 달 말에 마감 끝나면 같이 바다 보러 가자. 약속한 거다?"'),
+             Turn(5, "서리", '"마감이나 끝내."')]
+    fx = lambda facts: json.dumps({"facts": facts}, ensure_ascii=False)  # noqa: E731
+    got = parse_facts(fx([
+        {"subject": "하람의 생일", "value": "다음 주 목요일", "evidence": "다음 주 목요일이 내 생일이야", "status": "확정"},
+        {"subject": "약속(바다)", "value": "마감 후 바다 (확답을 피함)", "evidence": "마감 끝나면 같이 바다 보러 가자", "status": "확정"},
+        {"subject": "금기(서리)", "value": "가족 이야기를 피함", "evidence": "가족 이야기는 하지 마", "status": "확정"},
+        {"subject": "말투(서리)", "value": "퉁명스러움", "evidence": "다음 주 목요일이 내 생일이야", "status": "확정"},
+    ]), turns, U, {})
+    check("사실 파싱: 근거가 사용자 발화에 있는 사실만, 항목명 통일, 출처는 근거 턴",
+          [(f.subject, f.value, f.source_turns) for f in got]
+          == [("생일(하람)", "다음 주 목요일", [2]), ("약속(바다)", "마감 후 바다 (확답을 피함)", [4])],
+          str([(f.subject, f.source_turns) for f in got]))
+    got = parse_facts(fx([{"subject": "생일(하람)", "value": "보리차 티백",
+                           "evidence": "다음 주 목요일이 내 생일이야", "status": "확정"}]), turns, U, {})
+    check("사실 파싱: 생일 값에 날짜 표현이 없으면 버림", got == [])
+    got = parse_facts(fx([{"subject": "생일(하람)", "value": "서리에게 생일 축하를 받음",
+                           "evidence": "다음 주 목요일이 내 생일이야", "status": "확정"}]), turns, U, {})
+    check("사실 파싱: '생일 축하'의 '일'은 날짜가 아님", got == [])
+    old_date = {"생일(하람)": Fact("생일(하람)", "다음 주 목요일", 1, [1])}
+    got = parse_facts(fx([{"subject": "생일(하람)", "value": "목요일인데 기억해 달라고 함",
+                           "evidence": "다음 주 목요일이 내 생일이야", "status": "확정"},
+                          {"subject": "약속(바다)", "value": "같이 가자고 함",
+                           "evidence": "같이 바다 보러 가자", "status": "확정"}]), turns, U,
+                      {**old_date, "약속(바다)": Fact("약속(바다)", "이번 달 말에 가자고 함", 1, [1])})
+    check("사실 파싱: 기존 값의 날짜 정보를 잃는 갱신은 거부",
+          [(f.subject, f.value) for f in got] == [("생일(하람)", "목요일인데 기억해 달라고 함")])
+    got = parse_facts(fx([{"subject": "선호(엄마)", "value": "노란색", "evidence": "다음 주 목요일이 내 생일이야", "status": "확정"},
+                          {"subject": "선호(엄마)", "value": "장미 싫어함", "evidence": "마감 끝나면 같이 바다", "status": "확정"}]),
+                      turns, U, {})
+    check("사실 파싱: 한 번에 같은 항목이 여러 개면 값을 합침",
+          [(f.subject, f.value) for f in got] == [("선호(엄마)", "노란색, 장미 싫어함")])
+    old = {"생일(하람)": Fact("생일(하람)", "다음 주 목요일", 9, [9])}
+    got = parse_facts(fx([{"subject": "생일(하람)", "value": "목요일 저녁",
+                           "evidence": "다음 주 목요일이 내 생일이야", "status": "확정"}]), turns, U, old)
+    check("사실 파싱: 기존 값보다 오래된 근거로는 갱신하지 않음", got == [])
+    got = parse_facts(fx([{"subject": "일정(이사)", "value": "다음 달 이사",
+                           "evidence": "이번 달 말에 마감 끝나면", "status": "취소"}]), turns, U, {})
+    check("사실 파싱: 취소된 사실은 '(취소됨)'으로 표시", got and got[0].value == "다음 달 이사 (취소됨)")
+    check("사실 파싱: 코드 블록으로 감싼 JSON도 읽음",
+          parse_facts("```json\n" + fx([]) + "\n```", turns, U, {}) == [])
+    eps = parse_episodes('{"episodes": ["1. 바다에 가자고 했다", "생일을 말했다", "a", "b", "c"]}', turns)
+    check("사건 파싱: 번호 제거, 최대 4개", [e.text for e in eps] == ["바다에 가자고 했다", "생일을 말했다", "a", "b"])
     check("항목명 통일: '하람의 생일'·'하람과의 약속' → '생일(하람)'·'약속(하람)'",
           [canonical_subject(x) for x in ("하람의 생일", "하람과의 약속", "약속(바다)", "생일")]
           == ["생일(하람)", "약속(하람)", "약속(바다)", "생일"])
-    check("파싱: L2 항목 앞 번호 제거", [e.text for e in eps] == ["바다에 가기로 했다"])
-    check("파싱: 설정 문장을 그대로 옮긴 항목은 버림", [f.subject for f in facts] == ["생일"])
-    facts, eps = parse("<profile>\n</profile>\n<episodes>\n</episodes>", turns)
-    check("파싱: 빈 블록은 저장할 내용 없음", facts == [] and eps == [])
-    try:
-        parse("<profile>\n- 생일: 목요일\n</profile>\n<episodes>\n- 바다에 가기로", turns)
-        check("파싱: 닫는 태그가 빠진(잘린) 응답은 실패로 처리", False)
-    except ExtractionError:
-        check("파싱: 닫는 태그가 빠진(잘린) 응답은 실패로 처리", True)
-    try:
-        parse("저장할 내용이 없습니다.", turns)
-        check("파싱: 블록이 없으면 실패로 처리", False)
-    except ExtractionError:
-        check("파싱: 블록이 없으면 실패로 처리", True)
+    for bad in ("저장할 내용이 없습니다.", '{"facts": "없음"}', '{"facts": [}'):
+        try:
+            parse_facts(bad, turns, U, {})
+            check(f"사실 파싱: 형식이 틀리면 실패로 처리 ({bad[:12]})", False)
+        except ExtractionError:
+            check(f"사실 파싱: 형식이 틀리면 실패로 처리 ({bad[:12]})", True)
+    req = build_fact_request(U, turns, {})
+    check("사실 요청: 사용자 줄은 전문, 캐릭터 줄은 대사만",
+          "[사용자 하람] \"다음 주 목요일" in req and "[캐릭터 서리 대사] 그래서." in req
+          and "컵을 내려놓았다" not in req)
 
 
 def t_extraction_call() -> None:
     class Stub:
         def __init__(self, finish: str) -> None:
-            self.finish, self.user = finish, ""
+            self.finish = finish
 
         def complete(self, system, user, **_):
-            self.user = user
-            return E.ChatResult(ok=True, finish_reason=self.finish,
-                                text="<profile>\n- 생일: 목요일\n</profile>\n<episodes>\n</episodes>")
+            return E.ChatResult(ok=True, finish_reason=self.finish, text='{"facts": [], "episodes": []}')
 
     s, d = sample_session(), DailyCounter(100)
     for i in range(E.MEMORY_BATCH):
@@ -196,11 +223,8 @@ def t_extraction_call() -> None:
     ok = E.run_extraction(s, Stub("length"))
     check("추출: 출력 상한에서 잘리면 실패, 대기 턴 보존",
           not ok and len(s.store.pending_turns(s.scope)) == pending)
-    s.store._store_fact(s.scope, Fact("호칭", '"너"라고 부른다', 0, [0]))
-    stub = Stub("stop")
-    ok = E.run_extraction(s, stub)
-    check("추출: 기존 기억은 escape를 풀어 전달",
-          ok and '"너"라고 부른다' in stub.user and "&quot;" not in stub.user)
+    ok = E.run_extraction(s, Stub("stop"))
+    check("추출: 정상 응답이면 대기 턴을 비움", ok and not s.store.pending_turns(s.scope))
 
 
 def t_rollup() -> None:
@@ -220,6 +244,10 @@ def t_rollup() -> None:
     check("롤업 승격: '항목: 값'은 L1 후보, '없음'은 승격 안 함",
           got == [("약속", "마감 후 바다 (확답 피함)"), None, ("생일", "목요일")], str(got))
     check("롤업 요약: 모델 요약 한 문장을 사용", summarizer(eps) == "세 사건을 묶은 한 문장")
+    guarded, _ = make_roller(Stub(["생일(하람): 축하를 받음", "생일(윤): 다음 주 금요일"]),
+                             known_subjects=lambda: {"생일(하람)"})
+    check("롤업 승격: 이미 있는 항목은 덮어쓰지 않음", guarded(eps[0]) is None
+          and guarded(eps[1]) == ("생일(윤)", "다음 주 금요일"))
     _, numbered = make_roller(Stub(["1. 번호가 붙은 요약"]))
     check("롤업 요약: 앞 번호 제거", numbered(eps) == "번호가 붙은 요약")
     _, fallback = make_roller(Stub([], ok=False))

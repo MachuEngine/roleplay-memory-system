@@ -9,6 +9,7 @@ memory 추출은 미추출 대화가 MEMORY_BATCH회 쌓이면 응답을 보여 
 from __future__ import annotations
 
 import html
+import json
 import re
 import sys
 import uuid
@@ -22,12 +23,12 @@ for p in (ROOT / "scripts", DEMO):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 
-from extraction import (DEMO_INSTRUCTION, PROMOTE_INSTRUCTION, SUMMARY_INSTRUCTION,  # noqa: E402
-                        make_extractor, make_roller)
+from extraction import (EPISODE_INSTRUCTION, FACT_INSTRUCTION, PROMOTE_INSTRUCTION,  # noqa: E402
+                        SUMMARY_INSTRUCTION, make_extractor, make_roller)
 from judge import flagged_sentences, invents_posture  # noqa: E402
 from limits import DailyCounter, check_turn  # noqa: E402
 from llm_client import ChatResult  # noqa: E402
-from memory_sim import L2_ITEM_CAP, Fact, MemoryStore, Scope, est_tokens  # noqa: E402
+from memory_sim import L2_ITEM_CAP, MemoryStore, Scope, est_tokens  # noqa: E402
 from prompt_render import render_system, unresolved  # noqa: E402
 from response_guard import safe_fallback, validate  # noqa: E402
 
@@ -208,30 +209,13 @@ def extraction_due(session: Session) -> bool:
 
 def run_extraction(session: Session, client) -> bool:
     """대기 중인 턴에서 L1·L2를 추출한다. 실패하면 큐가 남아 다음 차례에 다시 시도한다."""
-    # keywordbook은 프롬프트 주입용으로 escape되어 있다. 추출 모델에는 원문으로 보낸다.
-    existing = html.unescape(session.store.build_keywordbook(session.scope, paid=False))
     n = len(session.store.pending_turns(session.scope))
-    c, p = session.character, session.persona
-    setting = (f"{c.name}: {c.identity}\n{c.initial_state}\n"
-               f"{p.name}: {p.description}")
-    promoter, summarizer = make_roller(client)
-    before_texts = {ep.text for ep in session.store.episodes.get(session.scope, [])}
-    ok = session.store.run_extraction(session.scope, make_extractor(client, existing, setting),
-                                      promoter=promoter, summarizer=summarizer)
-    # 추출 모델은 생일·약속을 지시와 달리 L2에만 쓰는 경우가 많았다(20턴 테스트에서 6·12턴 L1 비어 있음).
-    # 이번에 새로 들어온 L2 항목마다 승격 판정을 한 번 더 해 지속 상태를 L1에 바로 올린다.
-    # L2 항목은 그대로 두므로 사건 기록과 현재 상태가 둘 다 남는다.
-    if ok:
-        known = before_texts
-        for ep in session.store.episodes.get(session.scope, []):
-            if ep.invalidated or ep.text in known:
-                continue
-            got = promoter(ep)
-            # 승격 단계는 새 항목만 더한다. 이미 있는 값의 갱신은 추출 단계가 맡는다
-            # (사건 한 줄에서 다시 뽑으면 기존 값보다 막연해지는 경우가 있었다).
-            if got is not None and got[0] not in session.store.facts.get(session.scope.profile_key(), {}):
-                session.store._store_fact(session.scope,
-                                          Fact(got[0], got[1], ep.turn, list(ep.source_turns)))
+    existing = dict(session.store.facts.get(session.scope.profile_key(), {}))
+    promoter, summarizer = make_roller(
+        client, lambda: set(session.store.facts.get(session.scope.profile_key(), {})))
+    ok = session.store.run_extraction(
+        session.scope, make_extractor(client, session.persona.name, existing),
+        promoter=promoter, summarizer=summarizer)
     # memory_sim은 추출 한 번에 롤업을 한 번(3개 → 1줄)만 한다. 한 번에 여러 항목이 늘면
     # 상한(L2_ITEM_CAP)을 넘은 채 남으므로, 플레이그라운드에서는 상한 안으로 들 때까지 반복한다.
     for _ in range(5):
@@ -269,11 +253,15 @@ class FakeClient:
             return ChatResult(ok=True, text="없음")
         if system == SUMMARY_INSTRUCTION:
             return ChatResult(ok=True, text="비 오는 오후 책방에서 둘이 나눈 이야기를 요약한 문장.")
-        if system == DEMO_INSTRUCTION:
-            text = self.extraction if self.extraction is not None else (
-                "<profile>\n- 호칭: 상대를 '너'라고 부른다\n</profile>\n"
-                "<episodes>\n- 비 오는 오후에 둘이 책방에서 이야기를 나눴다\n</episodes>")
-            return ChatResult(ok=True, text=text)
+        if system == FACT_INSTRUCTION:
+            if self.extraction is not None:
+                return ChatResult(ok=True, text=self.extraction)
+            said = re.search(r"^\[사용자 (\S+)\] (.+)$", user, re.MULTILINE)
+            facts = [{"subject": f"호칭({said.group(1)})", "value": "너",
+                      "evidence": said.group(2)[:40], "status": "확정"}] if said else []
+            return ChatResult(ok=True, text=json.dumps({"facts": facts}, ensure_ascii=False))
+        if system == EPISODE_INSTRUCTION:
+            return ChatResult(ok=True, text='{"episodes": ["비 오는 오후에 둘이 책방에서 이야기를 나눴다"]}')
         if self.replies:
             return ChatResult(ok=True, text=self.replies.pop(0))
         name = re.search(r"Play (.+?) in an immersive scene", system)

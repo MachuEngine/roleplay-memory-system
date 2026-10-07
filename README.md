@@ -84,7 +84,7 @@ OpenRouter를 경유하는 호출은 표준 라이브러리만 쓰고, `google-g
 `demo/`는 이 설계로 실제 대화를 해 볼 수 있는 Gradio 앱이다. 캐릭터 설정을 고정 정체성 / 초기 상태 / 말투 / 대화 예시로 나눠 입력받고, L1·L2 memory와 response guard를 거쳐 응답한다. 사칭 모드는 빼고 사용자 행동 대리 금지 규칙만 둔다.
 
 - **사용자 행동 판정 2단계** (`demo/judge.py`): 정규식이 넓게 고른 의심 문장 중, 사용자가 쓰지 않은 자세·위치를 단정한 문장만 결정적 규칙으로 위반 처리해 재생성한다. 나머지는 의심 문장으로 표시만 한다. 사람이 라벨을 붙인 110문장(`tests/cases/user_action_judge.json`)에서 정규식만 쓰면 정밀도 0.09였고, 이 규칙은 정밀도 1.00 · 재현율 0.80이다. LLM 판정(Flash-Lite, Flash)은 이보다 낮았다(`scripts/evaluate_user_action_judge.py`).
-- **기억**: 추출 직후 새 L2 항목에서 약속·생일 같은 지속 상태를 L1으로 바로 올리고, L2가 상한을 넘으면 오래된 사건을 Flash-Lite로 한 문장 요약한다(120자 절단 대신).
+- **기억** (`demo/extraction.py`): 사실 추출과 사건 요약을 두 호출로 나눈다. 사실은 사용자 발화 전문과 캐릭터 대사만 보고 JSON으로 근거 발화와 함께 받으며, 근거가 실제 사용자 발화에 없으면 버린다. 기존 L1 값은 더 최근 사용자 발화가 근거일 때만, 날짜 정보를 잃지 않을 때만 바뀐다. L2가 상한을 넘으면 오래된 사건을 한 문장으로 요약하고 지속 상태는 새 항목일 때만 L1으로 올린다. 실측 대화 4개에 정답을 붙인 세트(`tests/cases/memory_gold.json`)에서 기존 한 호출 방식은 재현율 0.73 · 틀린 값 6 · 금지 항목 9였고, 지금 방식은 1.00 · 0 · 0이다(`scripts/evaluate_memory_extraction.py`, 같은 대화로 규칙을 고친 결과라 새 대화 1개로 따로 확인).
 - **실호출 확인**: `scripts/run_demo_smoke.py --sample seori --turns 20`, `--sample haeden --turns 10` L3 recall은 넣지 않았다.
 
 ```bash

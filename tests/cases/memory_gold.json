@@ -1,0 +1,40 @@
+{
+  "_note": "플레이그라운드 실측 대화를 재현해 L1(profile) 추출을 채점하는 정답. 사실은 시나리오에서 사용자가 직접 말한 것만 정답으로 둔다. required는 해당 턴 이후 추출에서 L1에 있어야 하고(값 조건 포함), wrong은 같은 항목인데 값이 틀린 경우, forbidden은 있으면 안 되는 항목이다. 패턴은 '항목명: 값' 한 줄에 대한 정규식이다.",
+  "samples": {
+    "seori": {
+      "sample_file": "demo/sample_character.json",
+      "user": "하람",
+      "char": "서리",
+      "logs": [
+        "tests/results/demo_smoke_20261006_234958.json",
+        "tests/results/demo_smoke_20261007_173648.json",
+        "tests/results/demo_smoke_20261007_174711.json"
+      ],
+      "required": [
+        {"name": "생일", "from_turn": 2, "match": "생일", "value": "목요일"},
+        {"name": "바다 약속", "from_turn": 3, "match": "바다", "value": "마감|이번 달"}
+      ],
+      "forbidden": [
+        {"name": "이사를 확정처럼 저장", "match": "이사", "unless": "농담|취소|미정|정한 거 없|정하지 않|아직|지도|가능성|않"},
+        {"name": "설정 복사", "match": "^(금기|습관|말투|외양|성격|배경|직업|나이)"}
+      ]
+    },
+    "haeden": {
+      "sample_file": "tests/fixtures/sample_haeden.json",
+      "user": "윤",
+      "char": "해든",
+      "logs": [
+        "tests/results/demo_smoke_20261007_173851.json"
+      ],
+      "required": [
+        {"name": "어머니 생신", "from_turn": 2, "match": "생신|생일", "value": "금요일"},
+        {"name": "노란색 선호", "from_turn": 3, "match": "노란|색", "value": "노란"},
+        {"name": "꽃시장 약속", "from_turn": 7, "match": "꽃시장", "value": "토요일"}
+      ],
+      "forbidden": [
+        {"name": "꽃시장 시간 지어냄", "match": "꽃시장.*\\d+\\s*시"},
+        {"name": "설정 복사", "match": "^(금기|습관|말투|외양|성격|배경|직업|나이)"}
+      ]
+    }
+  }
+}
